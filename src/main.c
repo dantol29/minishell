@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:58:49 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/16 14:35:18 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/16 14:56:37 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 
 int	main(int argc, char **argv, char **envp)
 {
+	(void)argv;
+	(void)argc;
+	(void)envp;
 	// check if shell is running in interactive mode
 	if (isatty(STDIN_FILENO))
 	{
