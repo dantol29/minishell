@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/16 16:15:32 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/16 16:28:14 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 typedef struct s_shell
 {
 	char	*cmd_path;
+	char	**command;
 }	t_shell;
 
 #include "../libft/libft.h"
