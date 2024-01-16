@@ -6,14 +6,25 @@
 ```
 
 ## Functions used to create the minishell
-_check if shell is running in interactive mode_
+1. _check if shell is running in interactive mode_
 ```
 int isatty(int fd);
 ```
 Check whether a given file descriptor refers to a terminal.
 The function returns 1 if the file descriptor refers to a terminal, and 0 otherwise.
 
-readline
+2. _print a message and store user input_
+```
+char *readline(const char *prompt);
+```
+Prints a string to the user before they enter a command. 
+
+3. _get the current working directory_
+```
+char *getcwd(char *buf, size_t size);
+```
+The function returns a pointer to the provided buffer if successful and NULL on failure.
+If the buffer size is too small to hold the entire path, NULL is also returned.
 
 rl_clear_history
 
@@ -25,21 +36,7 @@ rl_redisplay
 
 add_history
 
-printf
-
-malloc
-
-free
-
-write
-
 access
-
-open
-
-read
-
-close
 
 fork
 
@@ -61,10 +58,6 @@ sigaddset
 
 kill
 
-exit
-
-getcwd
-
 chdir
 
 stat
@@ -77,7 +70,7 @@ unlink
 
 execve
 
-
+getenv
 _______
 
 
@@ -103,8 +96,6 @@ ttyslot
 
 ioctl
 
-getenv
-
 tcsetattr
 
 tcgetattr
@@ -121,3 +112,18 @@ tgoto
 
 tputs
 
+printf
+
+malloc
+
+free
+
+write
+
+open
+
+read
+
+close
+
+exit
