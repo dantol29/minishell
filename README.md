@@ -1,6 +1,18 @@
 # Minishell
-## Functions used to create the minishell
+## Development
 ```
+1. Interpret: shell reads commands from stdin and executes them.
+2. Terminate: shell executes any shutdown commands, frees ups any memory, and terminates.
+```
+
+## Functions used to create the minishell
+_check if shell is running in interactive mode_
+```
+int isatty(int fd);
+```
+Check whether a given file descriptor refers to a terminal.
+The function returns 1 if the file descriptor refers to a terminal, and 0 otherwise.
+
 readline
 
 rl_clear_history
@@ -81,8 +93,6 @@ strerror
 
 perror
 
-isatty
-
 ttyname
 
 ttyslot
@@ -106,4 +116,4 @@ tgetstr
 tgoto
 
 tputs
-```
+
