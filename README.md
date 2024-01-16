@@ -77,6 +77,10 @@ unlink
 
 execve
 
+
+_______
+
+
 dup
 
 dup2
