@@ -71,97 +71,216 @@ unlink
 execve
 
 getenv
-_______
+_____________________________________________________________
+
+# DUP
+
+`int dup(int oldfd);`
+      
+*#include <unistd.h>*
+
+- Creates a copy of the file descriptor `oldfd`.
+- Uses the lowest-numbered unused file descriptor for the new one.
+- Both old and new descriptors refer to the same open file.
+- They share file offset and status flags.
+- Duplicate descriptor does not have the close-on-exec flag set.
+
+**Return:**
+- Success:  new file descriptor.
+- Error:    -1, and `errno` is set appropriately.
+
+___________________________________________________________
+# DUP2              
+`int dup2(int oldfd, int newfd);`
+
+*#include <unistd.h>*
+
+- Creates a copy of the file descriptor `oldfd` using the specified `newfd`.
+- If `newfd` was previously open, it is closed before reuse.
+- Closing and reusing `newfd` are performed atomically to avoid race conditions.
+
+**Note:**
+- If `oldfd` is not valid, the call fails, and `newfd` is not closed.
+- If `oldfd` and `newfd` have the same value, `dup2()` does nothing and returns `newfd`.
+
+**Return Value:**
+- Success: Returns the new file descriptor.
+- Error: Returns -1, and `errno` is set appropriately.
+
+_____________________________________________________________
+# PIPE
+
+`int pipe(int pipefd[2]);`
+
+*#include <unistd.h>*
+
+- Creates a unidirectional data channel (pipe) for interprocess communication.
+- Returns two file descriptors in the array `pipefd` (read end: `pipefd[0]`, write end: `pipefd[1]`).
+- Data written to the write end is buffered until read from the read end.
+
+**Return Value:**
+- Success:  0.
+- Error:  -1, `errno` is set appropriately, and `pipefd` is unchanged.
+
+____________________________________________________
+# OPENDIR
+`DIR *opendir(const char *name);`
+
+*#include <sys/types.h>*
+*#include <dirent.h>*
+
+ - opens a directory stream corresponding to the directory name, and returns a pointer to the directory stream.  
+ - The stream is positioned at the first entry in the directory.
+
+**Return Value:**
+-Success:  a pointer to the directory stream.
+- Error: NULL is returned,  and  errno  is set appropriately.
+
+_________________________________________________________________
+#READDIRV
 
 
-```dup```
-#include <unistd.h>
+**Return Value:**
+- Success:
+- Error:
+_________________________________________________
+# CLOSEDIR
 
-       The  dup() system call creates a copy of the file descriptor oldfd, using the lowest-numbered unused file descriptor for the new descriptor.
+**Return Value:**
+- Success:
+- Error:
 
-       After a successful return, the old and new file descriptors may be used interchangeably.  
-      They  refer  to  the same open file description (see   open(2)) and thus share file offset and file status flags;
-       for example,  if the file offset is modified by using lseek(2) on one of the file descriptors, the offset is also changed for the other.
+_________________________________
+# STRERROR
 
-       The two file descriptors do not share file descriptor flags (the close-on-exec  flag).
-       The close-on-exec flag (FD_CLOEXEC; see fcntl(2)) for  the duplicate descriptor is off.
-RETURN VALUE
-       Success:  the new file descriptor. 
-       Error: -1 is returned, and errno is set appropriately.
+**Return Value:**
+- Success:
+- Error:
+___________________________
+# PERROR
 
+**Return Value:**
+- Success:
+- Error:
+____________________________________
 
+# TTYNAME
 
-```dup2```
-
-#include <unistd.h>
-
- The dup2() system call performs the same task as dup(), but instead  of    using  the lowest-numbered unused file descriptor,
- it uses the file descriptor number specified in newfd.  
-If the file descriptor  newfd  was   previously open, it is silently closed before being reused.
-
- The  steps  of  closing  and reusing the file descriptor newfd are performed atomically. 
-  This is  important,  because  trying  to  implement  equivalent  functionality  using close(2) and dup() would be subject to  race conditions,
-  whereby newfd might be reused between the  two  steps.
-   Such  reuse  could  happen because the main program is interrupted by a   signal handler that allocates a file descriptor,
-   or because a  parallel  thread allocates a file descriptor.
-
-  Note the following points:
-
-       *  If  oldfd  is  not a valid file descriptor, then the call fails, and   newfd is not closed.
-
-       *  If oldfd is a valid file descriptor, and newfd has the same value as  oldfd, then dup2() does nothing, and returns newfd.
-          
-RETURN VALUE
-       Success:  the new file descriptor. 
-       Error: -1 is returned, and errno is set appropriately.
-       
-
-```pipe```
-
-```opendir```
-
-```readdirv```
-
-```closedir```
-
-```strerror```
-
-```perror```
-
-```ttyname```
-
+**Return Value:**
+- Success:
+- Error:
+____________________________________
+#TTYSLOT
 ```ttyslot```
 
-```ioctl```
+**Return Value:**
+- Success:
+- Error:
+____________________________________
+# IOCTL
 
-```tcsetattr```
 
-```tcgetattr```
+**Return Value:**
+- Success:
+- Error:
+____________________________________
+# TCSETATTR
 
-```tgetent```
 
-```tgetflag```
+**Return Value:**
+- Success:
+- Error:
+____________________________________
+# TCGETATTR
 
-```tgetnum```
 
-```tgetstr```
+**Return Value:**
+- Success:
+- Error:
+____________________________________
+# TGETENT
 
-```tgoto```
+**Return Value:**
+- Success:
+- Error:
+____________________________________
+# TGETFLAG
 
-```tputs```
+**Return Value:**
+- Success:
+- Error:
+____________________________________
+# TGETNUM
 
-```printf```
+**Return Value:**
+- Success:
+- Error:
+____________________________________
+#TGETSTR
 
-```malloc```
 
-```free```
+**Return Value:**
+- Success:
+- Error:
+____________________________________
+# TGOTO
 
-```write```
 
-```open```
+**Return Value:**
+- Success:
+- Error:
+____________________________________
+# TPUTS
 
-```read```
+**Return Value:**
+- Success:
+- Error:
+____________________________________
+# PRINTF
 
-```close```
+**Return Value:**
+- Success:
+- Error:
+____________________________________
+# MALLOC
 
-```exit```
+**Return Value:**
+- Success:
+- Error:
+____________________________________
+# FREE
+
+**Return Value:**
+- Success:
+- Error:
+____________________________________
+# WRITE
+
+**Return Value:**
+- Success:
+- Error:
+____________________________________
+# OPEN
+
+**Return Value:**
+- Success:
+- Error:
+____________________________________
+# READ
+
+**Return Value:**
+- Success:
+- Error:
+____________________________________
+# CLOSE
+
+**Return Value:**
+- Success:
+- Error:
+____________________________________
+# EXIT
+
+**Return Value:**
+- Success:
+- Error:
+____________________________________
