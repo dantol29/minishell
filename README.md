@@ -4,7 +4,21 @@
 1. Interpret: shell reads commands from stdin and executes them.
 2. Terminate: shell executes any shutdown commands, frees ups any memory, and terminates.
 ```
+_____________________________________________
+## INCLUDES FROM FUNCTIONS  TO HEADERS.H
 
+- //open,close, pipe,dup, dup2
+- #include <unistd.h>
+- //readdir, opendir
+- #include <dirent.h>
+- //opendir
+- *#include <sys/types.h>*
+
+
+
+
+
+____________________________________________
 ## Functions used to create the minishell
 ____________________________________
 ### READLINE
