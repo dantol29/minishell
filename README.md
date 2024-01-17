@@ -1,9 +1,10 @@
 # MINISHELL
 ____________________________________________
-### FUNCTION USED TO CREATE MINISHELL
+## FUNCTION USED TO CREATE MINISHELL
 
+
+PROCESS CONTROL
 ```
-// PROCESS CONTROL
 fork; // Create a new process.
 wait; // Wait for a child process to terminate.
 waitpid; // Wait for a specific child process to terminate.
@@ -11,34 +12,26 @@ wait3; // Wait for a child process and retrieve status information.
 wait4; // Wait for a specific child process and retrieve status information.
 execve; // Execute a program.
 exit; // Exit a program.
-
-// SIGNAL HANDLING
+```
+SIGNAL HANDLING
+```
 signal; // Set a signal handler.
 sigaction; // Handle signals with extended functionality.
-
-// FILE INFORMATION
-stat; // Retrieve file information.
-lstat; // Retrieve file information (follows symbolic links).
-fstat; // Retrieve file information (from an open file descriptor).
-
-// DIRECTORY OPERATIONS
+```
+DIRECTORY OPERATIONS
+```
 opendir; // Open a directory.
 readdir; // Read a directory entry.
 closedir; // Close a directory.
-
-// ERROR HANDLING
-strerror; // Get a descriptive string for an error code.
-perror; // Print a descriptive error message.
-
-// I/O CONTROL
-isatty; // Check if a file descriptor refers to a terminal.
-ttyname; // Get the name of the terminal.
-ioctl; // Perform I/O control operations.
-
-// ENVIRONMENT
-getenv; // Retrieve the value of an environment variable.
-
-// TERMINAL HANDLING
+```
+FILE INFORMATION
+```
+stat; // Retrieve file information.
+lstat; // Retrieve file information (follows symbolic links).
+fstat; // Retrieve file information (from an open file descriptor).
+```
+TERMINAL HANDLING
+```
 tcsetattr; // Set terminal attributes.
 tcgetattr; // Get terminal attributes.
 tgetent; // Get terminal capabilities.
@@ -47,25 +40,45 @@ tgetnum; // Get terminal number.
 tgetstr; // Get terminal string.
 tgoto; // String capabilities for cursor positioning.
 tputs; // Output terminal capabilities.
-
-// PROCESS TERMINATION
-kill; // Send a signal to a process.
-
-// MEMORY ALLOCATION
-malloc; // Allocate memory dynamically.
-free; // Deallocate previously allocated memory.
-
-// INPUT/OUTPUT
-printf; // Print formatted output.
-write; // Write to a file descriptor.
-
-// FILE OPERATIONS
+```
+I/O CONTROL
+```
+isatty; // Check if a file descriptor refers to a terminal.
+ttyname; // Get the name of the terminal.
+ioctl; // Perform I/O control operations.
+```
+ENVIRONMENT
+```
+getenv; // Retrieve the value of an environment variable.
+```
+FILE OPERATIONS
+```
 access; // Check file accessibility.
 open; // Open a file.
 read; // Read from a file.
 close; // Close a file.
 unlink; // Delete a file.
 ```
+PROCESS TERMINATION
+```
+kill; // Send a signal to a process.
+```
+ERROR HANDLING
+```
+strerror; // Get a descriptive string for an error code.
+perror; // Print a descriptive error message.
+```
+MEMORY ALLOCATION
+```
+malloc; // Allocate memory dynamically.
+free; // Deallocate previously allocated memory.
+```
+INPUT/OUTPUT
+```
+printf; // Print formatted output.
+write; // Write to a file descriptor.
+```
+
 ## PROCESS CONTROL
 ### _FORK_
 ```
