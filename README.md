@@ -7,6 +7,15 @@
 _____________________________________________
 ## INCLUDES FROM FUNCTIONS  TO HEADERS.H
 
+```
+ //open,close, pipe,dup, dup2
+ #include <unistd.h>
+ //readdir, opendir
+ #include <dirent.h>
+ //opendir
+ #include <sys/types.h>*
+
+```
 - //open,close, pipe,dup, dup2
 - #include <unistd.h>
 - //readdir, opendir
