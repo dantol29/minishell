@@ -8,12 +8,71 @@ _____________________________________________
 ## INCLUDES FROM FUNCTIONS  TO HEADERS.H
 
 ```
- //open,close, pipe,dup, dup2
- #include <unistd.h>
- //readdir, opendir
- #include <dirent.h>
- //opendir
- #include <sys/types.h>*
+// Standard I/O functions
+
+// printf
+#include <stdio.h>
+// malloc, free, exit
+#include <stdlib.h>
+// write, access, close, fork, execve, dup, dup2, pipe
+#include <unistd.h>
+
+
+// Process-related functions
+
+#include <sys/types.h>
+// wait, waitpid, wait3, wait4
+#include <sys/wait.h>
+// signal, sigaction, sigemptyset, sigaddset, kill
+#include <signal.h>
+
+
+// Error handling
+
+// perror, strerror
+#include <errno.h>    
+// File-related functions
+#include <fcntl.h>
+ // stat, lstat, fstat, unlink
+#include <sys/stat.h>
+
+
+// Directory-related functions
+
+// opendir, readdir, closedir
+#include <dirent.h>   
+
+
+// Terminal-related functions
+
+// ioctl
+#include <sys/ioctl.h>
+// strerror
+#include <string.h>
+// getpwuid
+#include <pwd.h>
+
+
+// Terminal I/O functions
+
+// tcsetattr, tcgetattr
+#include <termios.h>  
+#include <curses.h>
+
+
+// Terminal capabilities
+
+ // tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
+#include <term.h>    
+
+
+// Readline library functions
+
+// readline
+#include <readline/readline.h>
+// rl_clear_history, rl_on_new_line, rl_replace_line, rl_redisplay, add_history      
+#include <readline/history.h>
+
 
 ```
 
