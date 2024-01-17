@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/16 16:28:14 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/17 14:04:15 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,11 @@
 
 typedef struct s_shell
 {
-	char	*cmd_path;
+	char	work_dir[1024];
+	char	*username;
 	char	**command;
+	char	*cmd_path;
+	int		pid;
 }	t_shell;
 
 #include "../libft/libft.h"
@@ -24,5 +27,8 @@ typedef struct s_shell
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+
 
 #endif

@@ -192,11 +192,15 @@ unlink
 - Error:
 ____________________________________
 # EXECVE
-execve
+`int execve(const char *pathname, char *const argv[], char *const envp[]);`
+
+executes the program referred to by pathname.  This causes the
+program that is currently being run by the calling process  to  be  re‐
+placed  with  a  new  program,
 
 **Return Value:**
 - Success:
-- Error:
+- Error: -1, and `errno` is set appropriately.
 ____________________________________
 #getenv
 

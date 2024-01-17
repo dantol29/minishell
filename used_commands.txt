@@ -1,0 +1,6 @@
+1. getenv - to get enviromental variable
+2. getcwd - to get currect working directory
+3. readline - to read user input and print a message before
+4. access - to check if file exists
+5. fork - to create a child process
+6. execve - 
