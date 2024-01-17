@@ -3,15 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/17 14:04:15 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/17 18:58:09 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 #define MINISHELL_H
+
+
+// Standard I/O functions
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+// Process-related functions
+#include <sys/types.h>
+// wait, waitpid, wait3, wait4
+#include <sys/wait.h>
+// signal, sigaction, sigemptyset, sigaddset, kill
+#include <signal.h>
+// Error handling
+#include <errno.h>    
+#include <fcntl.h>
+#include <sys/stat.h>
+// Directory-related functions
+#include <dirent.h>   
+// Terminal-related functions
+#include <sys/ioctl.h>
+#include <string.h>
+#include <pwd.h>
+// Terminal I/O functions
+#include <termios.h>  
+#include <curses.h>
+// Terminal capabilities
+#include <term.h>    
+// Readline library functions     
+#include <readline/history.h>
+#include <readline/readline.h>
+
 
 typedef struct s_shell
 {
@@ -23,12 +54,7 @@ typedef struct s_shell
 }	t_shell;
 
 #include "../libft/libft.h"
-#include <unistd.h>
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <sys/types.h>
-#include <sys/wait.h>
+
 
 
 #endif
