@@ -20,8 +20,14 @@ _____________________________________________
 
 ____________________________________________
 ## Functions used to create the minishell
-____________________________________
 ### READLINE
+
+_#include <stdio.h>_
+
+_#include <readline/readline.h>_
+
+_#include <readline/history.h>_
+
 `char *readline(const char *prompt);`
 
 Read a line from the terminal and return it, using prompt as a prompt.  
@@ -32,6 +38,9 @@ If prompt is NULL or the empty string, no prompt is issued.
 - Error: NULL
 ____________________________________
 ### GETCWD
+
+_#include <unistd.h>_
+
 `char *getcwd(char *buf, size_t size);`
 
 Copies an absolute pathname of the current working directory to the array pointed to by buf, which is of length size.
@@ -41,6 +50,7 @@ Copies an absolute pathname of the current working directory to the array pointe
 - Error: NULL, errno set appropriately
 ____________________________________
 ### ACCESS
+
 _#include <unistd.h>_
 
 `int access(const char *pathname, int mode);`
@@ -53,6 +63,7 @@ Can the user who invoked me read/write/execute this file?
 - Error: -1 is returned, and  errno is set appropriately.
 ____________________________________
 ### EXECVE
+
 _#include <unistd.h>_
 
 `int execve(const char *pathname, char *const argv[], char *const envp[]);`
@@ -65,30 +76,48 @@ This causes the program that is currently being run by the calling process  to  
 - Error: -1, and errno is set appropriately.
 ____________________________________
 ### GETENV
+
 _#include <stdlib.h>_
 
 `char *getenv(const char *name);`
+
 Searches the environment list to find the environment variable name.
+
 **Return Value:**
 - Success: a pointer to the value  in  the  environment
 - Error: NULL
 ____________________________________
 ### FORK
-fork
+
+_#include <sys/types.h>_
+
+_#include <unistd.h>_
+
+`pid_t fork(void);`
+
+Creates  a new process by duplicating the calling process. 
+The new process is referred to as the child process.  
+The calling process is referred to as the parent process.
 
 **Return Value:**
-- Success:
-- Error:
-____________________________________
-### WAIT
-wait
-
-**Return Value:**
-- Success:
-- Error:
+- Success: On success, the PID of the child process is returned in the parent, and 0 is returned in the child.
+- Error: 0
 ____________________________________
 ### WAITPID
-waitpid
+
+_#include <sys/types.h>_
+
+_#include <sys/wait.h>_
+
+`pid_t waitpid(pid_t pid, int *wstatus, int options);`
+
+Is used to wait for the child termination.
+
+**Return Value:**
+- Success: the process ID of the child
+- Error: -1
+____________________________________
+### WAIT
 
 **Return Value:**
 - Success:
@@ -118,7 +147,6 @@ Check whether a given file descriptor refers to a terminal.
 - Success: 1 if the file descriptor refers to a terminal
 - Error: 0, errno is set to indicate the error
 ____________________________________
-### SIGNAL
 signal
 
 **Return Value:**
