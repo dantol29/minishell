@@ -67,7 +67,7 @@ close; // Close a file.
 unlink; // Delete a file.
 ```
 ## PROCESS CONTROL
-### FORK
+### _FORK_
 ```
 #include <sys/types.h>
 #include <unistd.h>
@@ -84,7 +84,7 @@ pid_t fork(void);
 - Success: On success, the PID of the child process is returned in the parent, and 0 is returned in the child.
 - Error: 0
 ____________________________________
-### WAITPID
+### _WAITPID_
 ```
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -99,7 +99,7 @@ pid_t waitpid(pid_t pid, int *wstatus, int options);
 - Success: the process ID of the child
 - Error: -1
 ____________________________________
-### WAIT
+### _WAIT_
 ```
 include
 
@@ -111,7 +111,7 @@ function
 - Success:
 - Error:
 ____________________________________
-### WAIT3
+### _WAIT3_
 ```
 include
 
@@ -123,7 +123,7 @@ function
 - Success:
 - Error:
 ____________________________________
-### WAIT4
+### _WAIT4_
 ```
 include
 
@@ -135,7 +135,7 @@ function
 - Success:
 - Error:
 ________________________________
-### EXECVE
+### _EXECVE_
 
 ```
 #include <unistd.h>
@@ -152,7 +152,7 @@ int execve(const char *pathname, char *const argv[], char *const envp[]);
 - Error: -1, and errno is set appropriately.
 ____________________________________
 ## SIGNAL HANDLING
-### SIGNAL
+### _SIGNAL_
 ```
 include
 
@@ -164,7 +164,7 @@ function
 - Success:
 - Error:
 ____________________________________
-### SIGACTION
+### _SIGACTION_
 ```
 include
 
@@ -177,7 +177,7 @@ function
 - Error:
 ____________________________________
 ## DIRECTORY OPERATIONS
-### OPENDIR
+### _OPENDIR_
 ```
 #include <sys/types.h>
 #include <dirent.h>
@@ -194,7 +194,7 @@ DIR *opendir(const char *name);
 - Error: NULL is returned,  and  errno  is set appropriately.
 
 _________________________________________________________________
-### READDIR
+### _READDIR_
 ```
  #include <dirent.h>
 
@@ -226,7 +226,7 @@ representing the next directory entry in the directory stream pointed to by dirp
 
 _________________________________________________
 
-### CLOSEDIR
+### _CLOSEDIR_
 ```
 include
 
@@ -240,7 +240,7 @@ function
 
 _________________________________
 ## FILE INFORMATION
-### STAT
+### _STAT_
 ```
 include
 
@@ -252,7 +252,7 @@ function
 - Success:
 - Error:
 ____________________________________
-### LSTAT
+### _LSTAT_
 ```
 include
 
@@ -264,7 +264,7 @@ function
 - Success:
 - Error:
 ____________________________________
-### FSTAT
+### _FSTAT_
 ```
 include
 
@@ -278,7 +278,7 @@ function
 ____________________________________
 ## MEMORY ALLOCATION
 ____________________________________
-### MALLOC
+### _MALLOC_
 ```
 include
 
@@ -290,7 +290,7 @@ function
 - Success:
 - Error:
 ____________________________________
-### FREE
+### _FREE_
 ```
 include
 
@@ -303,7 +303,7 @@ function
 - Error:
 ____________________________________
 ## INPUT/OUTPUT
-### PRINTF
+### _PRINTF_
 ```
 include
 
@@ -315,7 +315,7 @@ function
 - Success:
 - Error:
 ____________________________________
-### WRITE
+### _WRITE_
 ```
 include
 
@@ -328,7 +328,7 @@ function
 - Error:
 ____________________________________
 ## FILE OPERATIONS
-### OPEN
+### _OPEN_
 ```
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -344,7 +344,7 @@ int open(const char *pathname, int flags, mode_t mode);
 - Success:
 - Error:
 ____________________________________
-### READ
+### _READ_
 ```
 #include <unistd.h>
 
@@ -379,7 +379,7 @@ ssize_t read(int fd, void *buf, size_t count);
        it is left unspecified whether the file position (if any) changes.
 
 ____________________________________
-### CLOSE
+### _CLOSE_
 ```
 #include <unistd.h>
 
@@ -397,7 +397,7 @@ int close(int fd);
 - Success: 0
 - Error: -1 and errno is set appropriately.
 ____________________________________
-### ACCESS
+### _ACCESS_
 ```
 #include <unistd.h>
 
@@ -412,7 +412,7 @@ int access(const char *pathname, int mode);
 - Success: 0
 - Error: -1 is returned, and  errno is set appropriately.
 ____________________________________
-### READLINE
+### _READLINE_
 
 ```
 #include <stdio.h>
@@ -430,7 +430,7 @@ char *readline(const char *prompt);
 - Success: the text of the line read
 - Error: NULL
 ____________________________________
-### GETCWD
+### _GETCWD_
 ```
 #include <unistd.h>
 
@@ -446,7 +446,7 @@ Copies an absolute pathname of the current working directory to the array pointe
 ____________________________________
 
 
-### GETENV   - Searches the environment list to find the environment variable name.
+### _GETENV_
 ```
 #include <stdlib.h>
 
@@ -461,7 +461,7 @@ char *getenv(const char *name);
 - Error: NULL
 ____________________________________
 
-### ISATTY  - Check whether a given file descriptor refers to a terminal.
+### _ISATTY_
 ```
 include
 
@@ -476,7 +476,7 @@ int isatty(int fd);
 - Error: 0, errno is set to indicate the error
 ____________________________________
 
-### SIGEMTYSET 
+### _SIGEMTYSET_
 ```
 include
 
@@ -488,7 +488,7 @@ function
 - Success:
 - Error:
 ____________________________________
-### SIGADDSET
+### _SIGADDSET_
 ```
 include
 
@@ -500,7 +500,7 @@ function
 - Success:
 - Error:
 ____________________________________
-### KILL
+### _KILL_
 ```
 include
 
@@ -512,56 +512,7 @@ function
 - Success:
 - Error:
 ____________________________________
-### CHDIR
-```
-include
-
-
-function
-```
- 
-**Return Value:**
-- Success:
-- Error:
-____________________________________
-
-### UNLINK 
-```
-include
-
-
-function
-```
-
-**Return Value:**
-- Success:
-- Error:
-____________________________________
-### rl_clear_history
-```
-include
-
-
-function
-```
-
-**Return Value:**
-- Success:
-- Error:
-____________________________________
-### rl_on_new_line
-```
-include
-
-
-function
-```
-
-**Return Value:**
-- Success:
-- Error:
-____________________________________
-### rl_replace_line 
+### _CHDIR_
 ```
 include
 
@@ -573,7 +524,8 @@ function
 - Success:
 - Error:
 ____________________________________
-### rl_redisplay
+
+### _UNLINK_
 ```
 include
 
@@ -585,7 +537,55 @@ function
 - Success:
 - Error:
 ____________________________________
-### ADD_HISTORY
+### _rl_clear_history_
+```
+include
+
+
+function
+```
+
+**Return Value:**
+- Success:
+- Error:
+____________________________________
+### _rl_on_new_line_
+```
+include
+
+
+function
+```
+
+**Return Value:**
+- Success:
+- Error:
+____________________________________
+### _rl_replace_line_ 
+```
+include
+
+
+function
+```
+ 
+**Return Value:**
+- Success:
+- Error:
+____________________________________
+### _rl_redisplay_
+```
+include
+
+
+function
+```
+
+**Return Value:**
+- Success:
+- Error:
+____________________________________
+### _ADD_HISTORY_
 ```
 include
 
@@ -599,7 +599,7 @@ function
 _____________________________________________________
 Alena
 _____________________________________________________________
-### DUP  - Creates a copy of the file descriptor `oldfd`.
+### _DUP_
 ```
 #include <unistd.h>
 
@@ -618,7 +618,7 @@ int dup(int oldfd);
 - Success:  new file descriptor.
 - Error:    -1, and `errno` is set appropriately.
 ___________________________________________________________
-### DUP2   - Creates a copy of the file descriptor `oldfd` using the specified `newfd`.       
+### _DUP2_      
 ```
 #include <unistd.h>
 
@@ -640,7 +640,7 @@ int dup2(int oldfd, int newfd);
 - Error: Returns -1, and `errno` is set appropriately.
 
 _____________________________________________________________
-### PIPE  - Creates a unidirectional data channel (pipe) for interprocess communication.
+### _PIPE_
 ```
 #include <unistd.h>
 
@@ -658,7 +658,7 @@ int pipe(int pipefd[2]);
 
 ____________________________________________________
 
-### STRERROR
+### _STRERROR_
 ```
 include
 
@@ -673,7 +673,7 @@ function
 - Success:
 - Error:
 ___________________________
-### PERROR
+### _PERROR_
 ```
 include
 
@@ -688,7 +688,7 @@ function
 - Success:
 - Error:
 ____________________________________
-### TTYNAME
+### _TTYNAME_
 ```
 include
 
@@ -703,7 +703,7 @@ function
 - Success:
 - Error:
 ____________________________________
-### TTYSLOT
+### _TTYSLOT_
 ```
 include
 
@@ -718,7 +718,7 @@ function
 - Success:
 - Error:
 ____________________________________
-### IOCTL
+### _IOCTL_
 ```
 include
 
@@ -733,7 +733,7 @@ function
 - Success:
 - Error:
 ____________________________________
-### TCSETATTR
+### _TCSETATTR_
 ```
 include
 
@@ -748,7 +748,7 @@ function
 - Success:
 - Error:
 ____________________________________
-### TCGETATTR
+### _TCGETATTR_
 ```
 include
 
@@ -763,7 +763,7 @@ function
 - Success:
 - Error:
 ____________________________________
-### TGETENT
+### _TGETENT_
 ```
 include
 
@@ -778,7 +778,7 @@ function
 - Success:
 - Error:
 ____________________________________
-### TGETFLAG
+### _TGETFLAG_
 ```
 include
 
@@ -793,7 +793,7 @@ function
 - Success:
 - Error:
 ____________________________________
-### TGETNUM
+### _TGETNUM_
 ```
 include
 
@@ -808,7 +808,7 @@ function
 - Success:
 - Error:
 ____________________________________
-#TGETSTR
+### _TGETSTR_
 ```
 include
 
@@ -823,7 +823,7 @@ function
 - Success:
 - Error:
 ____________________________________
-### TGOTO
+### _TGOTO_
 ```
 include
 
@@ -838,7 +838,7 @@ function
 - Success:
 - Error:
 ____________________________________
-### TPUTS
+### _TPUTS_
 **_include_
 ```
 function
@@ -853,7 +853,7 @@ function
 
 
 ____________________________________
-# EXIT — cause the shell to exit
+# _EXIT_ 
 ```
 exit [n]
 ```
