@@ -18,28 +18,33 @@ _____________________________________________
 ```
 
 ____________________________________________
-## Functions used to create the minishell
+### Functions used to create the minishell
+
+________________________________
 ### READLINE
 
-_#include <stdio.h>_
-_#include <readline/readline.h>_
-_#include <readline/history.h>_
-
 ```
+#include <stdio.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+
+
 char *readline(const char *prompt);
 ```
 
  **Description**
  - Read a line from the terminal and return it, using prompt as a prompt.  
--If prompt is NULL or the empty string, no prompt is issued.
+ -If prompt is NULL or the empty string, no prompt is issued.
 
 **Return Value:**
 - Success: the text of the line read
 - Error: NULL
 ____________________________________
 ### GETCWD
-_#include <unistd.h>_
 ```
+#include <unistd.h>
+
+
 char *getcwd(char *buf, size_t size);
 ```
 
@@ -50,8 +55,10 @@ Copies an absolute pathname of the current working directory to the array pointe
 - Error: NULL, errno set appropriately
 ____________________________________
 ### ACCESS
-_#include <unistd.h>_
 ```
+#include <unistd.h>
+
+
 int access(const char *pathname, int mode);
 ```
 
@@ -65,8 +72,10 @@ int access(const char *pathname, int mode);
 ____________________________________
 ### EXECVE
 
-_#include <unistd.h>_
 ```
+#include <unistd.h>
+
+
 int execve(const char *pathname, char *const argv[], char *const envp[]);
 ```
 
@@ -78,11 +87,14 @@ int execve(const char *pathname, char *const argv[], char *const envp[]);
 - Success:
 - Error: -1, and errno is set appropriately.
 ____________________________________
-### GETENV
-_#include <stdlib.h>_
+### GETENV   - Searches the environment list to find the environment variable name.
 ```
+#include <stdlib.h>
+
+
 char *getenv(const char *name);
 ```
+
  **Description**
  - Searches the environment list to find the environment variable name.
 
@@ -90,10 +102,12 @@ char *getenv(const char *name);
 - Success: a pointer to the value  in  the  environment
 - Error: NULL
 ____________________________________
-### FORK
-_#include <sys/types.h>_
-_#include <unistd.h>_
+### FORK  - Creates  a new process by duplicating the calling process.
 ```
+#include <sys/types.h>
+#include <unistd.h>
+
+
 pid_t fork(void);
 ```
 
@@ -106,12 +120,15 @@ pid_t fork(void);
 - Success: On success, the PID of the child process is returned in the parent, and 0 is returned in the child.
 - Error: 0
 ____________________________________
-### WAITPID
-_#include <sys/types.h>_
-_#include <sys/wait.h>_
+### WAITPID   - used to wait for the child termination.
 ```
+#include <sys/types.h>
+#include <sys/wait.h>
+
+
 pid_t waitpid(pid_t pid, int *wstatus, int options);
 ```
+
  **Description**
  - Is used to wait for the child termination.
 
@@ -120,21 +137,25 @@ pid_t waitpid(pid_t pid, int *wstatus, int options);
 - Error: -1
 ____________________________________
 ### WAIT
-_include_
 ```
+include
+
+
 function
 ```
 
  **Description**
  - 
- 
+  
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
 ### WAIT3
-_include_
 ```
+include
+
+
 function
 ```
 
@@ -146,8 +167,10 @@ function
 - Error:
 ____________________________________
 ### WAIT4
-_include_
 ```
+include
+
+
 function
 ```
 
@@ -158,11 +181,14 @@ function
 - Success:
 - Error:
 - ________________________________
-### ISATTY
-_include_
+### ISATTY  - Check whether a given file descriptor refers to a terminal.
 ```
+include
+
+
 int isatty(int fd);
 ```
+
  **Description**
  - Check whether a given file descriptor refers to a terminal.
 
@@ -171,8 +197,10 @@ int isatty(int fd);
 - Error: 0, errno is set to indicate the error
 ____________________________________
 ### SIGNAL
-_include_
 ```
+include
+
+
 function
 ```
 
@@ -184,8 +212,10 @@ function
 - Error:
 ____________________________________
 ### SIGACTION
-_include_
 ```
+include
+
+
 function
 ```
 
@@ -197,8 +227,10 @@ function
 - Error:
 ____________________________________
 ### SIGEMTYSET 
-_include_
 ```
+include
+
+
 function
 ```
 
@@ -210,8 +242,10 @@ function
 - Error:
 ____________________________________
 ### SIGADDSET
-_include_
 ```
+include
+
+
 function
 ```
 
@@ -223,8 +257,10 @@ function
 - Error:
 ____________________________________
 ### KILL
-_include_
 ```
+include
+
+
 function
 ```
 
@@ -236,8 +272,10 @@ function
 - Error:
 ____________________________________
 ### CHDIR
-_include_
 ```
+include
+
+
 function
 ```
 
@@ -249,8 +287,10 @@ function
 - Error:
 ____________________________________
 ### STAT
-_include_
 ```
+include
+
+
 function
 ```
 
@@ -262,21 +302,25 @@ function
 - Error:
 ____________________________________
 ### LSTAT
-_include_
 ```
+include
+
+
 function
 ```
 
  **Description**
  - 
-  
+   
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
 ### FSTAT
-_include_
 ```
+include
+
+
 function
 ```
 
@@ -288,21 +332,25 @@ function
 - Error:
 ____________________________________
 ### UNLINK 
-_include_
 ```
+include
+
+
 function
 ```
 
  **Description**
  - 
-  
+   
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
 ### rl_clear_history
-_include_
 ```
+include
+
+
 function
 ```
 
@@ -314,8 +362,10 @@ function
 - Error:
 ____________________________________
 ### rl_on_new_line
-_include_
 ```
+include
+
+
 function
 ```
 
@@ -327,8 +377,10 @@ function
 - Error:
 ____________________________________
 ### rl_replace_line 
-_include_
 ```
+include
+
+
 function
 ```
 
@@ -340,8 +392,10 @@ function
 - Error:
 ____________________________________
 ### rl_redisplay
-_include_
 ```
+include
+
+
 function
 ```
 
@@ -353,8 +407,10 @@ function
 - Error:
 ____________________________________
 ### ADD_HISTORY
-_include_
 ```
+include
+
+
 function
 ```
 
@@ -367,10 +423,11 @@ function
 _____________________________________________________
 Alena
 _____________________________________________________________
-
-### DUP
-_#include <unistd.h>_
+### DUP  - Creates a copy of the file descriptor `oldfd`.
 ```
+#include <unistd.h>
+
+
 int dup(int oldfd);
 ```
       
@@ -385,9 +442,11 @@ int dup(int oldfd);
 - Success:  new file descriptor.
 - Error:    -1, and `errno` is set appropriately.
 ___________________________________________________________
-### DUP2              
-_#include <unistd.h>_
+### DUP2   - Creates a copy of the file descriptor `oldfd` using the specified `newfd`.       
 ```
+#include <unistd.h>
+
+
 int dup2(int oldfd, int newfd);
 ```
 
@@ -405,9 +464,11 @@ int dup2(int oldfd, int newfd);
 - Error: Returns -1, and `errno` is set appropriately.
 
 _____________________________________________________________
-### PIPE
-_#include <unistd.h>_
+### PIPE  - Creates a unidirectional data channel (pipe) for interprocess communication.
 ```
+#include <unistd.h>
+
+
 int pipe(int pipefd[2]);
 ```
  **Description**
@@ -420,10 +481,12 @@ int pipe(int pipefd[2]);
 - Error:  -1, `errno` is set appropriately, and `pipefd` is unchanged.
 
 ____________________________________________________
-### OPENDIR
-_#include <sys/types.h>_
-_#include <dirent.h>_
+### OPENDIR  - opens a directory stream corresponding to the directory name, and returns a pointer to the directory stream.  
 ```
+#include <sys/types.h>
+#include <dirent.h>
+
+
 DIR *opendir(const char *name);
 ```
 
@@ -437,8 +500,10 @@ DIR *opendir(const char *name);
 
 _________________________________________________________________
 ### READDIR  readdir - read a directory
- _#include <dirent.h>_
 ```
+ #include <dirent.h>
+
+
 struct dirent *readdir(DIR *dirp);
 ```
 
@@ -467,8 +532,10 @@ representing the next directory entry in the directory stream pointed to by dirp
 
 _________________________________________________
 ### CLOSEDIR
-_include_
 ```
+include
+
+
 function
 ```
 
@@ -481,8 +548,10 @@ function
 
 _________________________________
 ### STRERROR
-_include_
 ```
+include
+
+
 function
 ```
 
@@ -494,8 +563,10 @@ function
 - Error:
 ___________________________
 ### PERROR
-_include_
 ```
+include
+
+
 function
 ```
 
@@ -507,8 +578,10 @@ function
 - Error:
 ____________________________________
 ### TTYNAME
-_include_
 ```
+include
+
+
 function
 ```
 
@@ -520,8 +593,10 @@ function
 - Error:
 ____________________________________
 ### TTYSLOT
-_include_
 ```
+include
+
+
 function
 ```
 
@@ -533,8 +608,10 @@ function
 - Error:
 ____________________________________
 ### IOCTL
-_include_
 ```
+include
+
+
 function
 ```
 
@@ -546,8 +623,10 @@ function
 - Error:
 ____________________________________
 ### TCSETATTR
-_include_
 ```
+include
+
+
 function
 ```
 
@@ -559,8 +638,10 @@ function
 - Error:
 ____________________________________
 ### TCGETATTR
-_include_
 ```
+include
+
+
 function
 ```
 
@@ -572,8 +653,10 @@ function
 - Error:
 ____________________________________
 ### TGETENT
-_include_
 ```
+include
+
+
 function
 ```
 
@@ -585,21 +668,25 @@ function
 - Error:
 ____________________________________
 ### TGETFLAG
-_include_
 ```
+include
+
+
 function
 ```
 
  **Description**
  - 
-  
+ 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
 ### TGETNUM
-_include_
 ```
+include
+
+
 function
 ```
 
@@ -611,8 +698,10 @@ function
 - Error:
 ____________________________________
 #TGETSTR
-_include_
 ```
+include
+
+
 function
 ```
 
@@ -624,8 +713,10 @@ function
 - Error:
 ____________________________________
 ### TGOTO
-_include_
 ```
+include
+
+
 function
 ```
 
@@ -637,21 +728,23 @@ function
 - Error:
 ____________________________________
 ### TPUTS
-_include_
+**_include_
 ```
 function
 ```
 
  **Description**
  - 
-  
+ 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
 ### PRINTF
-_include_
 ```
+include
+
+
 function
 ```
 
@@ -663,8 +756,10 @@ function
 - Error:
 ____________________________________
 ### MALLOC
-_include_
 ```
+include
+
+
 function
 ```
 
@@ -676,8 +771,10 @@ function
 - Error:
 ____________________________________
 ### FREE
-_include_
 ```
+include
+
+
 function
 ```
 
@@ -689,8 +786,10 @@ function
 - Error:
 ____________________________________
 ### WRITE
-_include_
 ```
+include
+
+
 function
 ```
 
@@ -701,10 +800,16 @@ function
 - Success:
 - Error:
 ____________________________________
-### OPEN
-_include_
+### OPEN  - open and possibly create a file
 ```
-function
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+
+
+int open(const char *pathname, int flags);
+int open(const char *pathname, int flags, mode_t mode);
+
 ```
 
  **Description**
@@ -714,22 +819,47 @@ function
 - Success:
 - Error:
 ____________________________________
-### READ
-_include_
+### READ - read from a file descriptor
 ```
-function
+#include <unistd.h>
+
+
+ssize_t read(int fd, void *buf, size_t count);
 ```
 
  **Description**
- - 
+ - read() attempts to read up to count bytes from file descriptor fd into the
+       buffer starting at buf.
+ - On files that support seeking, the read operation commences  at  the  file
+       offset,  and  the  file offset is incremented by the number of bytes read.
+       If the file offset is at or past the end of file, no bytes are  read,  and
+       read() returns zero.
+   -  If  count  is  zero, read() may detect the errors described below.  In the
+       absence of any errors, or if read() does not check for  errors,  a  read()
+       with a count of 0 returns zero and has no other effects.
+   -   According  to  POSIX.1,  if count is greater than SSIZE_MAX, the result is
+       implementation-defined; see NOTES for the upper limit on Linux.
+
  
 **Return Value:**
 - Success:
+   -number of bytes read is returned (zero  indicates  end  of file), and the file position is advanced by this number.
+   -It is not an error if this number is smaller than the number of bytes requested;
+   this may happen  for  example  because fewer bytes are actually available right now
+       (maybe because we were close to end-of-file, or  because  we  are  reading
+       from  a  pipe, or from a terminal), or because read() was interrupted by a
+       signal.  See also NOTES.
+
 - Error:
+  -  On error, -1 is returned, and errno is set appropriately.  In  this  case,
+       it is left unspecified whether the file position (if any) changes.
+
 ____________________________________
 ### CLOSE - close a file descriptor
-_#include <unistd.h>_
 ```
+#include <unistd.h>
+
+
 int close(int fd);
 ```
  **Description**
@@ -745,7 +875,6 @@ int close(int fd);
 - Error: -1 and errno is set appropriately.
 ____________________________________
 # EXIT — cause the shell to exit
-_include_
 ```
 exit [n]
 ```
