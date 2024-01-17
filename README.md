@@ -7,7 +7,7 @@
 
 ## Functions used to create the minishell
 ________________________________
-# ISATTY
+### ISATTY
 ```
 int isatty(int fd);
 ```
@@ -19,7 +19,7 @@ The function returns 1 if the file descriptor refers to a terminal, and 0 otherw
 - Success:
 - Error:
 ____________________________________
-# READLINE
+### READLINE
 ```
 char *readline(const char *prompt);
 ```
@@ -30,7 +30,7 @@ Prints a string to the user before they enter a command.
 - Success:
 - Error:
 ____________________________________
-# GETCWD
+### GETCWD
 ```
 char *getcwd(char *buf, size_t size);
 ```
@@ -43,155 +43,121 @@ If the buffer size is too small to hold the entire path, NULL is also returned.
 - Error:
 ____________________________________
 
-# rl_clear_history
 
-
-**Return Value:**
-- Success:
-- Error:
 ____________________________________
-
-# rl_on_new_line
-
-
-**Return Value:**
-- Success:
-- Error:
-____________________________________
-
-# rl_replace_line 
-
-**Return Value:**
-- Success:
-- Error:
-____________________________________
-
-# rl_redisplay
-
-**Return Value:**
-- Success:
-- Error:
-____________________________________
-# ADD_HISTORY
-add_history
-
-**Return Value:**
-- Success:
-- Error:
-____________________________________
-# ACCESS
+### ACCESS
 access
 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
-# FORK
+### FORK
 fork
 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
-# WAIT
+### WAIT
 wait
 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
-# WAITPID
+### WAITPID
 waitpid
 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
-# WAIT3
+### WAIT3
 wait3
 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
-# WAIT4
+### WAIT4
 wait4
 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
-# SIGNAL
+### SIGNAL
 signal
 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
-# SIGACTION
+### SIGACTION
 sigaction
 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
-# SIGEMTYSET 
+### SIGEMTYSET 
 sigemptyset
 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
-# SIGADDSET
+### SIGADDSET
 sigaddset
 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
-# KILL
+### KILL
 kill
 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
-# CHDIR
+### CHDIR
 chdir
 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
-# STAT
+### STAT
 stat
 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
-# LSTAT
+### LSTAT
 lstat
 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
-# FSTAT
+### FSTAT
 fstat
 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
-# UNLINK 
+### UNLINK 
 unlink
 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
-# EXECVE
+### EXECVE
 `int execve(const char *pathname, char *const argv[], char *const envp[]);`
 
 executes the program referred to by pathname.  This causes the
@@ -202,17 +168,52 @@ placed  with  a  new  program,
 - Success:
 - Error: -1, and `errno` is set appropriately.
 ____________________________________
-#getenv
+### GETENV
+
+**Return Value:**
+- Success:
+- Error:
+____________________________________
+### rl_clear_history
+
 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
 
+### rl_on_new_line
+
+
+**Return Value:**
+- Success:
+- Error:
+____________________________________
+
+### rl_replace_line 
+
+**Return Value:**
+- Success:
+- Error:
+____________________________________
+
+### rl_redisplay
+
+**Return Value:**
+- Success:
+- Error:
+____________________________________
+### ADD_HISTORY
+add_history
+
+**Return Value:**
+- Success:
+- Error:
+
 Alena
 _____________________________________________________________
 
-# DUP
+### DUP
 
 `int dup(int oldfd);`
       
@@ -228,7 +229,7 @@ _____________________________________________________________
 - Success:  new file descriptor.
 - Error:    -1, and `errno` is set appropriately.
 ___________________________________________________________
-# DUP2              
+### DUP2              
 `int dup2(int oldfd, int newfd);`
 
 *#include <unistd.h>*
@@ -246,7 +247,7 @@ ___________________________________________________________
 - Error: Returns -1, and `errno` is set appropriately.
 
 _____________________________________________________________
-# PIPE
+### PIPE
 
 `int pipe(int pipefd[2]);`
 
@@ -261,7 +262,7 @@ _____________________________________________________________
 - Error:  -1, `errno` is set appropriately, and `pipefd` is unchanged.
 
 ____________________________________________________
-# OPENDIR
+### OPENDIR
 `DIR *opendir(const char *name);`
 
 *#include <sys/types.h>*
@@ -275,7 +276,7 @@ ____________________________________________________
 - Error: NULL is returned,  and  errno  is set appropriately.
 
 _________________________________________________________________
-# READDIR  readdir - read a directory
+### READDIR  readdir - read a directory
 `struct dirent *readdir(DIR *dirp);`
  #include <dirent.h>
 The  readdir()  function returns a pointer to a dirent structure
@@ -302,72 +303,72 @@ It returns NULL on reaching the end of the directory stream or if an error occur
        To  distinguish  end   of  stream  from  an  error, set errno to zero before calling readdir() and then check the  value of errno if NULL is returned.
 
 _________________________________________________
-# CLOSEDIR
+### CLOSEDIR
 
 **Return Value:**
 - Success:
 - Error:
 
 _________________________________
-# STRERROR
+### STRERROR
 
 **Return Value:**
 - Success:
 - Error:
 ___________________________
-# PERROR
+### PERROR
 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
 
-# TTYNAME
+### TTYNAME
 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
-# TTYSLOT
+### TTYSLOT
 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
-# IOCTL
-
-
-**Return Value:**
-- Success:
-- Error:
-____________________________________
-# TCSETATTR
+### IOCTL
 
 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
-# TCGETATTR
+### TCSETATTR
 
 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
-# TGETENT
+### TCGETATTR
+
 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
-# TGETFLAG
+### TGETENT
 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
-# TGETNUM
+### TGETFLAG
+
+**Return Value:**
+- Success:
+- Error:
+____________________________________
+### TGETNUM
 
 **Return Value:**
 - Success:
@@ -380,56 +381,56 @@ ____________________________________
 - Success:
 - Error:
 ____________________________________
-# TGOTO
+### TGOTO
 
 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
-# TPUTS
+### TPUTS
 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
-# PRINTF
+### PRINTF
 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
-# MALLOC
+### MALLOC
 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
-# FREE
+### FREE
 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
-# WRITE
+### WRITE
 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
-# OPEN
+### OPEN
 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
-# READ
+### READ
 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
-# CLOSE - close a file descriptor
+### CLOSE - close a file descriptor
  #include <unistd.h>
 
 `int close(int fd);`
