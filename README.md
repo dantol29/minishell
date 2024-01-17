@@ -6,51 +6,35 @@
 ```
 
 ## Functions used to create the minishell
-________________________________
-### ISATTY
-```
-int isatty(int fd);
-```
-_check if shell is running in interactive mode_
-Check whether a given file descriptor refers to a terminal.
-The function returns 1 if the file descriptor refers to a terminal, and 0 otherwise.
-
-**Return Value:**
-- Success:
-- Error:
 ____________________________________
 ### READLINE
-```
-char *readline(const char *prompt);
-```
-_print a message and store user input_
-Prints a string to the user before they enter a command. 
+`char *readline(const char *prompt);`
+
+Read a line from the terminal and return it, using prompt as a prompt.  
+If prompt is NULL or the empty string, no prompt is issued.
 
 **Return Value:**
-- Success:
-- Error:
+- Success: the text of the line read
+- Error: NULL
 ____________________________________
 ### GETCWD
-```
-char *getcwd(char *buf, size_t size);
-```
- _get the current working directory_
-The function returns a pointer to the provided buffer if successful and NULL on failure.
-If the buffer size is too small to hold the entire path, NULL is also returned.
+`char *getcwd(char *buf, size_t size);`
+
+Copies an absolute pathname of the current working directory to the array pointed to by buf, which is of length size.
 
 **Return Value:**
-- Success:
-- Error:
-____________________________________
-
-
+- Success: a null-terminated string containing an absolute pathname of the current working directory
+- Error: NULL, errno set appropriately
 ____________________________________
 ### ACCESS
-access
+`int access(const char *pathname, int mode);`
+
+Checks  whether the calling process can access the file pathname. 0 is default mode.  
+Can the user who invoked me read/write/execute this file?
 
 **Return Value:**
-- Success:
-- Error:
+- Success: 0
+- Error: -1 is returned, and  errno is set appropriately.
 ____________________________________
 ### FORK
 fork
@@ -86,6 +70,16 @@ wait4
 **Return Value:**
 - Success:
 - Error:
+- ________________________________
+### ISATTY
+```
+int isatty(int fd);
+```
+Check whether a given file descriptor refers to a terminal.
+
+**Return Value:**
+- Success: 1 if the file descriptor refers to a terminal
+- Error: 0, errno is set to indicate the error
 ____________________________________
 ### SIGNAL
 signal
