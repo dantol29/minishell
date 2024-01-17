@@ -1,76 +1,4 @@
 # MINISHELL
-_____________________________________________
-### INCLUDES FROM FUNCTIONS  TO HEADERS.H
-
-```
-// Standard I/O functions
-
-// printf
-#include <stdio.h>
-// malloc, free, exit
-#include <stdlib.h>
-// write, access, close, fork, execve, dup, dup2, pipe
-#include <unistd.h>
-
-
-// Process-related functions
-
-#include <sys/types.h>
-// wait, waitpid, wait3, wait4
-#include <sys/wait.h>
-// signal, sigaction, sigemptyset, sigaddset, kill
-#include <signal.h>
-
-
-// Error handling
-
-// perror, strerror
-#include <errno.h>    
-// File-related functions
-#include <fcntl.h>
- // stat, lstat, fstat, unlink
-#include <sys/stat.h>
-
-
-// Directory-related functions
-
-// opendir, readdir, closedir
-#include <dirent.h>   
-
-
-// Terminal-related functions
-
-// ioctl
-#include <sys/ioctl.h>
-// strerror
-#include <string.h>
-// getpwuid
-#include <pwd.h>
-
-
-// Terminal I/O functions
-
-// tcsetattr, tcgetattr
-#include <termios.h>  
-#include <curses.h>
-
-
-// Terminal capabilities
-
- // tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
-#include <term.h>    
-
-
-// Readline library functions
-
-// readline
-#include <readline/readline.h>
-// rl_clear_history, rl_on_new_line, rl_replace_line, rl_redisplay, add_history      
-#include <readline/history.h>
-
-
-```
-
 ____________________________________________
 ### FUNCTION USED TO CREATE MINISHELL
 
@@ -139,7 +67,7 @@ close; // Close a file.
 unlink; // Delete a file.
 ```
 ## PROCESS CONTROL
-### FORK  - Creates  a new process by duplicating the calling process.
+### FORK
 ```
 #include <sys/types.h>
 #include <unistd.h>
@@ -156,7 +84,7 @@ pid_t fork(void);
 - Success: On success, the PID of the child process is returned in the parent, and 0 is returned in the child.
 - Error: 0
 ____________________________________
-### WAITPID   - used to wait for the child termination.
+### WAITPID
 ```
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -249,7 +177,7 @@ function
 - Error:
 ____________________________________
 ## DIRECTORY OPERATIONS
-### OPENDIR  - opens a directory stream corresponding to the directory name, and returns a pointer to the directory stream.  
+### OPENDIR
 ```
 #include <sys/types.h>
 #include <dirent.h>
@@ -266,7 +194,7 @@ DIR *opendir(const char *name);
 - Error: NULL is returned,  and  errno  is set appropriately.
 
 _________________________________________________________________
-### READDIR  readdir - read a directory
+### READDIR
 ```
  #include <dirent.h>
 
@@ -400,7 +328,7 @@ function
 - Error:
 ____________________________________
 ## FILE OPERATIONS
-### OPEN  - open and possibly create a file
+### OPEN
 ```
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -416,7 +344,7 @@ int open(const char *pathname, int flags, mode_t mode);
 - Success:
 - Error:
 ____________________________________
-### READ - read from a file descriptor
+### READ
 ```
 #include <unistd.h>
 
@@ -451,7 +379,7 @@ ssize_t read(int fd, void *buf, size_t count);
        it is left unspecified whether the file position (if any) changes.
 
 ____________________________________
-### CLOSE - close a file descriptor
+### CLOSE
 ```
 #include <unistd.h>
 
