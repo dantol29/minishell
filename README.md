@@ -27,6 +27,8 @@ Copies an absolute pathname of the current working directory to the array pointe
 - Error: NULL, errno set appropriately
 ____________________________________
 ### ACCESS
+_#include <unistd.h>_
+
 `int access(const char *pathname, int mode);`
 
 Checks  whether the calling process can access the file pathname. 0 is default mode.  
@@ -37,6 +39,8 @@ Can the user who invoked me read/write/execute this file?
 - Error: -1 is returned, and  errno is set appropriately.
 ____________________________________
 ### EXECVE
+_#include <unistd.h>_
+
 `int execve(const char *pathname, char *const argv[], char *const envp[]);`
 
 Executes the program referred to by pathname. 
@@ -47,10 +51,13 @@ This causes the program that is currently being run by the calling process  to  
 - Error: -1, and errno is set appropriately.
 ____________________________________
 ### GETENV
+_#include <stdlib.h>_
 
+`char *getenv(const char *name);`
+Searches the environment list to find the environment variable name.
 **Return Value:**
-- Success:
-- Error:
+- Success: a pointer to the value  in  the  environment
+- Error: NULL
 ____________________________________
 ### FORK
 fork
