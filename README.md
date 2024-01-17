@@ -36,6 +36,22 @@ Can the user who invoked me read/write/execute this file?
 - Success: 0
 - Error: -1 is returned, and  errno is set appropriately.
 ____________________________________
+### EXECVE
+`int execve(const char *pathname, char *const argv[], char *const envp[]);`
+
+Executes the program referred to by pathname. 
+This causes the program that is currently being run by the calling process  to  be  replaced  with  a  new  program,
+
+**Return Value:**
+- Success:
+- Error: -1, and errno is set appropriately.
+____________________________________
+### GETENV
+
+**Return Value:**
+- Success:
+- Error:
+____________________________________
 ### FORK
 fork
 
@@ -146,23 +162,6 @@ fstat
 ____________________________________
 ### UNLINK 
 unlink
-
-**Return Value:**
-- Success:
-- Error:
-____________________________________
-### EXECVE
-`int execve(const char *pathname, char *const argv[], char *const envp[]);`
-
-executes the program referred to by pathname.  This causes the
-program that is currently being run by the calling process  to  be  re‐
-placed  with  a  new  program,
-
-**Return Value:**
-- Success:
-- Error: -1, and `errno` is set appropriately.
-____________________________________
-### GETENV
 
 **Return Value:**
 - Success:
