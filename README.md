@@ -22,25 +22,26 @@ ____________________________________________
 ### READLINE
 
 _#include <stdio.h>_
-
 _#include <readline/readline.h>_
-
 _#include <readline/history.h>_
 
-`char *readline(const char *prompt);`
+```
+char *readline(const char *prompt);
+```
 
-Read a line from the terminal and return it, using prompt as a prompt.  
-If prompt is NULL or the empty string, no prompt is issued.
+ **Description**
+ - Read a line from the terminal and return it, using prompt as a prompt.  
+-If prompt is NULL or the empty string, no prompt is issued.
 
 **Return Value:**
 - Success: the text of the line read
 - Error: NULL
 ____________________________________
 ### GETCWD
-
 _#include <unistd.h>_
-
-`char *getcwd(char *buf, size_t size);`
+```
+char *getcwd(char *buf, size_t size);
+```
 
 Copies an absolute pathname of the current working directory to the array pointed to by buf, which is of length size.
 
@@ -49,13 +50,14 @@ Copies an absolute pathname of the current working directory to the array pointe
 - Error: NULL, errno set appropriately
 ____________________________________
 ### ACCESS
-
 _#include <unistd.h>_
+```
+int access(const char *pathname, int mode);
+```
 
-`int access(const char *pathname, int mode);`
-
-Checks  whether the calling process can access the file pathname. 0 is default mode.  
-Can the user who invoked me read/write/execute this file?
+ **Description**
+ - Checks  whether the calling process can access the file pathname. 0 is default mode.  
+-Can the user who invoked me read/write/execute this file?
 
 **Return Value:**
 - Success: 0
@@ -64,202 +66,315 @@ ____________________________________
 ### EXECVE
 
 _#include <unistd.h>_
+```
+int execve(const char *pathname, char *const argv[], char *const envp[]);
+```
 
-`int execve(const char *pathname, char *const argv[], char *const envp[]);`
-
-Executes the program referred to by pathname. 
-This causes the program that is currently being run by the calling process  to  be  replaced  with  a  new  program,
+ **Description**
+ - Executes the program referred to by pathname. 
+-This causes the program that is currently being run by the calling process  to  be  replaced  with  a  new  program,
 
 **Return Value:**
 - Success:
 - Error: -1, and errno is set appropriately.
 ____________________________________
 ### GETENV
-
 _#include <stdlib.h>_
-
-`char *getenv(const char *name);`
-
-Searches the environment list to find the environment variable name.
+```
+char *getenv(const char *name);
+```
+ **Description**
+ - Searches the environment list to find the environment variable name.
 
 **Return Value:**
 - Success: a pointer to the value  in  the  environment
 - Error: NULL
 ____________________________________
 ### FORK
-
 _#include <sys/types.h>_
-
 _#include <unistd.h>_
+```
+pid_t fork(void);
+```
 
-`pid_t fork(void);`
-
-Creates  a new process by duplicating the calling process. 
-The new process is referred to as the child process.  
-The calling process is referred to as the parent process.
+ **Description**
+ - Creates  a new process by duplicating the calling process. 
+- The new process is referred to as the child process.  
+- The calling process is referred to as the parent process.
 
 **Return Value:**
 - Success: On success, the PID of the child process is returned in the parent, and 0 is returned in the child.
 - Error: 0
 ____________________________________
 ### WAITPID
-
 _#include <sys/types.h>_
-
 _#include <sys/wait.h>_
-
-`pid_t waitpid(pid_t pid, int *wstatus, int options);`
-
-Is used to wait for the child termination.
+```
+pid_t waitpid(pid_t pid, int *wstatus, int options);
+```
+ **Description**
+ - Is used to wait for the child termination.
 
 **Return Value:**
 - Success: the process ID of the child
 - Error: -1
 ____________________________________
 ### WAIT
+_include_
+```
+function
+```
 
+ **Description**
+ - 
+ 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
 ### WAIT3
-wait3
+_include_
+```
+function
+```
 
+ **Description**
+ - 
+ 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
 ### WAIT4
-wait4
+_include_
+```
+function
+```
 
+ **Description**
+ - 
+ 
 **Return Value:**
 - Success:
 - Error:
 - ________________________________
 ### ISATTY
+_include_
 ```
 int isatty(int fd);
 ```
-Check whether a given file descriptor refers to a terminal.
+ **Description**
+ - Check whether a given file descriptor refers to a terminal.
 
 **Return Value:**
 - Success: 1 if the file descriptor refers to a terminal
 - Error: 0, errno is set to indicate the error
 ____________________________________
-signal
+### SIGNAL
+_include_
+```
+function
+```
 
+ **Description**
+ - 
+ 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
 ### SIGACTION
-sigaction
+_include_
+```
+function
+```
 
+ **Description**
+ - 
+ 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
 ### SIGEMTYSET 
-sigemptyset
+_include_
+```
+function
+```
 
+ **Description**
+ - 
+ 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
 ### SIGADDSET
-sigaddset
+_include_
+```
+function
+```
 
+ **Description**
+ - 
+  
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
 ### KILL
-kill
+_include_
+```
+function
+```
 
+ **Description**
+ - 
+ 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
 ### CHDIR
-chdir
+_include_
+```
+function
+```
 
+ **Description**
+ - 
+ 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
 ### STAT
-stat
+_include_
+```
+function
+```
 
+ **Description**
+ - 
+ 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
 ### LSTAT
-lstat
+_include_
+```
+function
+```
 
+ **Description**
+ - 
+  
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
 ### FSTAT
-fstat
+_include_
+```
+function
+```
 
+ **Description**
+ - 
+ 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
 ### UNLINK 
-unlink
+_include_
+```
+function
+```
 
+ **Description**
+ - 
+  
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
 ### rl_clear_history
+_include_
+```
+function
+```
 
-
+ **Description**
+ - 
+ 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
-
 ### rl_on_new_line
+_include_
+```
+function
+```
 
-
+ **Description**
+ - 
+ 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
-
 ### rl_replace_line 
+_include_
+```
+function
+```
 
+ **Description**
+ - 
+ 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
-
 ### rl_redisplay
+_include_
+```
+function
+```
 
+ **Description**
+ - 
+ 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
 ### ADD_HISTORY
-add_history
+_include_
+```
+function
+```
 
+ **Description**
+ - 
+ 
 **Return Value:**
 - Success:
 - Error:
-
+_____________________________________________________
 Alena
 _____________________________________________________________
 
 ### DUP
-
-`int dup(int oldfd);`
+_#include <unistd.h>_
+```
+int dup(int oldfd);
+```
       
-*#include <unistd.h>*
-
+ **Description**
 - Creates a copy of the file descriptor `oldfd`.
 - Uses the lowest-numbered unused file descriptor for the new one.
 - Both old and new descriptors refer to the same open file.
@@ -271,10 +386,12 @@ _____________________________________________________________
 - Error:    -1, and `errno` is set appropriately.
 ___________________________________________________________
 ### DUP2              
-`int dup2(int oldfd, int newfd);`
+_#include <unistd.h>_
+```
+int dup2(int oldfd, int newfd);
+```
 
-*#include <unistd.h>*
-
+ **Description**
 - Creates a copy of the file descriptor `oldfd` using the specified `newfd`.
 - If `newfd` was previously open, it is closed before reuse.
 - Closing and reusing `newfd` are performed atomically to avoid race conditions.
@@ -289,11 +406,11 @@ ___________________________________________________________
 
 _____________________________________________________________
 ### PIPE
-
-`int pipe(int pipefd[2]);`
-
-*#include <unistd.h>*
-
+_#include <unistd.h>_
+```
+int pipe(int pipefd[2]);
+```
+ **Description**
 - Creates a unidirectional data channel (pipe) for interprocess communication.
 - Returns two file descriptors in the array `pipefd` (read end: `pipefd[0]`, write end: `pipefd[1]`).
 - Data written to the write end is buffered until read from the read end.
@@ -304,11 +421,13 @@ _____________________________________________________________
 
 ____________________________________________________
 ### OPENDIR
-`DIR *opendir(const char *name);`
+_#include <sys/types.h>_
+_#include <dirent.h>_
+```
+DIR *opendir(const char *name);
+```
 
-*#include <sys/types.h>*
-*#include <dirent.h>*
-
+ **Description** 
  - opens a directory stream corresponding to the directory name, and returns a pointer to the directory stream.  
  - The stream is positioned at the first entry in the directory.
 
@@ -318,13 +437,16 @@ ____________________________________________________
 
 _________________________________________________________________
 ### READDIR  readdir - read a directory
-`struct dirent *readdir(DIR *dirp);`
- #include <dirent.h>
-The  readdir()  function returns a pointer to a dirent structure
-representing the next directory entry in the directory stream pointed to by dirp.
-It returns NULL on reaching the end of the directory stream or if an error occurred.
+ _#include <dirent.h>_
+```
+struct dirent *readdir(DIR *dirp);
+```
 
-       In the glibc implementation, the dirent structure is defined as follows:
+ **Description**
+ - The  readdir()  function returns a pointer to a dirent structure
+representing the next directory entry in the directory stream pointed to by dirp.
+-In the glibc implementation, the dirent structure is defined as follows:
+```
 
            struct dirent {
                ino_t          d_ino;       /* Inode number */
@@ -334,7 +456,7 @@ It returns NULL on reaching the end of the directory stream or if an error occur
                                               by all filesystem types */
                char           d_name[256]; /* Null-terminated filename */
            };
-
+```
 
 **Return Value:**
 - Success: a pointer to a dirent structure.   (This  structure  may  be statically allocated;
@@ -345,157 +467,296 @@ It returns NULL on reaching the end of the directory stream or if an error occur
 
 _________________________________________________
 ### CLOSEDIR
+_include_
+```
+function
+```
 
+ **Description**
+ - 
+ 
 **Return Value:**
 - Success:
 - Error:
 
 _________________________________
 ### STRERROR
+_include_
+```
+function
+```
 
+ **Description**
+ - 
+ 
 **Return Value:**
 - Success:
 - Error:
 ___________________________
 ### PERROR
+_include_
+```
+function
+```
 
+ **Description**
+ - 
+ 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
-
 ### TTYNAME
+_include_
+```
+function
+```
 
+ **Description**
+ - 
+  
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
 ### TTYSLOT
+_include_
+```
+function
+```
 
+ **Description**
+ - 
+ 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
 ### IOCTL
+_include_
+```
+function
+```
 
-
+ **Description**
+ - 
+ 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
 ### TCSETATTR
+_include_
+```
+function
+```
 
-
+ **Description**
+ - 
+ 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
 ### TCGETATTR
+_include_
+```
+function
+```
 
-
+ **Description**
+ - 
+ 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
 ### TGETENT
+_include_
+```
+function
+```
 
+ **Description**
+ - 
+ 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
 ### TGETFLAG
+_include_
+```
+function
+```
 
+ **Description**
+ - 
+  
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
 ### TGETNUM
+_include_
+```
+function
+```
 
+ **Description**
+ - 
+ 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
 #TGETSTR
+_include_
+```
+function
+```
 
-
+ **Description**
+ - 
+ 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
 ### TGOTO
+_include_
+```
+function
+```
 
-
+ **Description**
+ - 
+ 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
 ### TPUTS
+_include_
+```
+function
+```
 
+ **Description**
+ - 
+  
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
 ### PRINTF
+_include_
+```
+function
+```
 
+ **Description**
+ - 
+ 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
 ### MALLOC
+_include_
+```
+function
+```
 
+ **Description**
+ - 
+ 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
 ### FREE
+_include_
+```
+function
+```
 
+ **Description**
+ - 
+ 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
 ### WRITE
+_include_
+```
+function
+```
 
+ **Description**
+ - 
+  
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
 ### OPEN
+_include_
+```
+function
+```
 
+ **Description**
+ - 
+ 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
 ### READ
+_include_
+```
+function
+```
 
+ **Description**
+ - 
+ 
 **Return Value:**
 - Success:
 - Error:
 ____________________________________
 ### CLOSE - close a file descriptor
- #include <unistd.h>
-
-`int close(int fd);`
-
- closes a file descriptor, so that it no longer refers to any file and may be reused.
- Any record locks (see fcntl(2)) held on the file it was associated with,
+_#include <unistd.h>_
+```
+int close(int fd);
+```
+ **Description**
+ - closes a file descriptor, so that it no longer refers to any file and may be reused.
+ -Any record locks (see fcntl(2)) held on the file it was associated with,
  and owned  by  the  process, are removed (regardless of the file descriptor that was used to obtain the lock).
-
-If  fd  is  the  last  file  descriptor  referring  to  the underlying open file description (see open(2)), 
+-If  fd  is  the  last  file  descriptor  referring  to  the underlying open file description (see open(2)), 
  the resources associated with the open file description are freed;
- if the file descripor was the last reference to a file which has been removed using unlink(2), the file is deleted.
+ -if the file descripor was the last reference to a file which has been removed using unlink(2), the file is deleted.
 
 **Return Value:**
 - Success: 0
 - Error: -1 and errno is set appropriately.
 ____________________________________
 # EXIT — cause the shell to exit
-`exit [n]`
-The  exit  utility  shall cause the shell to exit from its current execution environment with the
-       exit status specified by the unsigned decimal integer n.  If the current execution environment is
-       a  subshell  environment,  the  shell shall exit from the subshell environment with the specified
-       exit status and continue in the environment from which that  subshell  environment  was  invoked;
-       otherwise,  the  shell utility shall terminate with the specified exit status. If n is specified,
-       but its value is not between 0 and 255 inclusively, the exit status is undefined.
+_include_
+```
+exit [n]
+```
+ **Description**
+ - The  exit  utility  shall cause the shell to exit from its current execution environment with the
+       exit status specified by the unsigned decimal integer n.
+   - If the current execution environment is  a  subshell  environment,
+     the  shell shall exit from the subshell environment with the specified
+      exit status and continue in the environment from which that  subshell  environment  was  invoked;
+  - otherwise,  the  shell utility shall terminate with the specified exit status.
+  - If n is specified, but its value is not between 0 and 255 inclusively, the exit status is undefined.
 
 STDERR
        The standard error shall be used only for diagnostic messages.
