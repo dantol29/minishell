@@ -23,50 +23,70 @@ char *readline(const char *prompt);
 _______________________________________________________
 ###  _RL_CLEAR_HISTORY_
 ```
-function
+#include <readline/readline.h>
+#include <readline/history.h>
+
+void rl_clear_history(void);
 ```
-_rl_clear_history_
+
+- Is used to clear the history list maintained by Readline.
 
 **Return Value:**
-- Success:
-- Error:
+- Success: void
+- Error: void
 ____________________________________
-
 ###  _RL_ON_NEW_LINE_
 ```
-function
+#include <readline/readline.h>
+#include <readline/history.h>
+
+void rl_on_new_line();
 ```
-_rl_on_new_line_
+
+ - The prompt will be displayed on a new line before the user's input.
+ - If is not set, the prompt is typically displayed on the same line as the input.
 
 **Return Value:**
-- Success:
-- Error:
+- Success: void
+- Error: void
 ____________________________________
-
 ###  _RL_REPLACE_LINE_
 ```
-function
+#include <readline/readline.h>
+
+void rl_replace_line(const char *text, int clear_undo);
 ```
- _rl_replace_line_ 
+
+- Is used to replace the current input line with a new line.
 
 **Return Value:**
-- Success:
-- Error:
+- Success: void
+- Error: void
 ____________________________________
 ### _RL_REDISPLAY_
 ```
-function
+#include <readline/readline.h>
+
+void rl_redisplay(void);
 ```
-_rl_redisplay_
+
+- Is used to refresh the display of the current input line.
+
 **Return Value:**
-- Success:
-- Error:
+- Success: void
+- Error: void
 ____________________________________
 ###  _ADD_HISTORY_
 ```
-function
+#include <readline/readline.h>
+#include <readline/history.h>
+
+void add_history(const char *line);
 ```
 
+- Is used to add a line to the history list.
+- The history list in Readline keeps track of previously entered command lines, allowing users to recall and re-execute them.
+
 **Return Value:**
-- Success:
-- Error:
+- Success: void
+- Error: void
