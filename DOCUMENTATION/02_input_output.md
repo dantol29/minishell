@@ -6,19 +6,25 @@
 ___________________________________________________________
 ### _PRINTF_
 ```
-function
+#include <stdio.h>
+
+int	ft_printf(const char *format, ...);
 ```
-- 
+- Prints information on the STDOUT
+
 **Return Value:**
-- Success:
-- Error:
+- Success: number of bytes written
+- Error: -1
 ____________________________________
 ### _WRITE_
 ```
-function
+#include <unistd.h>
+
+ssize_t write(int fd, const void *buf, size_t count);
 ```
-- 
+- Writes characters to the file descriptor
+
 **Return Value:**
-- Success:
-- Error:
+- Success: number of bytes written
+- Error: -1
 _____________________________________________
