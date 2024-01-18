@@ -46,10 +46,16 @@ struct dirent *readdir(DIR *dirp);
 _________________________________________________
 ### _CLOSEDIR_
 ```
-function
+int closedir(DIR *dirp);
 ```
--
+- closes  the  directory stream associated with dirp.  A successful call to
+closedir() also closes the underlying file descriptor associated with dirp.
+- The  directory  stream  descriptor dirp is not available after this call.
+
  
 **Return Value:**
-- Success:
-- Error:
+- Success: 0
+- Error: -1 is returned, and errno is set appropriately.
+ERRORS
+       EBADF  Invalid directory stream descriptor dirp.
+
