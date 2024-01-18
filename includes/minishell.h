@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/17 18:58:09 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/01/18 12:13:18 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@
 // Readline library functions     
 #include <readline/history.h>
 #include <readline/readline.h>
-
+// Error handling
+#include <errno.h>
 
 typedef struct s_shell
 {

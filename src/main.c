@@ -6,11 +6,17 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:58:49 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/17 14:13:39 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/18 12:16:30 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	ctrl_c(int signum)
+{
+	(void)signum;
+	write(1, "\n", 1);
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -19,6 +25,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argv;
 	(void)argc;
+	signal(SIGINT, ctrl_c);
 	shell.username = getenv("USER"); // get env variable user
 	getcwd(shell.work_dir, sizeof(shell.work_dir)); // getcwd - get the current working directory
 	printf("%s@minishell %s", shell.username, shell.work_dir);
@@ -35,7 +42,7 @@ int	main(int argc, char **argv, char **envp)
 			waitpid(shell.pid, NULL, 0);
 		}
 		else
-			printf("Command does not exist\n");
+			printf("minishell: command not found: %s\n", shell.command[0]);
 		printf("%s@minishell %s", shell.username, shell.work_dir);
 		line = readline(" $ "); // read user input
 	}
