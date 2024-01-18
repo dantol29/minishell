@@ -17,7 +17,7 @@ int isatty(int fd);
 ____________________________________
 ### _TTYNAME_
 ```
-function
+char *ttyname(int fd);
 ```
  - return name of a terminal
   
@@ -41,7 +41,7 @@ The return value may point to static data, possibly overwritten by the next call
 _____________________________________
 ### _IOCTL_
 ```
-function
+int ioctl(int fd, unsigned long request, ...);
 ```
  - control device
 - The ioctl() system call manipulates the underlying device parameters of special files.
