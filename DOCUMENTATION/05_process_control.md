@@ -11,6 +11,9 @@
 ________________________________________
 ### _FORK_
 ```
+#include <sys/types.h>
+#include <unistd.h>
+
 pid_t fork(void);
 ```
 
@@ -24,46 +27,61 @@ pid_t fork(void);
 ____________________________________
 ### _WAIT_
 ```
-function
+#include <sys/types.h>
+#include <sys/wait.h>
+
+pid_t wait(int *status);
 ```
+- Simply waits for any child process to terminate.
 
 **Return Value:**
-- Success:
-- Error:
+- Success: the process ID of the terminated child process
+- Error: -1
 ____________________________________
 ### _WAITPID_
 ```
+#include <sys/types.h>
+#include <sys/wait.h>
+
 pid_t waitpid(pid_t pid, int *wstatus, int options);
 ```
 
  - Is used to wait for the child termination.
 
 **Return Value:**
-- Success: the process ID of the child
+- Success: the process ID of the terminated child process
 - Error: -1
 ____________________________________
 ### _WAIT3_
 ```
-function
+#include <sys/types.h>
+#include <sys/wait.h>
+
+pid_t wait3(int *status, int options, struct rusage *rusage);
 ```
-- 
+- Wait for a child process and retrieve status information.
 
 **Return Value:**
-- Success:
-- Error:
+- Success: the process ID of the terminated child process
+- Error: -1
 ____________________________________
 ### _WAIT4_
 ```
-function
+#include <sys/types.h>
+#include <sys/wait.h>
+
+pid_t wait4(pid_t pid, int *status, int options, struct rusage *rusage);
 ```
- - 
+- Wait for a specific child process and retrieve status information. 
 
 **Return Value:**
-- Success:
-- Error:
+- Success: the process ID of the terminated child process
+- Error: -1
 ________________________________
 ### _EXECVE_
 ```
+#include <unistd.h>
+
 int execve(const char *pathname, char *const argv[], char *const envp[]);
 ```
 -Executes the program referred to by pathname. 
@@ -75,6 +93,8 @@ int execve(const char *pathname, char *const argv[], char *const envp[]);
 ____________________________________
 # _EXIT_ 
 ```
+#include <unistd.h>
+
 exit [n]
 ```
  - The  exit  utility  shall cause the shell to exit from its current execution             
