@@ -11,9 +11,6 @@
 ________________________________________
 ### _FORK_
 ```
-#include <sys/types.h>
-#include <unistd.h>
-
 pid_t fork(void);
 ```
 
@@ -27,9 +24,6 @@ pid_t fork(void);
 ____________________________________
 ### _WAIT_
 ```
-#include <sys/types.h>
-#include <sys/wait.h>
-
 pid_t wait(int *status);
 ```
 - Simply waits for any child process to terminate.
@@ -40,9 +34,6 @@ pid_t wait(int *status);
 ____________________________________
 ### _WAITPID_
 ```
-#include <sys/types.h>
-#include <sys/wait.h>
-
 pid_t waitpid(pid_t pid, int *wstatus, int options);
 ```
 
@@ -54,12 +45,12 @@ pid_t waitpid(pid_t pid, int *wstatus, int options);
 ____________________________________
 ### _WAIT3_
 ```
-#include <sys/types.h>
-#include <sys/wait.h>
-
 pid_t wait3(int *status, int options, struct rusage *rusage);
 ```
 - Wait for a child process and retrieve status information.
+- wait3() waits of any child
+- similar to waitpid(2), but additionally return resource usage information about the child in the structure pointed to by rusage.
+- wait3(wstatus, options, rusage); is equivalent to: waitpid(-1, wstatus, options);
 
 **Return Value:**
 - Success: the process ID of the terminated child process
@@ -67,12 +58,11 @@ pid_t wait3(int *status, int options, struct rusage *rusage);
 ____________________________________
 ### _WAIT4_
 ```
-#include <sys/types.h>
-#include <sys/wait.h>
-
 pid_t wait4(pid_t pid, int *status, int options, struct rusage *rusage);
 ```
+- wait4() can be used to select a specific child, or children, on which to wait. 
 - Wait for a specific child process and retrieve status information. 
+- wait4(pid, wstatus, options, rusage); is equivalent to:  waitpid(pid, wstatus, options);
 
 **Return Value:**
 - Success: the process ID of the terminated child process
@@ -80,21 +70,19 @@ pid_t wait4(pid_t pid, int *status, int options, struct rusage *rusage);
 ________________________________
 ### _EXECVE_
 ```
-#include <unistd.h>
-
 int execve(const char *pathname, char *const argv[], char *const envp[]);
 ```
--Executes the program referred to by pathname. 
--This causes the program that is currently being run by the calling process  to  be  replaced  with  a  new  program,
+- Executes the program referred to by pathname. 
+- This causes the program that is currently
+  being run by the calling process to be replaced with a new program,
+  with  newly  initialized  stack,  heap, and (initialized and uninitialized) data segments.
 
 **Return Value:**
-- Success:
+- Success: n success, execve() does not return
 - Error: -1, and errno is set appropriately.
 ____________________________________
 # _EXIT_ 
 ```
-#include <unistd.h>
-
 exit [n]
 ```
  - The  exit  utility  shall cause the shell to exit from its current execution             

@@ -11,9 +11,9 @@ WE CAN PUT NEW INFORMATION ON THE TOP
 [] 02_finish writing documetation
 [] 03_finish writing documetation
 [] 04_finish writing documetation
-[] 05_finish writing documetation
-[] 06_finish writing documetation
-[] 07_finish writing documetation
+[x] 05_finish writing documetation
+[x] 06_finish writing documetation
+[x] 07_finish writing documetation
 [x] 08_finish writing documetation
 [x] 09_finish writing documetation
 [x] 10_finish writing documetation
