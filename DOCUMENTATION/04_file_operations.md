@@ -20,10 +20,13 @@ int access(const char *pathname, int mode);
 ____________________________________________________
 ### _OPEN_
 ```
+#include <fcntl.h>
+
 int open(const char *pathname, int flags);
 int open(const char *pathname, int flags, mode_t mode);
 
 ```
+- Opens a file descriptor.
  
 **Return Value:**
 - Success:
@@ -76,9 +79,12 @@ int close(int fd);
 ________________________________________________________
 ### _UNLINK_
 ```
-function
+#include <unistd.h>
+
+int unlink(const char *pathname);
 ```
+- Is used to delete the file.
 
 **Return Value:**
-- Success:
-- Error:
+- Success: 0
+- Error: -1
