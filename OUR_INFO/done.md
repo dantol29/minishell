@@ -7,7 +7,20 @@ WE CAN PUT NEW INFORMATION ON THE TOP
 ...
 
 18.01
-
+[] 01_finish writing documetation
+[] 02_finish writing documetation
+[] 03_finish writing documetation
+[] 04_finish writing documetation
+[] 05_finish writing documetation
+[] 06_finish writing documetation
+[] 07_finish writing documetation
+[] 08_finish writing documetation
+[] 09_finish writing documetation
+[] 10_finish writing documetation
+[x] 11_finish writing documetation
+[x] 12_finish writing documetation
+[x] 13_finish writing documetation
+[x] 14_finish writing documetation
 
 
 17.01
