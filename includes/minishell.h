@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/01/20 13:59:56 by akurmyza         ###   ########.fr       */
-=======
-/*   Updated: 2024/01/20 13:36:05 by dtolmaco         ###   ########.fr       */
->>>>>>> eff8ffbee251884c3f4b1e2e13ea8350ab8b3b17
+/*   Updated: 2024/01/20 16:04:54 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,21 +44,15 @@
 #include <readline/readline.h>
 // Error handling
 #include <errno.h>
+#define TRUE 1
+#define FALSE 0
 
-<<<<<<< HEAD
-typedef enum e_bool
-{
-	TRUE = 1,
-	FALSE = 0
-}	t_bool;
-=======
 typedef struct s_env
 {
 	char		*name;
 	char		*value;
 	struct s_env	*next;
 }	t_env;
->>>>>>> eff8ffbee251884c3f4b1e2e13ea8350ab8b3b17
 
 typedef struct s_shell
 {
