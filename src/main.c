@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:58:49 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/20 17:51:58 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/20 19:51:11 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,40 @@ void	parsing(char *line, t_shell *shell, char **envp)
 		printf("minishell: command not found: %s\n", shell->command[0]);
 }
 
+int check_pipe_symbol(char *line)
+{
+	int i;
+
+	i = 0;
+	while(line[i])
+	{
+		if (line[i] == '|')
+			return (TRUE);
+		i++;
+	}
+	return (FALSE);
+}
+
+void call_pipe_function(void)
+{
+	return ;
+}
+
+void	call_functions(char *line, t_shell *shell)
+{
+	if (check_pipe_symbol(line))
+		call_pipe_function();
+	else if (ft_strncmp("echo ", line, 5) == 0)
+	{
+		check_input(line + 5, shell->env);
+			//parsing(line, &shell, envp);	
+	}
+	else if (access("gfgfgffg", 0) != 0)
+		printf("command not found\n");			//TODO:  add print command, before "command not found" (perror)
+}
+
+
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell shell;
@@ -52,8 +86,7 @@ int	main(int argc, char **argv, char **envp)
 	line = readline(" $ "); // read user input
 	while (line != NULL)
 	{
-		check_input(line, shell.env);
-		//parsing(line, &shell, envp);
+		call_functions(line, &shell);
 		add_history(line);
 		printf("minishell");
 		line = readline(" $ "); // read user input

@@ -1,6 +1,8 @@
 ### VARIABLES
 
--
+# ECHO
+echo$USER
+minishell: command not found: echodtolmaco
 
 # SET / UNSET VARIABLE
 

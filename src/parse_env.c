@@ -6,28 +6,11 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:50:22 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/20 19:18:43 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/20 19:25:02 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-/*
-checks if the environment variable is set
-*/
-int	is_env_var(char *variable_name, t_env *lst)
-{
-	t_env	*tmp;
-
-	tmp = lst;
-	while (tmp)
-	{
-		if (ft_strcmp(tmp->name, variable_name) == 0)
-			return (TRUE);
-		tmp = tmp->next;
-	}
-	return (FALSE);
-}
 
 /*
 checks if the environment variable is set
@@ -83,7 +66,6 @@ void	check_input(char *line, t_env *lst)
 			i++;
 			while (line[i] && line[i] != '\"')
 			{
-				//printf("i :%d, c: %c\n", i, line[i]);
 				if (line[i] == '$')
 					i = print_env_var(line, lst, i);
 				else
@@ -145,4 +127,21 @@ void	check_input(char *line, t_env *lst)
 // 		}
 // 		i++;
 // 	}
+// }
+
+// /*
+// checks if the environment variable is set
+// */
+// int	is_env_var(char *variable_name, t_env *lst)
+// {
+// 	t_env	*tmp;
+
+// 	tmp = lst;
+// 	while (tmp)
+// 	{
+// 		if (ft_strcmp(tmp->name, variable_name) == 0)
+// 			return (TRUE);
+// 		tmp = tmp->next;
+// 	}
+// 	return (FALSE);
 // }
