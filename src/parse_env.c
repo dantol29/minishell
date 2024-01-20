@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:50:22 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/20 19:25:02 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/20 19:57:49 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	check_input(char *line, t_env *lst)
 		else if (line[i] == '\"')
 		{
 			i++;
-			while (line[i] && line[i] != '\"')
+			while (line[i] && line[i] != '\"') // TODO: error if a quote is not closed
 			{
 				if (line[i] == '$')
 					i = print_env_var(line, lst, i);
