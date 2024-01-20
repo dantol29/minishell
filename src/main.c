@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:58:49 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/18 12:42:24 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/20 13:35:00 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	ctrl_c(int signum)
 {
 	(void)signum;
-	write(1, "\n", 1);
 }
 
 void	parsing(char *line, t_shell *shell, char **envp)
@@ -49,12 +48,14 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	signal(SIGINT, ctrl_c);
 	shell.username = getenv("USER"); // get env variable user
+	save_envp(&shell, envp);
 	getcwd(shell.work_dir, sizeof(shell.work_dir)); // getcwd - get the current working directory
 	printf("%s@minishell %s", shell.username, shell.work_dir);
 	line = readline(" $ "); // read user input
 	while (line != NULL)
 	{
 		parsing(line, &shell, envp);
+		add_history(line);
 		printf("%s@minishell %s", shell.username, shell.work_dir);
 		line = readline(" $ "); // read user input
 	}
