@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:58:49 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/18 12:42:24 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/20 12:52:10 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,23 @@ void	parsing(char *line, t_shell *shell, char **envp)
 	}
 	else
 		printf("minishell: command not found: %s\n", shell->command[0]);
+}
+
+void check_input(char *line)
+{
+	int i;
+
+	i = 0;
+
+	while (line[i])
+	{
+		if (line[i] == '$')
+		{
+			check_brackets( )
+		}
+		i++;
+	}
+	
 }
 
 int	main(int argc, char **argv, char **envp)

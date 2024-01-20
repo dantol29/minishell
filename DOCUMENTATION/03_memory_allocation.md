@@ -7,8 +7,6 @@
 _______________________________________________
 ### _MALLOC_
 ```
-#include <stdlib.h>
-
 void *malloc(size_t size);
 ```
  - Allocates size bytes and returns a pointer to the allocated memory
@@ -19,8 +17,6 @@ void *malloc(size_t size);
 ____________________________________
 ### _FREE_
 ```
-#include <stdlib.h>
-
 void free(void *ptr);
 ```
  - frees the memory space pointed to by ptr

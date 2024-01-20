@@ -1,7 +1,17 @@
 add new TODO's from beginning. []=todo [x] = done
 
+
+
+20.01
+[ ]  read input, find $VAR, check if valid Variables (valid: "$USER", "'$USER'")
+[ ] ft search in history
+
+
+19.01
+[x] free day
+
 18.01
-[] complete adding library
+[x] complete adding library
 [] correcly handle ctrl+c signal
 [] run simple commands with absolute path (e.g. /bin/ls, ../bin/ls)
 [] start  writing unit tests for existing functions
