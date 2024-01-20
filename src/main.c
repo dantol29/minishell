@@ -6,7 +6,7 @@
 /*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:58:49 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/20 12:52:10 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/01/20 14:08:48 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,32 @@ void	parsing(char *line, t_shell *shell, char **envp)
 	}
 	else
 		printf("minishell: command not found: %s\n", shell->command[0]);
+}
+
+/*
+checks if the environment variable is set
+return 1 if set, 0 if not
+ */
+t_bool is_env_var_set()
+
+
+
+	
+/*
+	// start checking in both directions, before and after variable    "<--$VAR-->"
+	VALID:
+		$VAR
+		"$VAR"
+		"'$VAR"
+	
+	NOT_VALID:
+		$USEr (Small letter) Retturn: empty line 
+*/
+int check_brackets(char *line)
+{
+	// go both directions, before and after variable
+	
+	//invalid cases: $USEr. ! Small letter. Retturn:empty line 
 }
 
 void check_input(char *line)
