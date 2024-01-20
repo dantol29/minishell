@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/20 16:04:54 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/01/20 17:51:53 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,9 @@ typedef struct s_shell
 #include "../libft/libft.h"
 
 void	save_envp(t_shell *shell, char **envp);
+void	check_input(char *line, t_env *lst);
+
+// utils
+int		ft_strcmp(const char *str1, const char *str2);
 
 #endif

@@ -15,19 +15,44 @@
  a-z A-Z 1-9 _  valid symols
  bla$VAR (bla$VAR)
 
+ #  NOT VALID
+  _ VAR (_ in begin)
+
  #TEXT
+ //OK
  echo '$BLABLA'
 $BLABLA
-echo '$BLABLA'
-$BLABLA
+
+//OK
 echo "$USER jhjhjvhjvgjg"
 akurmyza jhjhjvhjvgjg
 
+//OK
  echo "$USER'' " jhjhjvhjvgjg
 akurmyza''  jhjhjvhjvgjg
 
-echo "$USER'' " jhjhjvhjvgjg "$USER"
-akurmyza''  jhjhjvhjvgjg akurmyza
 
- #NOT VALID
-  _VAR
+
+  /*
+	// start checking in both directions, before and after variable    "<--$VAR-->"
+	  abcd "$USER    fsdgsd"
+	VALID:
+		$VAR
+		"$VAR"
+		"'$VAR"
+	
+	NOT_VALID:
+		$USEr (Small letter) Retturn: empty line 
+*/
+
+//OK
+echo "'"$USER"'"
+'dtolmaco'
+
+//OK
+echo "abc$fgfgfgfgf dfdfdfd"
+abc dfdfdfd
+
+//OK
+echo $USER $USER
+dtolmaco dtolmaco
