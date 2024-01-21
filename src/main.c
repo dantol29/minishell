@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:58:49 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/21 19:14:35 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/21 19:27:09 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,20 @@ void	ctrl_c(int signum)
 
 void	launch_exec(char *line, t_shell *shell, char **envp)
 {
-	shell->command = ft_split(line, ' '); // store entered command (use ft_split for flags)
-	shell->cmd_path = ft_strjoin("/usr/bin/", shell->command[0]); // if commands whtout path (ls, pwd)
+	shell->command = ft_split(line, ' ');
+	shell->cmd_path = ft_strjoin("/usr/bin/", shell->command[0]);
 	if (access(shell->cmd_path, 0) == 0)
 	{
 		shell->pid = fork();
 		if (shell->pid == 0)
-			execve(shell->cmd_path, shell->command, envp); // execute command (command path, command with flags, env variables)
+			execve(shell->cmd_path, shell->command, envp);
 		waitpid(shell->pid, NULL, 0);
 	}
-	else if (access(shell->command[0], 0) == 0) // if absolute path (/bin/ls, ../bin/ls)
+	else if (access(shell->command[0], 0) == 0)
 	{
 		shell->pid = fork();
 		if (shell->pid == 0)
-			execve(shell->command[0], shell->command, envp); // execute command (command path, command with flags, env variables)
+			execve(shell->command[0], shell->command, envp);
 		waitpid(shell->pid, NULL, 0);
 	}
 	else
@@ -42,7 +42,7 @@ void	launch_exec(char *line, t_shell *shell, char **envp)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_shell shell;
+	t_shell	shell;
 	char	*line;
 
 	(void)argv;
@@ -50,13 +50,13 @@ int	main(int argc, char **argv, char **envp)
 	signal(SIGINT, ctrl_c);
 	save_envp(&shell, envp);
 	printf("minishell");
-	line = readline(" $ "); // read user input
+	line = readline(" $ ");
 	while (line != NULL)
 	{
 		launch_commands(line, &shell, envp);
 		add_history(line);
 		printf("minishell");
-		line = readline(" $ "); // read user input
+		line = readline(" $ ");
 	}
 	printf("exit\n");
 }

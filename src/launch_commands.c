@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:12:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/21 19:13:35 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/21 19:28:13 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ static char	*find_command(char *line)
 	return (extract_command(line, count_letters));
 }
 
-
 void	launch_commands(char *line, t_shell *shell, char **envp)
 {
 	char	*command;
@@ -72,10 +71,11 @@ void	launch_commands(char *line, t_shell *shell, char **envp)
 		return ;
 	if (check_pipe_symbol(line))
 		call_pipe_function();
-	else if (ft_strcmp("echo ", command) == 0 || ft_strcmp("echo", command) == 0)
+	else if (ft_strcmp("echo ", command) == 0 \
+	|| ft_strcmp("echo", command) == 0)
 		check_echo_line(line, shell->env);
 	else if (access(ft_strjoin("/usr/bin/", command), 0) == 0)
 		launch_exec(line, shell, envp);
 	else
-		printf("command not found\n");			//TODO:  add print command, before "command not found" (perror)	
+		printf("command not found\n");
 }
