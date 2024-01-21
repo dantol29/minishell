@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:50:22 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/20 19:57:49 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/21 12:15:25 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,21 +48,32 @@ void	check_input(char *line, t_env *lst)
 {
 	int	i;
 	int	start;
+	int	flag;
 
 	i = 0;
+	flag = 1;
 	start = 0;
+	line = ft_strtrim(line, " ");
 	while (line[i])
 	{
 		if (line[i] == '$')
+		{
+			if (line[i - 1] == ' ')
+				write(1, " ", 1);
 			i = print_env_var(line, lst, i);
+		}
 		else if (line[i] == '\'')
 		{
+			if (line[i - 1] == ' ')
+				write(1, " ", 1);
 			i++;
 			while (line[i] && line[i] != '\'')
 				write(1, &line[i++], 1);
 		}
 		else if (line[i] == '\"')
 		{
+			if (line[i - 1] == ' ')
+				write(1, " ", 1);
 			i++;
 			while (line[i] && line[i] != '\"') // TODO: error if a quote is not closed
 			{
@@ -73,61 +84,18 @@ void	check_input(char *line, t_env *lst)
 				i++;
 			}
 		}
-		else
+		else if (line[i] != ' ')
+		{
+			if (line[i - 1] == ' ')
+				write(1, " ", 1);
 			write(1, &line[i], 1);
+		}
 		i++;
 	}
-	write(1, "\n", 1);
+	if (ft_strncmp("-n", line, 2) != 0)
+		write(1, "\n", 1);
 }
 
-// if (line[i] == '$')
-// {
-// 	i++;
-// 	start = i;
-// 	while (line[i] && (ft_isalnum(line[i]) || line[i] == '_'))
-		// check if valid variable
-// 		i++;
-// 	if (is_env_var(ft_substr(line, start, i - start), lst))
-		// check if variable exists
-// 		check_quotes_print(line, TRUE, lst);
-// 	else
-// 		check_quotes_print(line, FALSE, lst);
-			// check which quotes and print variable
-// }
-// else
-// 	write(1, &line[i], 1);
-
-// void check_quotes_print(char *line, int exist, t_env *lst)
-// {
-// 	int i;
-// 	int start;
-
-// 	i = 0;
-// 	start = 0;
-// 	while (line[i])
-// 	{
-// 		if (line[i] == '\'')	// '$TEXT'
-// 		{
-// 			i++;
-// 			start = i;
-// 			while( line[i] && line[i] != '\'')
-// 					i++;
-// 			printf("%s", ft_substr(line, start, i - start));
-// 		}
-// 		else if (line[i] == '\"')		// "$VAR"
-// 		{
-// 			i++;
-// 			start = i; // +1 skip "
-// 			while (line[i] && line[i] != '\"')
-// 					i++;
-// 			if (exist == FALSE)
-// 				write(1, "\n", 1);
-// 			else
-// 				print_env_var_value(ft_substr(line, start + 1, i - start - 1),
-// 		}
-// 		i++;
-// 	}
-// }
 
 // /*
 // checks if the environment variable is set

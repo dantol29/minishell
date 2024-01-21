@@ -58,3 +58,7 @@ abc dfdfdfd
 //OK
 echo $USER $USER
 dtolmaco dtolmaco
+
+//OKs
+ echo      a            b         USER
+a bSER
