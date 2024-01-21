@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:00:47 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/21 19:01:14 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/21 19:28:44 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	print_env_var_value(char *variable_name, t_env *lst)
 		tmp = tmp->next;
 	}
 }
+
 /* i++ - to skip $ dollar sign, i-- - to not skip white space between env var*/
 int	print_env_var(char *line, t_env *lst, int i)
 {
@@ -36,7 +37,7 @@ int	print_env_var(char *line, t_env *lst, int i)
 	i++;
 	start = i;
 	while (line[i] && (ft_isalnum(line[i]) || line[i] == '_'))
-			i++;
+		i++;
 	print_env_var_value(ft_substr(line, start, i - start), lst);
 	i--;
 	return (i);

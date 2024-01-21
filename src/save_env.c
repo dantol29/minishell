@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   save_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 13:35:22 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/20 13:39:03 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/21 19:29:21 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,4 @@ void	save_envp(t_shell *shell, char **envp)
 		lstadd_back(&shell->env, new);
 		envp++;
 	}
-	//printf("list size: %d\n", lstsize(shell->env));
 }
