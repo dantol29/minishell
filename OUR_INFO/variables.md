@@ -1,5 +1,12 @@
 ### VARIABLES
 
+ # CHECK IF BUILTIN
+type -a echo
+echo is a shell builtin
+echo is /usr/bin/echo
+echo is /bin/echo
+
+
 # ECHO
 echo$USER
 minishell: command not found: echodtolmaco
@@ -67,7 +74,32 @@ a bSER
 echo -n '"abc'"
 minishell: error while looking for matching quote
 
-type -a echo
-echo is a shell builtin
-echo is /usr/bin/echo
-echo is /bin/echo
+
+
+
+//OK
+//    \=1 \\=1 \\\=2 \\\\=2 \\\\\=3
+echo "we\\n"
+we\n
+
+
+//OK
+echo "Hello$World!"
+Hello!
+
+//OK
+echo '1\\2'
+1\\2
+
+//OK
+echo '1\\2'
+1\\2
+
+//TODO
+echo b\"
+b"
+
+// OK
+echo Hello \"World\"!
+Hello "World"!
+

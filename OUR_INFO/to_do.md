@@ -2,9 +2,10 @@ add new TODO's from beginning. []=todo [x] = done
 
 
 21.01
+[ ] \\ edge case
 [x] echo skip empty space
 [x] echo -n 
-[ ] Display proper error message (invalid command)
+[x] Display proper error message echo (invalid command)
 [x] Check if a quote is closed (error if not)
 [ ] Fix history
 [ ] Search and launch the right executable (ls, pwd, /bin/ls, /bin/pwd)

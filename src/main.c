@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:58:49 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/21 12:30:59 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/21 13:51:57 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ctrl_c(int signum)
 	(void)signum;
 }
 
-void	parsing(char *line, t_shell *shell, char **envp)
+void	launch_exec(char *line, t_shell *shell, char **envp)
 {
 	shell->command = ft_split(line, ' '); // store entered command (use ft_split for flags)
 	shell->cmd_path = ft_strjoin("/usr/bin/", shell->command[0]); // if commands whtout path (ls, pwd)
@@ -64,10 +64,10 @@ void	call_functions(char *line, t_shell *shell)
 	if (check_pipe_symbol(line))
 		call_pipe_function();
 	else if (ft_strncmp("echo ", line, 5) == 0)
-		check_input(line + 5, shell->env);
+		check_echo_line(line + 5, shell->env);
 	else if (access("gfgfgffg", 0) != 0)
 		printf("command not found\n");			//TODO:  add print command, before "command not found" (perror)
-//parsing(line, &shell, envp);	
+	//launch_exec(line, &shell, envp);	
 }
 
 

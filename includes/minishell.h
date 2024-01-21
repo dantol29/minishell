@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/21 12:30:48 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/21 13:48:12 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ typedef struct s_shell
 #include "../libft/libft.h"
 
 void	save_envp(t_shell *shell, char **envp);
-void	check_input(char *line, t_env *lst);
+void	check_echo_line(char *line, t_env *lst);
 
 // utils
 int		ft_strcmp(const char *str1, const char *str2);
