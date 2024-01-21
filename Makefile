@@ -1,7 +1,7 @@
 NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-SRC = src/main.c src/save_env.c src/parse_env.c src/utils.c
+SRC = src/main.c src/save_env.c src/echo.c src/utils.c src/print_env.c src/launch_commands.c src/pipe.c
 LIBFT = libft
 OBJS = $(SRC:.c=.o)
 

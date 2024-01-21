@@ -1,7 +1,7 @@
 ### VARIABLES
 #     check:
 ```
-     echo        "-n"    "$USER hello" '$USER' $USER
+    "e"c"h"o      '-n'     "$USER hello" '$USER' $USER "world\""
 ```
  # CHECK IF BUILTIN
 type -a echo
@@ -125,3 +125,19 @@ no newline
 // OK
 echo "-n "
 -n 
+
+// OK
+echo "hello \"world\""
+hello "world"
+
+// OK
+echo "Hello\nWorld!"
+Hello\nWorld!
+
+// OK
+echo Hello\nWorld!
+HellonWorld!
+
+// OK
+echo \"
+"

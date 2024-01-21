@@ -1,49 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_env.c                                        :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:50:22 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/21 17:24:20 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/21 19:00:39 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/*
-checks if the environment variable is set
-*/
-static void	print_env_var_value(char *variable_name, t_env *lst)
-{
-	t_env	*tmp;
-
-	tmp = lst;
-	while (tmp)
-	{
-		if (ft_strcmp(tmp->name, variable_name) == 0)
-		{
-			write(1, tmp->value, sizeof(tmp->value));
-			break ;
-		}
-		tmp = tmp->next;
-	}
-}
-
-static int	print_env_var(char *line, t_env *lst, int i)
-{
-	int	start;
-
-	i++; // to skip $ dollar sign
-	start = i;
-	while (line[i] && (ft_isalnum(line[i]) || line[i] == '_'))
-			i++;
-	print_env_var_value(ft_substr(line, start, i - start), lst);
-	i--; // to not skip white space between env var
-	return (i);
-}
-
+/*checks that every quote is closed and skips \\"*/
 static int	check_quotes(char *line)
 {
 	char	symbol;
@@ -52,15 +21,15 @@ static int	check_quotes(char *line)
 	i = 0;
 	while(line[i])
 	{
-
-		if (line[i] && line[i - 1] == '\\' && (line[i] == '\'' || line[i] ==  '\"'))
-			i++;
-		if (line[i] == '\'' || line[i] ==  '\"')
+		if (line[i] && line[i - 1] != '\\' && (line[i] == '\'' || line[i] ==  '\"'))
 		{
 			symbol = line[i];
-			i++;
-			while (line[i] && line[i] != symbol)
+			while (line[i])
+			{
 				i++;
+				if (line[i] && line[i] == symbol && line[i - 1] != '\\')
+					break ;
+			}
 			if (line[i] != symbol)
 			{
 				printf("minishell: error while looking for matching quote\n");
@@ -72,6 +41,7 @@ static int	check_quotes(char *line)
 	return (TRUE);
 }
 
+/*echo print function*/
 static int	print_inside_quotes(char *line, int i, t_env *lst)
 {
 	char	symbol;
@@ -84,7 +54,8 @@ static int	print_inside_quotes(char *line, int i, t_env *lst)
 	i++;
 	while (line[i] && line[i] != symbol)
 	{
-		if (line[i] == '\\' && line[i + 1] && symbol != '\'')
+		if (line[i] == '\\' && symbol != '\'' && \
+		(line[i + 1] == '\\' || line[i + 1] == '\"'))
 			i++;	
 		if (symbol == '\"' && line[i] == '$')
 			i = print_env_var(line, lst, i);
@@ -95,6 +66,7 @@ static int	print_inside_quotes(char *line, int i, t_env *lst)
 	return (i);
 }
 
+/*print echo*/
 static void	print_echo_line(char *line, t_env *lst)
 {
 	int	i;
@@ -116,7 +88,8 @@ static void	print_echo_line(char *line, t_env *lst)
 	}
 }
 
-char	*check_flag_n(char *line, int *flag)
+/*checks echo -n flag*/
+static char	*check_flag_n(char *line, int *flag)
 {
 	if (ft_strncmp("\"-n\" ", line, 5) == 0 \
 	|| ft_strncmp("\'-n\' ", line, 5) == 0)
@@ -143,6 +116,7 @@ char	*check_flag_n(char *line, int *flag)
 	return (line);
 }
 
+/*manage echo function*/
 void	check_echo_line(char *line, t_env *lst)
 {
 	int	flag;
@@ -160,21 +134,3 @@ void	check_echo_line(char *line, t_env *lst)
 	if (!flag)
 		write(1, "\n", 1);
 }
-
-
-// /*
-// checks if the environment variable is set
-// */
-// int	is_env_var(char *variable_name, t_env *lst)
-// {
-// 	t_env	*tmp;
-
-// 	tmp = lst;
-// 	while (tmp)
-// 	{
-// 		if (ft_strcmp(tmp->name, variable_name) == 0)
-// 			return (TRUE);
-// 		tmp = tmp->next;
-// 	}
-// 	return (FALSE);
-// }

@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/21 17:12:59 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/21 19:16:12 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,19 @@ typedef struct s_shell
 
 void	save_envp(t_shell *shell, char **envp);
 void	check_echo_line(char *line, t_env *lst);
+void	launch_commands(char *line, t_shell *shell, char **envp);
+void	launch_exec(char *line, t_shell *shell, char **envp);
 
 // utils
 int		ft_strcmp(const char *str1, const char *str2);
-int	is_empty_line(char *line);
+int		is_empty_line(char *line);
+
+// print env
+int		print_env_var(char *line, t_env *lst, int i);
+void	print_env_var_value(char *variable_name, t_env *lst);
+
+// pipe
+int		check_pipe_symbol(char *line);
+void	call_pipe_function(void);
 
 #endif
