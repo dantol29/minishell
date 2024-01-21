@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:50:22 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/21 12:15:25 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/21 13:25:55 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,46 +44,71 @@ int	print_env_var(char *line, t_env *lst, int i)
 	return (i);
 }
 
+int	check_quotes(char *line)
+{
+	char	symbol;
+	int		i;
+
+	i = 0;
+	while(line[i])
+	{
+		if (line[i] == '\'' || line[i] == '\"')
+		{
+			symbol = line[i];
+			i++;
+			while (line[i] && line[i] != symbol)
+				i++;
+			if (line[i] != symbol)
+			{
+				printf("minishell: error while looking for matching quote\n");
+				return (FALSE);
+			}
+		}
+		i++;
+	}
+	return (TRUE);
+}
+
+int	print_inside_quotes(char *line, int i, t_env *lst)
+{
+	char	symbol;
+
+	symbol = line[i];
+	if (line[i - 1] == ' ')
+		write(1, " ", 1);
+	if (symbol == '$')
+		return (print_env_var(line, lst, i));
+	i++;
+	while (line[i] && line[i] != symbol)
+	{
+		if (symbol == '\"' && line[i] == '$')
+			i = print_env_var(line, lst, i);
+		else
+			write(1, &line[i], 1);
+		i++;
+	}
+	return (i);
+}
+
 void	check_input(char *line, t_env *lst)
 {
 	int	i;
-	int	start;
 	int	flag;
 
 	i = 0;
-	flag = 1;
-	start = 0;
+	flag = 0;
 	line = ft_strtrim(line, " ");
+	if (ft_strncmp("-n ", line, 3) == 0)
+	{
+		line = ft_strtrim(line + 3, " ");
+		flag = 1;
+	}
+	if (!check_quotes(line))
+		return ;
 	while (line[i])
 	{
-		if (line[i] == '$')
-		{
-			if (line[i - 1] == ' ')
-				write(1, " ", 1);
-			i = print_env_var(line, lst, i);
-		}
-		else if (line[i] == '\'')
-		{
-			if (line[i - 1] == ' ')
-				write(1, " ", 1);
-			i++;
-			while (line[i] && line[i] != '\'')
-				write(1, &line[i++], 1);
-		}
-		else if (line[i] == '\"')
-		{
-			if (line[i - 1] == ' ')
-				write(1, " ", 1);
-			i++;
-			while (line[i] && line[i] != '\"') // TODO: error if a quote is not closed
-			{
-				if (line[i] == '$')
-					i = print_env_var(line, lst, i);
-				else
-					write(1, &line[i], 1);
-				i++;
-			}
-		}
+		if (line[i] == '\'' || line[i] == '\"' || line[i] == '$')
+			i = print_inside_quotes(line, i, lst);
 		else if (line[i] != ' ')
 		{
 			if (line[i - 1] == ' ')
@@ -92,7 +117,7 @@ void	check_input(char *line, t_env *lst)
 		}
 		i++;
 	}
-	if (ft_strncmp("-n", line, 2) != 0)
+	if (!flag)
 		write(1, "\n", 1);
 }
 

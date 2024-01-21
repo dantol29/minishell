@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:58:49 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/21 12:05:43 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/21 12:30:59 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,14 @@ void call_pipe_function(void)
 
 void	call_functions(char *line, t_shell *shell)
 {
+	line = ft_strtrim(line, " ");
 	if (check_pipe_symbol(line))
 		call_pipe_function();
 	else if (ft_strncmp("echo ", line, 5) == 0)
-	{
 		check_input(line + 5, shell->env);
-			//parsing(line, &shell, envp);	
-	}
 	else if (access("gfgfgffg", 0) != 0)
 		printf("command not found\n");			//TODO:  add print command, before "command not found" (perror)
+//parsing(line, &shell, envp);	
 }
 
 

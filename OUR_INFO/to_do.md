@@ -2,15 +2,15 @@ add new TODO's from beginning. []=todo [x] = done
 
 
 21.01
-[ ] echo skip empty space
-[ ] echo -n 
+[x] echo skip empty space
+[x] echo -n 
 [ ] Display proper error message (invalid command)
-[ ] Check if a quote is closed (error if not)
+[x] Check if a quote is closed (error if not)
 [ ] Fix history
 [ ] Search and launch the right executable (ls, pwd, /bin/ls, /bin/pwd)
 [ ] Make cd function
 [ ] Correcly handle ctrl+c signal
-[ ] Add .gitignore
+[x] Add .gitignore
 
 20.01
 [x]  read input, find $VAR, check if valid Variables (valid: "$USER", "'$USER'")

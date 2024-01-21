@@ -62,3 +62,12 @@ dtolmaco dtolmaco
 //OKs
  echo      a            b         USER
 a bSER
+
+//OK
+echo -n '"abc'"
+minishell: error while looking for matching quote
+
+type -a echo
+echo is a shell builtin
+echo is /usr/bin/echo
+echo is /bin/echo
