@@ -1,5 +1,8 @@
 ### VARIABLES
-
+#     check:
+```
+     echo        "-n"    "$USER hello" '$USER' $USER
+```
  # CHECK IF BUILTIN
 type -a echo
 echo is a shell builtin
@@ -95,7 +98,7 @@ echo '1\\2'
 echo '1\\2'
 1\\2
 
-//TODO
+//OK
 echo b\"
 b"
 
@@ -103,3 +106,22 @@ b"
 echo Hello \"World\"!
 Hello "World"!
 
+// OK
+"ec""ho" 1234
+1234
+
+// OK
+"ec" "ho" 1234
+ec: command not found
+
+//OK
+echo
+newline
+
+// OK
+echo -n, "-n", '-n'
+no newline
+
+// OK
+echo "-n "
+-n 

@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:50:22 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/21 14:23:34 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/21 17:24:20 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ static int	check_quotes(char *line)
 	i = 0;
 	while(line[i])
 	{
-		if (line[i] == '\'' || line[i] == '\"')
+
+		if (line[i] && line[i - 1] == '\\' && (line[i] == '\'' || line[i] ==  '\"'))
+			i++;
+		if (line[i] == '\'' || line[i] ==  '\"')
 		{
 			symbol = line[i];
 			i++;
@@ -82,7 +85,7 @@ static int	print_inside_quotes(char *line, int i, t_env *lst)
 	while (line[i] && line[i] != symbol)
 	{
 		if (line[i] == '\\' && line[i + 1] && symbol != '\'')
-			i++;
+			i++;	
 		if (symbol == '\"' && line[i] == '$')
 			i = print_env_var(line, lst, i);
 		else
@@ -113,17 +116,44 @@ static void	print_echo_line(char *line, t_env *lst)
 	}
 }
 
+char	*check_flag_n(char *line, int *flag)
+{
+	if (ft_strncmp("\"-n\" ", line, 5) == 0 \
+	|| ft_strncmp("\'-n\' ", line, 5) == 0)
+	{
+		line = ft_strtrim(line + 5, " ");
+		*flag = 1;
+	}
+	else if  (ft_strncmp("-n ", line, 3) == 0)
+	{
+		line = ft_strtrim(line + 3, " ");
+		*flag = 1;
+	}
+	else if (ft_strncmp("-n", line, 2) == 0)
+	{
+		if (is_empty_line(line + 2))
+			return (NULL);
+	}
+	else if (ft_strncmp("\"-n\"", line, 4) == 0 \
+	|| ft_strncmp("\'-n\'", line, 4) == 0)
+	{
+		if (is_empty_line(line + 4))
+			return (NULL);
+	}
+	return (line);
+}
+
 void	check_echo_line(char *line, t_env *lst)
 {
 	int	flag;
 
 	flag = 0;
+	while (*line && *line != ' ')
+		line++;
 	line = ft_strtrim(line, " ");
-	if (ft_strncmp("-n ", line, 3) == 0)
-	{
-		line = ft_strtrim(line + 3, " ");
-		flag = 1;
-	}
+	line = check_flag_n(line, &flag);
+	if (line == NULL)
+		return ;
 	if (!check_quotes(line))
 		return ;
 	print_echo_line(line, lst);

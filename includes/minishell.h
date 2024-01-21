@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/21 13:48:12 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/21 17:12:59 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,6 @@ void	check_echo_line(char *line, t_env *lst);
 
 // utils
 int		ft_strcmp(const char *str1, const char *str2);
+int	is_empty_line(char *line);
 
 #endif

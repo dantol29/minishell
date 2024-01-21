@@ -2,7 +2,13 @@ add new TODO's from beginning. []=todo [x] = done
 
 
 21.01
-[ ] \\ edge case
+[x] print no line (write (1, "", 1);)
+[x] echo -n, "-n", '-n'
+[x] if just echo print a newline
+[x] return new line if empty arguments
+[x] "ec"ho" edge case
+[x] \\ edge case
+[x] \" edge case echo b\"
 [x] echo skip empty space
 [x] echo -n 
 [x] Display proper error message echo (invalid command)
