@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:50:22 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/21 19:30:19 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/22 14:13:22 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,49 +89,70 @@ static void	print_echo_line(char *line, t_env *lst)
 	}
 }
 
-/*checks echo -n flag*/
+/*checks echo -n flag
+echo -n -nnnnn AB
+skip all valid -n -nnnnnn
+return line*/
 static char	*check_flag_n(char *line, int *flag)
 {
-	if (ft_strncmp("\"-n\" ", line, 5) == 0 \
-	|| ft_strncmp("\'-n\' ", line, 5) == 0)
+	int		i;
+	int		j;
+	char	symbol;
+
+	i = 0;
+	j = 0;
+	while (line[i])
 	{
-		line = ft_strtrim(line + 5, " ");
-		*flag = 1;
+		if (line[i] == '\"' || line[i] == '\'')
+		{
+			symbol = line[i++];
+			if (line[i++] != '-')
+				return (line + j);
+			while (line[i] && line[i] == 'n')
+				i++;
+			if (line[i++] != symbol)
+				return (line + j);
+			if (line[i] != ' ' && line[i] != '\0')
+				return (line + j);
+			*flag = 0;
+			j = i;
+		}
+		else if (line[i] == '-')
+		{
+			i++;
+			while(line[i] == 'n')
+				i++;
+			if (line[i] != ' ' && line[i] != '\0')
+				return (line + j);
+			*flag = 0;
+			j = i;	
+		}
+		i++;
 	}
-	else if (ft_strncmp("-n ", line, 3) == 0)
-	{
-		line = ft_strtrim(line + 3, " ");
-		*flag = 1;
-	}
-	else if (ft_strncmp("-n", line, 2) == 0)
-	{
-		if (is_empty_line(line + 2))
-			return (NULL);
-	}
-	else if (ft_strncmp("\"-n\"", line, 4) == 0 \
-	|| ft_strncmp("\'-n\'", line, 4) == 0)
-	{
-		if (is_empty_line(line + 4))
-			return (NULL);
-	}
-	return (line);
+	return (line + j);
 }
 
-/*manage echo function*/
+/*manage echo function
+while (*line && *line != ' ')
+		line++; // to skip `echo`*/
 void	check_echo_line(char *line, t_env *lst)
 {
 	int	flag;
 
-	flag = 0;
+	flag = 1;
 	while (*line && *line != ' ')
 		line++;
+	if (is_empty_line(line))
+	{
+		write(1, "\n", 1);
+		return ;
+	}
 	line = ft_strtrim(line, " ");
 	line = check_flag_n(line, &flag);
-	if (line == NULL)
-		return ;
+	line = ft_strtrim(line, " ");
 	if (!check_quotes(line))
 		return ;
 	print_echo_line(line, lst);
-	if (!flag)
+	if (flag)
 		write(1, "\n", 1);
 }

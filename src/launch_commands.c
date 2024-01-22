@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launch_commands.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:12:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/21 19:28:13 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/22 13:52:48 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	launch_commands(char *line, t_shell *shell, char **envp)
 {
 	char	*command;
 
+	(void)envp;
 	line = ft_strtrim(line, " ");
 	command = find_command(line);
 	if (command == NULL || is_empty_line(line))
@@ -72,10 +73,9 @@ void	launch_commands(char *line, t_shell *shell, char **envp)
 	if (check_pipe_symbol(line))
 		call_pipe_function();
 	else if (ft_strcmp("echo ", command) == 0 \
-	|| ft_strcmp("echo", command) == 0)
+	|| ft_strcmp("echo", command) == 0 || access(command, 0) == 0)
 		check_echo_line(line, shell->env);
-	else if (access(ft_strjoin("/usr/bin/", command), 0) == 0)
-		launch_exec(line, shell, envp);
+	//else if (launch_exec(line, shell, envp) == FALSE)
 	else
 		printf("command not found\n");
 }

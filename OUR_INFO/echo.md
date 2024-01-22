@@ -141,3 +141,28 @@ HellonWorld!
 // OK
 echo \"
 "
+
+// OK
+echo "-n" "-n"
+
+// OK
+echo "-n""-n"
+-n-n
+
+// OK
+echo "-n" " -n"
+ -n
+
+// OK
+echo " -n" "-n"
+ -n -n
+
+// OK
+echo -nnnnnnnnnnnnn
+
+// OK
+echo "-n -n -n"
+-n -n -n
+
+// OK
+echo -n -n -n -n

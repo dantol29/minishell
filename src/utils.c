@@ -6,7 +6,7 @@
 /*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:51:29 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/21 19:29:54 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/01/22 12:51:41 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,5 @@ int	is_empty_line(char *line)
 			return (FALSE);
 		i++;
 	}
-	write(1, "", 1);
 	return (TRUE);
 }

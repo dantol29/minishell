@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/21 19:16:12 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/22 13:08:00 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ typedef struct s_shell
 void	save_envp(t_shell *shell, char **envp);
 void	check_echo_line(char *line, t_env *lst);
 void	launch_commands(char *line, t_shell *shell, char **envp);
-void	launch_exec(char *line, t_shell *shell, char **envp);
+int		launch_exec(char *line, t_shell *shell, char **envp);
 
 // utils
 int		ft_strcmp(const char *str1, const char *str2);

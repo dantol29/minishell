@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:58:49 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/21 19:27:09 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/22 13:46:54 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ctrl_c(int signum)
 	write(1, "", 1);
 }
 
-void	launch_exec(char *line, t_shell *shell, char **envp)
+int	launch_exec(char *line, t_shell *shell, char **envp)
 {
 	shell->command = ft_split(line, ' ');
 	shell->cmd_path = ft_strjoin("/usr/bin/", shell->command[0]);
@@ -31,13 +31,18 @@ void	launch_exec(char *line, t_shell *shell, char **envp)
 	}
 	else if (access(shell->command[0], 0) == 0)
 	{
+		printf("command[0]:%s\n", shell->command[0]);
 		shell->pid = fork();
 		if (shell->pid == 0)
 			execve(shell->command[0], shell->command, envp);
 		waitpid(shell->pid, NULL, 0);
 	}
 	else
+	{
 		printf("minishell: command not found: %s\n", shell->command[0]);
+		return (FALSE);
+	}
+	return (TRUE);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -50,7 +55,7 @@ int	main(int argc, char **argv, char **envp)
 	signal(SIGINT, ctrl_c);
 	save_envp(&shell, envp);
 	printf("minishell");
-	line = readline(" $ ");
+	line = readline("$");
 	while (line != NULL)
 	{
 		launch_commands(line, &shell, envp);

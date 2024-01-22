@@ -2,6 +2,7 @@ add new TODO's from beginning. []=todo [x] = done
 
 
 22.01
+[x] echo -n || echo -n -n || echo -nnnnnnnn  -must display only new line
 [ ] /bin/echo a
 	a
 [ ] Fix history
