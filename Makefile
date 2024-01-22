@@ -1,7 +1,7 @@
 NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-SRC = src/main.c src/save_env.c src/echo.c src/utils.c src/print_env.c src/launch_commands.c src/pipe.c
+SRC = src/main.c src/save_env.c src/echo.c src/utils.c src/env.c src/launch_commands.c src/pipe.c
 LIBFT = libft
 OBJS = $(SRC:.c=.o)
 
@@ -18,6 +18,10 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 	rm -f $(LIBFT)/libft.a
+
+mini: re
+	./minishell
+
 
 re: fclean all
 

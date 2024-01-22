@@ -6,7 +6,7 @@
 /*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:58:49 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/22 13:46:54 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/01/22 15:20:23 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ctrl_c(int signum)
 int	launch_exec(char *line, t_shell *shell, char **envp)
 {
 	shell->command = ft_split(line, ' ');
-	shell->cmd_path = ft_strjoin("/usr/bin/", shell->command[0]);
+	shell->cmd_path = ft_strjoin("/bin/", shell->command[0]);
 	if (access(shell->cmd_path, 0) == 0)
 	{
 		shell->pid = fork();
@@ -31,7 +31,6 @@ int	launch_exec(char *line, t_shell *shell, char **envp)
 	}
 	else if (access(shell->command[0], 0) == 0)
 	{
-		printf("command[0]:%s\n", shell->command[0]);
 		shell->pid = fork();
 		if (shell->pid == 0)
 			execve(shell->command[0], shell->command, envp);

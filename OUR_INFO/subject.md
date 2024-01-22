@@ -48,12 +48,12 @@
 [ ] ctrl-\ does nothing.
 
 ### Your shell must implement the following builtins:
-[ ] echo   with option -n
+[x] echo   with option -n
 [ ] cd     with only a relative or absolute path
-[ ] pwd    with no options
-[ ] export with no options
-[ ] unset  with no options
-[ ] env    with no options or arguments
+[x] pwd    with no options
+[x] export with no options
+[x] unset  with no options
+[x] env    with no options or arguments
 [ ] exit   with no options
 
 - The readline() function can cause memory leaks. You don’t have to fix them.

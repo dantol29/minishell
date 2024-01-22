@@ -6,7 +6,7 @@
 /*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/22 13:08:00 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/01/22 17:33:33 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,15 @@ int		launch_exec(char *line, t_shell *shell, char **envp);
 // utils
 int		ft_strcmp(const char *str1, const char *str2);
 int		is_empty_line(char *line);
+char	*skip_command_name(char *line);
+void	lstadd_back(t_env **lst, t_env *new);
 
-// print env
+// env
 int		print_env_var(char *line, t_env *lst, int i);
 void	print_env_var_value(char *variable_name, t_env *lst);
+int		find_env_var(char *variable_name, t_env *lst);
+void	replace_env_var_value(char *variable_name, char *new_value, t_env *lst);
+void	unset_env_var(char *env_name, t_env **lst);
 
 // pipe
 int		check_pipe_symbol(char *line);

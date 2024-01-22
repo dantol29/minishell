@@ -6,7 +6,7 @@
 /*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:50:22 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/22 14:13:22 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/01/22 15:44:08 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,14 +140,12 @@ void	check_echo_line(char *line, t_env *lst)
 	int	flag;
 
 	flag = 1;
-	while (*line && *line != ' ')
-		line++;
+	line = skip_command_name(line);
 	if (is_empty_line(line))
 	{
 		write(1, "\n", 1);
 		return ;
 	}
-	line = ft_strtrim(line, " ");
 	line = check_flag_n(line, &flag);
 	line = ft_strtrim(line, " ");
 	if (!check_quotes(line))
