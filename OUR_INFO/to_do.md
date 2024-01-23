@@ -1,8 +1,13 @@
 add new TODO's from beginning. []=todo [x] = done
 
+[ ] Not interpret unclosed quotes or special characters which are not required by the
+        subject such as \ (backslash) or ; (semicolon).
+[ ] ; semicolon 
+[ ] exitocde Handle $? which should expand to the exit status of the most recently executed foreground pipeline.
+[ ] ctrl-\ does nothing.
 
 23.01
-[ ] Make cd function (save old pwd, new pwd)
+[x] Make cd function (save old pwd, new pwd), cd -, cd ~, cd ..
 [x] ctrl+c signal
 [ ] exit code
 [x] gfgffgfgf: command not found

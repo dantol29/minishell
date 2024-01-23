@@ -6,7 +6,7 @@
 /*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:00:47 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/23 11:28:34 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/01/23 13:23:54 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	find_env_var(char *variable_name, t_env *lst)
 	tmp = lst;
 	while (tmp)
 	{
-		if (ft_strcmp(tmp->name, variable_name) == 0)
+		if (ft_strcmp(tmp->name, variable_name))
 			return (TRUE);
 		tmp = tmp->next;
 	}
@@ -65,7 +65,7 @@ void	replace_env_var_value(char *variable_name, char *new_value, t_env *lst)
 	tmp = lst;
 	while (tmp)
 	{
-		if (ft_strcmp(tmp->name, variable_name) == 0)
+		if (ft_strcmp(tmp->name, variable_name))
 		{
 			tmp->value = new_value;
 			break ;
@@ -83,13 +83,13 @@ void	unset_env_var(char *env_name, t_env **lst)
 	prev = NULL;
 	if (!find_env_var(env_name, *lst))
 		return ;
-	if (current != NULL && ft_strcmp(current->name, env_name) == 0)
+	if (current != NULL && ft_strcmp(current->name, env_name))
 	{
 		*lst = current->next;
 		free(current);
 		return ;
 	}
-	while (current && ft_strcmp(current->name, env_name) != 0)
+	while (current && !ft_strcmp(current->name, env_name))
 	{
 		prev = current;
 		current = current->next;

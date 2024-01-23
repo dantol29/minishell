@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launch_commands.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:12:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/23 12:30:00 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/23 14:18:32 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,46 @@ int	add_env_var(char *line, t_env *env)
 	return (TRUE);
 }
 
+char	*get_env_value(char *variable_name, t_env *lst)
+{
+	t_env	*tmp;
+
+	tmp = lst;
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->name, variable_name))
+			return (tmp->value);
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
+
+void	cd(char *line, t_env *env)
+{
+	int	status;
+
+	status = 0;
+	line = skip_command_name(line);
+	if (ft_strcmp("-", line))
+	{
+		printf("%s\n", get_env_value("OLDPWD", env));
+		chdir(get_env_value("OLDPWD", env));
+		status = 1;
+	}
+	replace_env_var_value("OLDPWD", getcwd(NULL, 0), env);
+	if (ft_strcmp("~", line))
+		chdir(get_env_value("HOME", env));
+	else if (status == 0)
+	{
+		if (chdir(line) == -1)
+		{
+			printf("cd: %s: %s\n", strerror(errno) ,line);
+			return ;
+		}
+	}
+	replace_env_var_value("PWD", getcwd(NULL, 0), env);
+}
+
 void	launch_commands(char *line, t_shell *shell, char **envp)
 {
 	char	*command;
@@ -132,6 +172,8 @@ void	launch_commands(char *line, t_shell *shell, char **envp)
 		unset_env_var(skip_command_name(line), &shell->env);
 	else if (ft_strcmp("pwd", command) || ft_strcmp("/bin/pwd", command))
 		printf("%s\n", getcwd(NULL, 0));
+	else if (ft_strcmp("cd", command))
+		cd(line, shell->env);
 	else if (launch_exec(line, shell, envp) == FALSE)
 		printf("%s: command not found\n", command);
 }
