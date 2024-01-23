@@ -6,7 +6,7 @@
 /*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:00:47 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/22 17:24:40 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/01/23 11:28:34 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	print_env_var(char *line, t_env *lst, int i)
 }
 
 /*checks if the environment variable exists*/
-int find_env_var(char *variable_name, t_env *lst)
+int	find_env_var(char *variable_name, t_env *lst)
 {
 	t_env	*tmp;
 
@@ -74,7 +74,7 @@ void	replace_env_var_value(char *variable_name, char *new_value, t_env *lst)
 	}
 }
 
-void unset_env_var(char *env_name, t_env **lst)
+void	unset_env_var(char *env_name, t_env **lst)
 {
 	t_env	*current;
 	t_env	*prev;
@@ -83,19 +83,17 @@ void unset_env_var(char *env_name, t_env **lst)
 	prev = NULL;
 	if (!find_env_var(env_name, *lst))
 		return ;
-    if (current != NULL && ft_strcmp(current->name, env_name) == 0)
+	if (current != NULL && ft_strcmp(current->name, env_name) == 0)
 	{
-        *lst = current->next;
-        free(current);
-        return  ;
-    }
-
-	while(current && ft_strcmp(current->name, env_name) != 0)
+		*lst = current->next;
+		free(current);
+		return ;
+	}
+	while (current && ft_strcmp(current->name, env_name) != 0)
 	{
 		prev = current;
 		current = current->next;
 	}
-    prev->next = current->next;
-    free(current);
+	prev->next = current->next;
+	free(current);
 }
-

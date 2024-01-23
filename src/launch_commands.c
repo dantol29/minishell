@@ -6,7 +6,7 @@
 /*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:12:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/22 17:32:29 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/01/23 11:34:36 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int	add_env_var(char *line, t_env *env)
 		replace_env_var_value(name, value, env);
 	else
 		lstadd_back(&env, create_new_env_node(name, value));
-	return(TRUE);
+	return (TRUE);
 }
 
 void	launch_commands(char *line, t_shell *shell, char **envp)

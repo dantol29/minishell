@@ -6,7 +6,7 @@
 /*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:50:22 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/22 15:44:08 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/01/23 11:21:05 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ static char	*check_flag_n(char *line, int *flag)
 		else if (line[i] == '-')
 		{
 			i++;
-			while(line[i] == 'n')
+			while (line[i] == 'n')
 				i++;
 			if (line[i] != ' ' && line[i] != '\0')
 				return (line + j);

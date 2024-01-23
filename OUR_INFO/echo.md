@@ -3,166 +3,75 @@
 ```
     "e"c"h"o      '-n'     "$USER hello" '$USER' $USER "world\""
 ```
- # CHECK IF BUILTIN
-type -a echo
-echo is a shell builtin
-echo is /usr/bin/echo
-echo is /bin/echo
+## CHECK COMMAND IF it is BUILTIN
+# type -a echo
+# echo is a shell builtin
+# echo is /usr/bin/echo
+# echo is /bin/echo
 
 
 # ECHO
-echo$USER
-minishell: command not found: echodtolmaco
+[x] echo$USER						$minishell: command not found: echodtolmaco
 
 # SET / UNSET VARIABLE
 
- - setvatiable:  export TEST=test
- - find variable: env | grep test
- - output: TEST=test
- - delete variable:  unset TEST
- -  env | grep test
+# export TEST=test    		//set vatiable  
+# env | grep test   		 //find variable:
+# TEST=test         		 //output:
+# unset TEST 				//delete variable:
+# env | grep test			//check if variable was deleted
 
- # VALID $VAR
- - "$USER"
- a-z A-Z 1-9 _  valid symols
- bla$VAR (bla$VAR)
+### VALID  VARIABLES: $VAR$VAR  "$VAR"	"'$VAR" must exist in ENV
+###	a-z ||  A-Z || 1-9 ||  '_'  valid symols 
+[x]  hello$VAR									$bla$VAR							
+[x] "$USER"										$akurmyza
+[x] echo '$BLABLA'								$BLABLA
 
- #  NOT VALID
-  _ VAR (_ in begin)
+#  NOT VALID VARIABLES: 
+[x] _ $USER (_ in begin)						$_akurmyza: command not found
+[x]$USEr (Small letter, not the same as valid $USER from env)  //  Retturn without empty line 
+[x] HELLO$USER									$HELLOakurmyza: command not found
+[x] echo "Hello$World!"							$Hello!
+ 
+ # OUR TESTS
+[x] echo "$USER jhjhjvhjvgjg"					$akurmyza jhjhjvhjvgjg
+[x] echo "$USER'' " jhjhjvhjvgjg				$akurmyza''  jhjhjvhjvgjg
+[x] echo "'"$USER"'"							$'dtolmaco'
+[X] echo "abc$fgfgfgfgf dfdfdfd"				$abc dfdfdfd
+[x] echo $USER $USER					 		$dtolmaco dtolmaco
+[x]  echo      a         b       USER			$a bSER
+[x] echo -n '"abc'"								$minishell: error while looking for matching quote
 
- #TEXT
- //OK
- echo '$BLABLA'
-$BLABLA
+##  VALID ECHO = "EC""HO" = "E""CHO" 
+[x] "ec""ho" 1234								$1234
+[x] "ec" "ho" 1234								$ec: command not found
 
-//OK
-echo "$USER jhjhjvhjvgjg"
-akurmyza jhjhjvhjvgjg
+## "INSIDE DOUBLE QUOTES ALWAYS WRITE ALL"
+[x] echo "Hello\nWorld!"						$Hello\nWorld!
 
-//OK
- echo "$USER'' " jhjhjvhjvgjg
-akurmyza''  jhjhjvhjvgjg
+## WRITE SIGN AFTER SLASH \ (\"= $ " )
+[x] echo b\"									$b"
+[x] echo Hello \"World\"!						$Hello "World"!
+[x] echo "hello \"world\""						$hello "world"
+[x] echo Hello\nWorld!							$HellonWorld!
+[x]  \"											$"
 
+##  WRITE SLASH AFTER SLASH \  \=1 \\=1 \\\=2 \\\\=2 \\\\\=3
+[x] echo "we\\n"								$we\n
+[x] echo '1\\2'									$1\\2
+[x] echo '1\\2'									$1\\2
 
-
-  /*
-	// start checking in both directions, before and after variable    "<--$VAR-->"
-	  abcd "$USER    fsdgsd"
-	VALID:
-		$VAR
-		"$VAR"
-		"'$VAR"
-	
-	NOT_VALID:
-		$USEr (Small letter) Retturn: empty line 
-*/
-
-//OK
-echo "'"$USER"'"
-'dtolmaco'
-
-//OK
-echo "abc$fgfgfgfgf dfdfdfd"
-abc dfdfdfd
-
-//OK
-echo $USER $USER
-dtolmaco dtolmaco
-
-//OKs
- echo      a            b         USER
-a bSER
-
-//OK
-echo -n '"abc'"
-minishell: error while looking for matching quote
+##  NEWLINE MUST BE ALWAYS 
+[x] echo										$newline
 
 
-
-
-//OK
-//    \=1 \\=1 \\\=2 \\\\=2 \\\\\=3
-echo "we\\n"
-we\n
-
-
-//OK
-echo "Hello$World!"
-Hello!
-
-//OK
-echo '1\\2'
-1\\2
-
-//OK
-echo '1\\2'
-1\\2
-
-//OK
-echo b\"
-b"
-
-// OK
-echo Hello \"World\"!
-Hello "World"!
-
-// OK
-"ec""ho" 1234
-1234
-
-// OK
-"ec" "ho" 1234
-ec: command not found
-
-//OK
-echo
-newline
-
-// OK
-echo -n, "-n", '-n'
-no newline
-
-// OK
-echo "-n "
--n 
-
-// OK
-echo "hello \"world\""
-hello "world"
-
-// OK
-echo "Hello\nWorld!"
-Hello\nWorld!
-
-// OK
-echo Hello\nWorld!
-HellonWorld!
-
-// OK
-echo \"
-"
-
-// OK
-echo "-n" "-n"
-
-// OK
-echo "-n""-n"
--n-n
-
-// OK
-echo "-n" " -n"
- -n
-
-// OK
-echo " -n" "-n"
- -n -n
-
-// OK
-echo -nnnnnnnnnnnnn
-
-// OK
-echo "-n -n -n"
--n -n -n
-
-// OK
-echo -n -n -n -n
+## NO NEWLINE -n = NO NEWLINE AFTER IMPUT
+[x] echo -n, "-n", '-n'							$no newline
+[x] echo "-n "									$-n 
+[x] echo "-n" "-n"								$
+[x] echo "-n""-n"								$-n-n
+[x] echo "-n" " -n"								$-n
+[x] echo " -n" "-n"							    $-n -n
+[x] echo -nnnnnnnnnnnnn							$
+[x] echo "-n -n -n"								$-n -n -n
+[x] echo -n -n -n -n
