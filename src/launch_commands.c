@@ -6,7 +6,7 @@
 /*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:12:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/23 14:18:32 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/01/23 14:22:00 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ void	cd(char *line, t_env *env)
 		status = 1;
 	}
 	replace_env_var_value("OLDPWD", getcwd(NULL, 0), env);
-	if (ft_strcmp("~", line))
+	if (ft_strcmp("~", line) || is_empty_line(line))
 		chdir(get_env_value("HOME", env));
 	else if (status == 0)
 	{
