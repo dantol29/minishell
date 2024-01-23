@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launch_commands.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:12:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/23 11:34:36 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/01/23 12:30:00 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,19 +119,19 @@ void	launch_commands(char *line, t_shell *shell, char **envp)
 		return ;
 	if (check_pipe_symbol(line))
 		call_pipe_function();
-	else if (ft_strcmp("echo", command) == 0 || ft_strcmp("/bin/echo", command) == 0)
+	else if (ft_strcmp("echo", command) || ft_strcmp("/bin/echo", command))
 		check_echo_line(line, shell->env);
-	else if (ft_strcmp("env", command) == 0 || ft_strcmp("/bin/env", command) == 0)
+	else if (ft_strcmp("env", command) || ft_strcmp("/bin/env", command))
 		print_env(shell->env);
-	else if (ft_strcmp("export", command) == 0)
+	else if (ft_strcmp("export", command))
 	{
 		if (!add_env_var(line, shell->env))
 			printf("error while creating a new variable\n");
 	}
-	else if (ft_strcmp("unset", command) == 0)
+	else if (ft_strcmp("unset", command))
 		unset_env_var(skip_command_name(line), &shell->env);
-	else if (ft_strcmp("pwd", command) == 0 || ft_strcmp("/bin/pwd", command) == 0)
+	else if (ft_strcmp("pwd", command) || ft_strcmp("/bin/pwd", command))
 		printf("%s\n", getcwd(NULL, 0));
 	else if (launch_exec(line, shell, envp) == FALSE)
-		printf("command not found\n");
+		printf("%s: command not found\n", command);
 }

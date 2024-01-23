@@ -3,19 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:58:49 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/22 15:20:23 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/01/23 12:30:36 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	ctrl_c(int signum)
+void ctrl_c(int signum)
 {
-	(void)signum;
-	write(1, "", 1);
+    (void)signum;
+	rl_replace_line("\0", 0);
+	write(STDERR_FILENO, "\n", 1);
+	rl_on_new_line();
+	rl_redisplay();
+	return ;
 }
 
 int	launch_exec(char *line, t_shell *shell, char **envp)
@@ -37,10 +41,7 @@ int	launch_exec(char *line, t_shell *shell, char **envp)
 		waitpid(shell->pid, NULL, 0);
 	}
 	else
-	{
-		printf("minishell: command not found: %s\n", shell->command[0]);
 		return (FALSE);
-	}
 	return (TRUE);
 }
 
@@ -53,14 +54,12 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	signal(SIGINT, ctrl_c);
 	save_envp(&shell, envp);
-	printf("minishell");
-	line = readline("$");
+	line = readline("minishell$ ");
 	while (line != NULL)
 	{
 		launch_commands(line, &shell, envp);
 		add_history(line);
-		printf("minishell");
-		line = readline(" $ ");
+		line = readline("minishell$ ");
 	}
 	printf("exit\n");
 }

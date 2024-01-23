@@ -1,6 +1,14 @@
 add new TODO's from beginning. []=todo [x] = done
 
 
+23.01
+[ ] Make cd function (save old pwd, new pwd)
+[x] ctrl+c signal
+[ ] exit code
+[x] gfgffgfgf: command not found
+[ ]	echo $?
+[ ] Fix history
+
 22.01
 [x] pwd
 [x] export
@@ -8,15 +16,7 @@ add new TODO's from beginning. []=todo [x] = done
 [x] unset  with no options
 [x] echo -n || echo -n -n || echo -nnnnnnnn  -must display only new line
 [x] /bin/echo (absolute path)
-[ ] Fix history
 [x] Search and launch the right executable (ls, pwd, /bin/ls, /bin/pwd)
-[ ] Make cd function (save old pwd, new pwd)
-[ ] Correcly handle ctrl+c signal
-[ ] exit code
-	dtolmaco@c4c1c6:~/Desktop/minishell$ gfgffgfgf
-	gfgffgfgf: command not found
-	dtolmaco@c4c1c6:~/Desktop/minishell$ echo $?
-	127
 
 
 21.01

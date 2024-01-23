@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:51:29 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/23 11:21:25 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/01/23 12:24:12 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ int	ft_strcmp(const char *str1, const char *str2)
 	i = 0;
 	while (str1[i] && str1[i] == str2[i])
 		i++;
-	return (str1[i] - str2[i]);
+	if (str1[i] == str2[i])
+		return (TRUE);
+	return (FALSE);
 }
 
 int	is_empty_line(char *line)
