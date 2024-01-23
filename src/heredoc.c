@@ -3,51 +3,73 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:15:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/01/23 16:45:40 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/01/23 18:14:07 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int is_heredoc ( char *line)
+int is_heredoc(char *line)
 {
     int i;
+	int	count;
 
+	count = 0;
     i = 0;
-    
-    if (ft_strnstr(line, "<<", ft_strlen(line)))
-        return (TRUE);
-    return (FALSE);
+    while(line[i])
+	{
+		if(line[i] == '<' && line[i + 1] == '<')
+		{
+			i += 2;
+			while (line[i])
+			{
+				count++;
+				if (line[i] == '<')
+					return (FALSE);
+				i++;
+			}
+		}
+		i++;
+	}
+	if (count == 1)
+		return (TRUE);
+	return (FALSE);
 }
 
 char   *run_heredoc(char *line)
 {
     int     i;
     int     start;
+	int		before_heredoc;
     char    *exit_heredoc;
-    char    *line;
+    char    *read_heredoc;
 
     i = 0;
-    while(line[i] && line[i] != '<' && line[i + 1] != '<')
-        i++;
+    while(line[i] && line[i] != '<')
+		i++;
+	before_heredoc = i;
     i += 2;
+	while (line[i] && line[i] == ' ')
+		i++;
     if(!line[i])
     {
         printf("heredoc: syntax error\n");
-        return ;
+        return (NULL);
     }
     start = i;
     while(line[i] && line[i] != ' ')
         i++;
-    exit_heredoc = ft_substr(line, start, i - start);
-    line = get_next_line(0);
-    while(line != NULL && !ft_strcmp(line, exit_heredoc))
+    exit_heredoc = ft_strjoin(ft_substr(line, start, i - start), "\n");
+	write(1, "heredoc> ", 9);
+    read_heredoc = get_next_line(0);
+    while(read_heredoc != NULL && !ft_strcmp(read_heredoc, exit_heredoc))
     {
-        free(line);
-        line = get_next_line(0);
+        free(read_heredoc);
+		write(1, "heredoc> ", 9);
+        read_heredoc = get_next_line(0);
     }
-    return (line + i);
+    return (ft_strjoin(ft_substr(line, 0, before_heredoc), line + i));
 }

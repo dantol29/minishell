@@ -6,16 +6,25 @@ add new TODO's from beginning. []=todo [x] = done
 [ ] exitocde Handle $? which should expand to the exit status of the most recently executed foreground pipeline.
 [ ] ctrl-\ does nothing.
 
-23.01
-[x] echo. no emty spaceafter invalid $VAR
-[ ] << (heredoc)
-[ ] << EOF AAAAAAAAAAAAAAAAAAA(after executing, prints AAAAAAAAAAAAAAAAAAa on the new line)
-[x] Make cd function (save old pwd, new pwd), cd -, cd ~, cd ..
-[x] ctrl+c signal
-[ ] exit code  https://www.redhat.com/sysadmin/exit-codes-demystified
-[x] gfgffgfgf: command not found
+24.01
+[ ] check if gnl has to be in the libft
+[ ] echo | - error
 [ ]	echo $?
 [ ] Fix history
+[ ] cat << (prints what was entered)
+[ ] if heredoc wiht multiple pipes
+[ ] if heredoc inside the quotes
+[ ] exit code  https://www.redhat.com/sysadmin/exit-codes-demystified
+
+23.01
+[x] echo. no empty space after invalid $VAR
+[x] Make cd function (save old pwd, new pwd), cd -, cd ~, cd ..
+[x] ctrl+c signal
+[x] gfgffgfgf: command not found
+[x] error handling with perror, strerror and errno
+[x] << (heredoc)
+[x] echo << EOF AAAAAAAAAAAAAAAAAAA(after executing, prints AAAAAAAAAAAAAAAAAAa on the new line)
+[x] organize echo.md
 
 22.01
 [x] pwd

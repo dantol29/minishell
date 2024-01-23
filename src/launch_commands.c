@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launch_commands.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:12:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/23 16:22:28 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/01/23 17:28:52 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,8 +155,8 @@ void	launch_commands(char *line, t_shell *shell, char **envp)
 	(void)envp;
 	line = ft_strtrim(line, " ");
 	command = find_command(line);
-	if (is_heredoc (line)
-		run_heredoc(line);
+	if (is_heredoc(line))
+		line = run_heredoc(line);
 	if (command == NULL || is_empty_line(line))
 		return ;
 	if (check_pipe_symbol(line))

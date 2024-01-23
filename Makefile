@@ -3,7 +3,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 LIBFT = libft
 
-SOURCES = src/main.c src/save_env.c src/echo.c src/utils.c src/env.c src/launch_commands.c src/pipe.c
+SOURCES = src/main.c src/save_env.c src/echo.c src/utils.c src/env.c src/launch_commands.c src/pipe.c src/heredoc.c src/get_next_line.c
 
 OBJECTS = $(SOURCES:.c=.o)
 

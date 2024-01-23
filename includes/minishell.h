@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/23 15:39:58 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/01/23 16:55:11 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,10 @@ void	check_echo_line(char *line, t_env *lst);
 void	launch_commands(char *line, t_shell *shell, char **envp);
 int		launch_exec(char *line, t_shell *shell, char **envp);
 
+// heredoc
+char   *run_heredoc(char *line);
+int		is_heredoc(char *line);
+
 // utils
 int		ft_strcmp(const char *str1, const char *str2);
 int		is_empty_line(char *line);
@@ -87,5 +91,8 @@ void	unset_env_var(char *env_name, t_env **lst);
 // pipe
 int		check_pipe_symbol(char *line);
 void	call_pipe_function(void);
+
+// gnl
+char	*get_next_line(int fd);
 
 #endif
