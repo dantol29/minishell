@@ -6,7 +6,7 @@
 /*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:50:22 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/23 11:21:05 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/01/23 15:38:38 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	check_quotes(char *line)
 }
 
 /*echo print function*/
-static int	print_inside_quotes(char *line, int i, t_env *lst)
+static int	print_inside_quotes(char *line, int i, t_env *lst, int *invalid_var)
 {
 	char	symbol;
 
@@ -51,7 +51,7 @@ static int	print_inside_quotes(char *line, int i, t_env *lst)
 	if (line[i - 1] == ' ')
 		write(1, " ", 1);
 	if (symbol == '$')
-		return (print_env_var(line, lst, i));
+		return (print_env_var(line, lst, i, invalid_var));
 	i++;
 	while (line[i] && line[i] != symbol)
 	{
@@ -59,7 +59,7 @@ static int	print_inside_quotes(char *line, int i, t_env *lst)
 		(line[i + 1] == '\\' || line[i + 1] == '\"'))
 			i++;
 		if (symbol == '\"' && line[i] == '$')
-			i = print_env_var(line, lst, i);
+			i = print_env_var(line, lst, i, invalid_var);
 		else
 			write(1, &line[i], 1);
 		i++;
@@ -71,15 +71,17 @@ static int	print_inside_quotes(char *line, int i, t_env *lst)
 static void	print_echo_line(char *line, t_env *lst)
 {
 	int	i;
+	int	invalid_var;
 
 	i = 0;
+	invalid_var = 0;
 	while (line[i])
 	{
 		if (line[i] == '\'' || line[i] == '\"' || line[i] == '$')
-			i = print_inside_quotes(line, i, lst);
+			i = print_inside_quotes(line, i, lst, &invalid_var);
 		else if (line[i] != ' ')
 		{
-			if (line[i - 1] == ' ')
+			if (invalid_var == 0 && line[i - 1] == ' ')
 				write(1, " ", 1);
 			if (line[i] == '\\' && line[i + 1])
 				i++;

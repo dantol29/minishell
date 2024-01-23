@@ -6,7 +6,7 @@
 /*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:00:47 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/23 13:23:54 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/01/23 15:52:09 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	print_env_var_value(char *variable_name, t_env *lst)
 	tmp = lst;
 	while (tmp)
 	{
-		if (ft_strcmp(tmp->name, variable_name) == 0)
+		if (ft_strcmp(tmp->name, variable_name))
 		{
 			write(1, tmp->value, sizeof(tmp->value));
 			break ;
@@ -30,15 +30,17 @@ void	print_env_var_value(char *variable_name, t_env *lst)
 }
 
 /* i++ - to skip $ dollar sign, i-- - to not skip white space between env var*/
-int	print_env_var(char *line, t_env *lst, int i)
+int	print_env_var(char *line, t_env *lst, int i, int *invalid_var)
 {
 	int	start;
 
 	i++;
 	start = i;
-	while (line[i] && (ft_isalnum(line[i]) || line[i] == '_'))
+	while (line[i] && line[i] != ' ')
 		i++;
 	print_env_var_value(ft_substr(line, start, i - start), lst);
+	if (!find_env_var(ft_substr(line, start, i - start), lst))
+		*invalid_var = 1;
 	i--;
 	return (i);
 }

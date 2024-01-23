@@ -6,7 +6,7 @@
 /*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/22 17:33:33 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/01/23 15:39:58 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	*skip_command_name(char *line);
 void	lstadd_back(t_env **lst, t_env *new);
 
 // env
-int		print_env_var(char *line, t_env *lst, int i);
+int		print_env_var(char *line, t_env *lst, int i, int *invalid_var);
 void	print_env_var_value(char *variable_name, t_env *lst);
 int		find_env_var(char *variable_name, t_env *lst);
 void	replace_env_var_value(char *variable_name, char *new_value, t_env *lst);
