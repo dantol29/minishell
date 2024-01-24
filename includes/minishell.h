@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/24 14:17:49 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/01/24 17:12:23 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,18 +56,15 @@ typedef struct s_env
 
 typedef struct s_shell
 {
-	char	work_dir[1024];
-	char	*username;
-	char	**command;
-	char	*cmd_path;
-	int		pid;
+	int		exit_code;
 	t_env	*env;
 }	t_shell;
 
 #include "../libft/libft.h"
 
 void	launch_commands(char *line, t_shell *shell, char **envp);
-int		launch_exec(char *line, t_shell *shell, char **envp);
+int		launch_exec(char *line, char **envp);
+char	*find_command(char *line);
 
 // echo
 void	check_echo_line(char *line, t_env *lst);
@@ -80,7 +77,6 @@ int		is_heredoc(char *line, int command_len);
 int		ft_strcmp(const char *str1, const char *str2);
 int		is_empty_line(char *line);
 char	*skip_command_name(char *line);
-void	lstadd_back(t_env **lst, t_env *new);
 int		is_quote(char c);
 int		check_quotes(char *line);
 
@@ -88,20 +84,25 @@ int		check_quotes(char *line);
 int		print_env_var(char *line, t_env *lst, int i, int *invalid_var);
 void	print_env_var_value(char *variable_name, t_env *lst);
 int		find_env_var(char *variable_name, t_env *lst);
+void	print_env(t_env *env);
+char	*get_env_value(char *variable_name, t_env *lst);
+
+// export and unset
+int		add_env_var(char *line, t_env *env);
+t_env	*create_new_env_node(char *name, char *value);
 void	replace_env_var_value(char *variable_name, char *new_value, t_env *lst);
 void	unset_env_var(char *env_name, t_env **lst);
-void	print_env(t_env *env);
-t_env	*create_new_env_node(char *name, char *value);
-int		add_env_var(char *line, t_env *env);
-char	*get_env_value(char *variable_name, t_env *lst);
-void	save_envp(t_shell *shell, char **envp);
 
 // cd
 void	cd(char *line, t_env *env);
 
 // pipe
 int		check_pipe_symbol(char *line);
-void	call_pipe_function(void);
+void	split_pipes(char *line);
+
+// save all env variables in a linked list
+void	save_envp(t_shell *shell, char **envp);
+void	lstadd_back(t_env **lst, t_env *new);
 
 // gnl
 char	*get_next_line(int fd);

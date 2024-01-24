@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:58:49 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/23 12:30:36 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/24 16:21:59 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,27 @@ void ctrl_c(int signum)
 	return ;
 }
 
-int	launch_exec(char *line, t_shell *shell, char **envp)
+int	launch_exec(char *line, char **envp)
 {
-	shell->command = ft_split(line, ' ');
-	shell->cmd_path = ft_strjoin("/bin/", shell->command[0]);
-	if (access(shell->cmd_path, 0) == 0)
+	char	**command;
+	char	*cmd_path;
+	int		pid;
+
+	command = ft_split(line, ' ');
+	cmd_path = ft_strjoin("/bin/", command[0]);
+	if (access(cmd_path, 0) == 0)
 	{
-		shell->pid = fork();
-		if (shell->pid == 0)
-			execve(shell->cmd_path, shell->command, envp);
-		waitpid(shell->pid, NULL, 0);
+		pid = fork();
+		if (pid == 0)
+			execve(cmd_path, command, envp);
+		waitpid(pid, NULL, 0);
 	}
-	else if (access(shell->command[0], 0) == 0)
+	else if (access(command[0], 0) == 0)
 	{
-		shell->pid = fork();
-		if (shell->pid == 0)
-			execve(shell->command[0], shell->command, envp);
-		waitpid(shell->pid, NULL, 0);
+		pid = fork();
+		if (pid == 0)
+			execve(command[0], command, envp);
+		waitpid(pid, NULL, 0);
 	}
 	else
 		return (FALSE);
@@ -57,6 +61,8 @@ int	main(int argc, char **argv, char **envp)
 	line = readline("minishell$ ");
 	while (line != NULL)
 	{
+		line = ft_strtrim(line, " ");
+		split_pipes(line);
 		launch_commands(line, &shell, envp);
 		add_history(line);
 		line = readline("minishell$ ");

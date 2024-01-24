@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:51:29 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/24 11:30:50 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/24 15:27:25 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,33 @@ int	is_quote(char c)
 	if (c == '\"' || c == '\'')
 		return (TRUE);
 	return (FALSE);
+}
+
+/*checks that every quote is closed and skips \\"*/
+int	check_quotes(char *line)
+{
+	char	symbol;
+	int		i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] && line[i - 1] != '\\' && is_quote(line[i]))
+		{
+			symbol = line[i];
+			while (line[i])
+			{
+				i++;
+				if (line[i] && line[i] == symbol && line[i - 1] != '\\')
+					break ;
+			}
+			if (line[i] != symbol)
+			{
+				printf("minishell: error while looking for matching quote\n");
+				return (FALSE);
+			}
+		}
+		i++;
+	}
+	return (TRUE);
 }

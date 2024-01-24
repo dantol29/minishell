@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launch_commands.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:12:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/24 14:19:53 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/01/24 17:11:59 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static char	*extract_command(char *line, int count_letters)
 }
 
 /*find command in the line ("echo" .....)*/
-static char	*find_command(char *line)
+char	*find_command(char *line)
 {
 	int		i;
 	int		count_quotes;
@@ -69,22 +69,12 @@ static char	*find_command(char *line)
 void	launch_commands(char *line, t_shell *shell, char **envp)
 {
 	char	*command;
-	int		pipe_count;
 
-	line = ft_strtrim(line, " ");
 	command = find_command(line);
-	if (!check_quotes(line))
-		return ;
-	pipe_count = check_pipe_symbol(line);
-	if (pipe_count > 0)
-	{
-		printf("yes\n");
-		return ;
-	}
-	if (pipe_count == -1)
-		return ;
 	line = run_heredoc(line, command);
 	if (command == NULL || line == NULL || is_empty_line(line))
+		return ;
+	if (!check_quotes(line))
 		return ;
  	else if (ft_strcmp("echo", command) || ft_strcmp("/bin/echo", command))
 		check_echo_line(line, shell->env);
@@ -106,6 +96,6 @@ void	launch_commands(char *line, t_shell *shell, char **envp)
 		printf("exit\n");
 		exit(EXIT_SUCCESS);
 	}
-	else if (launch_exec(line, shell, envp) == FALSE)
+	else if (launch_exec(line, envp) == FALSE)
 		printf("%s: command not found\n", command);
 }

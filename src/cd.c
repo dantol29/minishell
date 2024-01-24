@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 13:53:41 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/01/24 13:54:02 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/01/24 15:34:53 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	cd(char *line, t_env *env)
 	{
 		if (chdir(line) == -1)
 		{
-			printf("cd: %s: %s\n", strerror(errno) ,line);
+			printf("cd: %s: %s\n", strerror(errno), line);
 			return ;
 		}
 	}

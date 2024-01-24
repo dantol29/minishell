@@ -3,43 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:50:22 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/24 12:36:36 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/01/24 15:33:50 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-/*checks that every quote is closed and skips \\"*/
-int	check_quotes(char *line)
-{
-	char	symbol;
-	int		i;
-
-	i = 0;
-	while (line[i])
-	{
-		if (line[i] && line[i - 1] != '\\' && is_quote(line[i]))
-		{
-			symbol = line[i];
-			while (line[i])
-			{
-				i++;
-				if (line[i] && line[i] == symbol && line[i - 1] != '\\')
-					break ;
-			}
-			if (line[i] != symbol)
-			{
-				printf("minishell: error while looking for matching quote\n");
-				return (FALSE);
-			}
-		}
-		i++;
-	}
-	return (TRUE);
-}
 
 /*echo print function*/
 static int	print_inside_quotes(char *line, int i, t_env *lst, int *invalid_var)
@@ -76,7 +47,7 @@ static void	print_echo_line(char *line, t_env *lst)
 	invalid_var = 0;
 	while (line[i])
 	{
-		if (line[i] == '\'' || line[i] == '\"' || line[i] == '$')
+		if (is_quote(line[i]) || line[i] == '$')
 			i = print_inside_quotes(line, i, lst, &invalid_var);
 		else if (line[i] != ' ')
 		{
@@ -90,10 +61,7 @@ static void	print_echo_line(char *line, t_env *lst)
 	}
 }
 
-/*checks echo -n flag
-echo -n -nnnnn AB
-skip all valid -n -nnnnnn
-return line*/
+/*checks echo -n flag*/
 static char	*check_flag_n(char *line, int *flag)
 {
 	int		i;
@@ -104,7 +72,7 @@ static char	*check_flag_n(char *line, int *flag)
 	j = 0;
 	while (line[i])
 	{
-		if (line[i] == '\"' || line[i] == '\'')
+		if (is_quote(line[i]))
 		{
 			symbol = line[i++];
 			if (line[i++] != '-')
@@ -133,9 +101,7 @@ static char	*check_flag_n(char *line, int *flag)
 	return (line + j);
 }
 
-/*manage echo function
-while (*line && *line != ' ')
-		line++; // to skip `echo`*/
+/*manage echo function*/
 void	check_echo_line(char *line, t_env *lst)
 {
 	int	flag;
