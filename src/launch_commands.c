@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:12:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/23 17:28:52 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/24 11:59:53 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ void	cd(char *line, t_env *env)
 void	launch_commands(char *line, t_shell *shell, char **envp)
 {
 	char	*command;
+	int		pipe_count;
 
 	(void)envp;
 	line = ft_strtrim(line, " ");
@@ -159,9 +160,17 @@ void	launch_commands(char *line, t_shell *shell, char **envp)
 		line = run_heredoc(line);
 	if (command == NULL || is_empty_line(line))
 		return ;
-	if (check_pipe_symbol(line))
-		call_pipe_function();
-	else if (ft_strcmp("echo", command) || ft_strcmp("/bin/echo", command))
+	if (!check_quotes(line))
+		return ;
+	pipe_count = check_pipe_symbol(line);
+	if (pipe_count > 0)
+	{
+		printf("yes\n");
+		return ;
+	}
+	if (pipe_count == -1)
+		return ;
+ 	else if (ft_strcmp("echo", command) || ft_strcmp("/bin/echo", command))
 		check_echo_line(line, shell->env);
 	else if (ft_strcmp("env", command) || ft_strcmp("/bin/env", command))
 		print_env(shell->env);
