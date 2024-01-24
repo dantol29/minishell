@@ -6,6 +6,9 @@ add NEW TODO's to the TOP. []=todo [x] = done
 [ ] ctrl-\ does nothing.
 
 26.01
+
+[ ] !!!!! add \0 Nullterminator after creating substring (for no segm fold)
+
 [ ] check if executable between pipes
 [ ] check heredoc with pipe/pipes
 [ ] check if gnl has to be in the libft
