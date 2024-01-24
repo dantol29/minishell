@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/23 16:55:11 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/24 11:30:58 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int		ft_strcmp(const char *str1, const char *str2);
 int		is_empty_line(char *line);
 char	*skip_command_name(char *line);
 void	lstadd_back(t_env **lst, t_env *new);
+int		is_quote(char c);
 
 // env
 int		print_env_var(char *line, t_env *lst, int i, int *invalid_var);

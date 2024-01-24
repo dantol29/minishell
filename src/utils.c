@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:51:29 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/23 12:24:12 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/24 11:30:50 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,11 @@ char	*skip_command_name(char *line)
 		line++;
 	line = ft_strtrim(line, " ");
 	return (line);
+}
+
+int	is_quote(char c)
+{
+	if (c == '\"' || c == '\'')
+		return (TRUE);
+	return (FALSE);
 }
