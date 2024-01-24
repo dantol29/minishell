@@ -11,7 +11,8 @@
 
 
 # ECHO
-[x] echo$USER						$minishell: command not found: echodtolmaco
+
+[x] "echo a"                        $echo a: command not found
 
 # SET / UNSET VARIABLE
 
@@ -63,7 +64,6 @@
 
 ##  NEWLINE MUST BE ALWAYS 
 [x] echo										$newline
-
 
 ## NO NEWLINE -n = NO NEWLINE AFTER IMPUT
 [x] echo -n, "-n", '-n'							$no newline

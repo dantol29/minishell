@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/24 12:00:58 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/24 14:17:49 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,15 @@ typedef struct s_shell
 
 #include "../libft/libft.h"
 
-void	save_envp(t_shell *shell, char **envp);
-void	check_echo_line(char *line, t_env *lst);
 void	launch_commands(char *line, t_shell *shell, char **envp);
 int		launch_exec(char *line, t_shell *shell, char **envp);
 
+// echo
+void	check_echo_line(char *line, t_env *lst);
+
 // heredoc
-char   *run_heredoc(char *line);
-int		is_heredoc(char *line);
+char   *run_heredoc(char *line, char *command);
+int		is_heredoc(char *line, int command_len);
 
 // utils
 int		ft_strcmp(const char *str1, const char *str2);
@@ -89,6 +90,14 @@ void	print_env_var_value(char *variable_name, t_env *lst);
 int		find_env_var(char *variable_name, t_env *lst);
 void	replace_env_var_value(char *variable_name, char *new_value, t_env *lst);
 void	unset_env_var(char *env_name, t_env **lst);
+void	print_env(t_env *env);
+t_env	*create_new_env_node(char *name, char *value);
+int		add_env_var(char *line, t_env *env);
+char	*get_env_value(char *variable_name, t_env *lst);
+void	save_envp(t_shell *shell, char **envp);
+
+// cd
+void	cd(char *line, t_env *env);
 
 // pipe
 int		check_pipe_symbol(char *line);

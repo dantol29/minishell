@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:50:22 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/24 12:00:43 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/24 12:36:36 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ int	check_quotes(char *line)
 	i = 0;
 	while (line[i])
 	{
-		if (line[i] && line[i - 1] != '\\' && \
-		(line[i] == '\'' || line[i] == '\"'))
+		if (line[i] && line[i - 1] != '\\' && is_quote(line[i]))
 		{
 			symbol = line[i];
 			while (line[i])
