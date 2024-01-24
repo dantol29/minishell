@@ -1,23 +1,28 @@
-add new TODO's from beginning. []=todo [x] = done
+add NEW TODO's to the TOP. []=todo [x] = done
 
-[ ] Not interpret unclosed quotes or special characters which are not required by the
-        subject such as \ (backslash) or ; (semicolon).
+[ ] Not interpret unclosed quotes or special characters which are not required by the subject such as \ (backslash) or ; (semicolon).
 [ ] ; semicolon 
 [ ] exitocde Handle $? which should expand to the exit status of the most recently executed foreground pipeline.
 [ ] ctrl-\ does nothing.
 
-24.01
-[ ] divide line between pipes
-[x] heredoc error handling
-[x] quotes logic for commands "echo a"
-[x] count pipes
+26.01
+[ ] check if executable between pipes
+[ ] check heredoc with pipe/pipes
 [ ] check if gnl has to be in the libft
 [ ]	echo $?
 [ ] Fix history
-[ ] cat << (prints what was entered)
+[ ] cat and heredoc<< (prints what was entered)
 [ ] exit code  https://www.redhat.com/sysadmin/exit-codes-demystified
 
+25.01 
+[ ] Exam day  Daniil
+[ ] Free day Alena
 
+24.01
+[x] divide line between pipes and save in substrings
+[x] heredoc error handling
+[x] quotes logic for commands "echo a"
+[x] check and count pipes
 
 23.01
 [x] echo. no empty space after invalid $VAR
