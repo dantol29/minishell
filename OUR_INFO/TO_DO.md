@@ -8,13 +8,22 @@ add new TODO's from beginning. []=todo [x] = done
 
 24.01
 [ ] check if gnl has to be in the libft
-[ ] echo | - error
 [ ]	echo $?
 [ ] Fix history
 [ ] cat << (prints what was entered)
-[ ] if heredoc wiht multiple pipes
-[ ] if heredoc inside the quotes
 [ ] exit code  https://www.redhat.com/sysadmin/exit-codes-demystified
+# Heredoc
+[ ] '>>' ">>"
+[ ] if heredoc with multiple pipes
+[ ] if heredoc inside the quotes
+# PIPE
+[ ] is real pipe |
+[ ] echo | - error
+[ ] ||
+[ ] "|" '|'
+[ ] change ft check_pipe_symbol(char *line). 
+        To check if it is real pipe. Not : double ||, that is some command between, if it is not in "|"
+[ ] echo asdvs |     (error)
 
 23.01
 [x] echo. no empty space after invalid $VAR
