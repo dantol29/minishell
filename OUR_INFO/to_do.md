@@ -7,14 +7,14 @@ add NEW TODO's to the TOP. []=todo [x] = done
 
 26.01
 
-[ ] !!!!! add \0 Nullterminator after creating substring (for no segm fold)
-
-[ ] check if executable between pipes
+[x] !!!!! add \0 Nullterminator (substring does it for us:)
+[x] check if command exists between pipes
+[x] split pipes
+[ ] cat << A (prints what was entered, only if after heredoc is empty)
 [ ] check heredoc with pipe/pipes
 [ ] check if gnl has to be in the libft
 [ ]	echo $?
 [ ] Fix history
-[ ] cat and heredoc<< (prints what was entered)
 [ ] exit code  https://www.redhat.com/sysadmin/exit-codes-demystified
 
 25.01 

@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:58:49 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/24 16:21:59 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/25 12:40:53 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,14 @@ int	main(int argc, char **argv, char **envp)
 	while (line != NULL)
 	{
 		line = ft_strtrim(line, " ");
-		split_pipes(line);
-		launch_commands(line, &shell, envp);
-		add_history(line);
+		line = split_pipes(line);
+		if (line)
+		{
+			launch_commands(line, &shell, envp);
+			add_history(line);
+		}
 		line = readline("minishell$ ");
 	}
+	free(line);
 	printf("exit\n");
 }

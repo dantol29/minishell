@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/24 17:12:23 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/25 13:05:12 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	check_echo_line(char *line, t_env *lst);
 
 // heredoc
 char   *run_heredoc(char *line, char *command);
-int		is_heredoc(char *line, int command_len);
+int		is_heredoc(char *line);
 
 // utils
 int		ft_strcmp(const char *str1, const char *str2);
@@ -98,7 +98,7 @@ void	cd(char *line, t_env *env);
 
 // pipe
 int		check_pipe_symbol(char *line);
-void	split_pipes(char *line);
+char	*split_pipes(char *line);
 
 // save all env variables in a linked list
 void	save_envp(t_shell *shell, char **envp);
