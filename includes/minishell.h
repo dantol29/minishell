@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/25 13:05:12 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/25 17:23:39 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,11 @@ typedef struct s_shell
 #include "../libft/libft.h"
 
 void	launch_commands(char *line, t_shell *shell, char **envp);
-int		launch_exec(char *line, char **envp);
+int		launch_exec(char *line, char **envp, t_shell *shell);
 char	*find_command(char *line);
 
 // echo
-void	check_echo_line(char *line, t_env *lst);
+void	check_echo_line(char *line, t_shell *shell);
 
 // heredoc
 char   *run_heredoc(char *line, char *command);
@@ -81,7 +81,7 @@ int		is_quote(char c);
 int		check_quotes(char *line);
 
 // env
-int		print_env_var(char *line, t_env *lst, int i, int *invalid_var);
+int		print_env_var(char *line, t_shell *shell, int i, int *invalid_var);
 void	print_env_var_value(char *variable_name, t_env *lst);
 int		find_env_var(char *variable_name, t_env *lst);
 void	print_env(t_env *env);

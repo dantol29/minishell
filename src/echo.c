@@ -6,14 +6,14 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:50:22 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/25 11:18:04 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/25 18:49:39 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 /*echo print function*/
-static int	print_inside_quotes(char *line, int i, t_env *lst, int *invalid_var)
+static int	print_inside_quot(char *line, int i, t_shell *shell, int *inval_var)
 {
 	char	symbol;
 
@@ -21,7 +21,7 @@ static int	print_inside_quotes(char *line, int i, t_env *lst, int *invalid_var)
 	if (line[i - 1] == ' ')
 		write(1, " ", 1);
 	if (symbol == '$')
-		return (print_env_var(line, lst, i, invalid_var));
+		return (print_env_var(line, shell, i, inval_var));
 	i++;
 	while (line[i] && line[i] != symbol)
 	{
@@ -29,7 +29,7 @@ static int	print_inside_quotes(char *line, int i, t_env *lst, int *invalid_var)
 		(line[i + 1] == '\\' || line[i + 1] == '\"'))
 			i++;
 		if (symbol == '\"' && line[i] == '$')
-			i = print_env_var(line, lst, i, invalid_var);
+			i = print_env_var(line, shell, i, inval_var);
 		else
 			write(1, &line[i], 1);
 		i++;
@@ -38,7 +38,7 @@ static int	print_inside_quotes(char *line, int i, t_env *lst, int *invalid_var)
 }
 
 /*print echo*/
-static void	print_echo_line(char *line, t_env *lst)
+static void	print_echo_line(char *line, t_shell *shell)
 {
 	int	i;
 	int	invalid_var;
@@ -48,7 +48,7 @@ static void	print_echo_line(char *line, t_env *lst)
 	while (line[i])
 	{
 		if (is_quote(line[i]) || line[i] == '$')
-			i = print_inside_quotes(line, i, lst, &invalid_var);
+			i = print_inside_quot(line, i, shell, &invalid_var);
 		else if (line[i] != ' ')
 		{
 			if (invalid_var == 0 && line[i - 1] == ' ')
@@ -94,7 +94,7 @@ static char	*check_flag_n(char *line, int *flag)
 			if (line[i] != ' ' && line[i] != '\0')
 				return (line + j);
 			*flag = 0;
-			j = i;	
+			j = i;
 		}
 		i++;
 	}
@@ -102,7 +102,7 @@ static char	*check_flag_n(char *line, int *flag)
 }
 
 /*manage echo function*/
-void	check_echo_line(char *line, t_env *lst)
+void	check_echo_line(char *line, t_shell *shell)
 {
 	int	flag;
 
@@ -117,7 +117,7 @@ void	check_echo_line(char *line, t_env *lst)
 	line = ft_strtrim(line, " ");
 	if (!check_quotes(line))
 		return ;
-	print_echo_line(line, lst);
+	print_echo_line(line, shell);
 	if (flag)
 		write(1, "\n", 1);
 }

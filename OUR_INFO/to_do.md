@@ -1,25 +1,34 @@
 add NEW TODO's to the TOP. []=todo [x] = done
+info about exit codes https://www.redhat.com/sysadmin/exit-codes-demystified
+ctr+c - exit code 130
+command not found - exit code 127
+error - exit code 1
+success - exit code 0
 
-[ ] Not interpret unclosed quotes or special characters which are not required by the subject such as \ (backslash) or ; (semicolon).
-[ ] ; semicolon 
-[ ] exitocde Handle $? which should expand to the exit status of the most recently executed foreground pipeline.
-[ ] ctrl-\ does nothing.
-
-26.01
-
-[x] !!!!! add \0 Nullterminator (substring does it for us:)
-[x] check if command exists between pipes
-[x] split pipes
-[ ] cat << A (prints what was entered, only if after heredoc is empty)
+27.01
+[ ] ctrl-\ does nothing
 [ ] check heredoc with pipe/pipes
 [ ] check if gnl has to be in the libft
-[ ]	echo $?
-[ ] Fix history
-[ ] exit code  https://www.redhat.com/sysadmin/exit-codes-demystified
+[ ] Fix history (what is wrong?)
 
-25.01 
-[ ] Exam day  Daniil
-[ ] Free day Alena
+26.01
+[ ] stop cat after cat << A
+[ ] exit code 130 (global variable?)
+[ ] < redirect input
+[ ] > redirect output
+[ ] >> redirect output in append mode
+
+25.01
+[x] exit code 1 (error)
+[x] exit code 0 (success)
+[x] exit code 127 (command not found)
+[x] echo $?
+[x] cat << A (print everything that is entered)
+[x] cat << A file.txt (print only file.txt)
+[x] add \0 (substring does it for us:)
+[x] check if command exists between pipes
+[x] split pipes
+// Free day Alena
 
 24.01
 [x] divide line between pipes and save in substrings

@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:15:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/01/25 13:32:45 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/25 18:50:22 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ static int	heredoc_read(char *line, int i)
 	return (i);
 }
 
-
 static int	heredoc_cat(char *line, int i)
 {
 	int		start;
@@ -88,12 +87,15 @@ static int	heredoc_cat(char *line, int i)
 	get_line = get_next_line(0);
 	while (get_line != NULL && !ft_strcmp(get_line, exit_heredoc))
 	{
-		save_cat[j++] = get_line; // save entered lines to print after
+		save_cat[j++] = ft_substr(get_line, 0, ft_strlen(get_line));
 		free(get_line);
 		write(1, "heredoc> ", 9);
 		get_line = get_next_line(0);
 	}
-	// if there is something after heredoc, do not print what was entered
+	start = 0;
+	if (is_empty_line(line + i))
+		while (start < j)
+			printf("%s", save_cat[start++]);
 	return (i);
 }
 

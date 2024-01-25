@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:12:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/25 13:05:18 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/25 18:51:13 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,18 +66,10 @@ char	*find_command(char *line)
 	return (extract_command(line, count_letters));
 }
 
-void	launch_commands(char *line, t_shell *shell, char **envp)
+static int	choose(char *line, char *command, char **envp, t_shell *shell)
 {
-	char	*command;
-
-	command = find_command(line);
-	line = run_heredoc(line, command);
-	if (command == NULL || line == NULL || is_empty_line(line))
-		return ;
-	if (!check_quotes(line))
-		return ;
- 	else if (ft_strcmp("echo", command) || ft_strcmp("/bin/echo", command))
-		check_echo_line(line, shell->env);
+	if (ft_strcmp("echo", command) || ft_strcmp("/bin/echo", command))
+		check_echo_line(line, shell);
 	else if (ft_strcmp("env", command) || ft_strcmp("/bin/env", command))
 		print_env(shell->env);
 	else if (ft_strcmp("export", command))
@@ -92,10 +84,31 @@ void	launch_commands(char *line, t_shell *shell, char **envp)
 	else if (ft_strcmp("cd", command))
 		cd(line, shell->env);
 	else if (ft_strcmp("exit", command))
-	{
 		printf("exit\n");
-		exit(EXIT_SUCCESS);
-	}
-	else if (launch_exec(line, envp) == FALSE)
+	else if (launch_exec(line, envp, shell) == FALSE)
+	{
 		printf("%s: command not found\n", command);
+		exit(127);
+	}
+	return (TRUE);
+}
+
+void	launch_commands(char *line, t_shell *shell, char **envp)
+{
+	char	*command;
+	int		pid;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		command = find_command(line);
+		line = run_heredoc(line, command);
+		if (command == NULL || line == NULL || is_empty_line(line))
+			exit(1);
+		if (!check_quotes(line))
+			exit(1);
+		if (choose(line, command, envp, shell))
+			exit(EXIT_SUCCESS);
+	}
+	waitpid(pid, &shell->exit_code, 0);
 }

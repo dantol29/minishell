@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:14:45 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/25 12:36:28 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/25 18:55:15 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int	check_pipe_symbol(char *line)
 	{
 		if (line[i] != '|' && line[i] != ' ' && !is_quote(line[i]))
 			status = 1;
-		if (status == 1 && line[i] == '|' && !is_quote(line[i - 1]) && !is_quote(line[i + 1]))
+		if (status == 1 && line[i] == '|' && !is_quote(line[i - 1]) \
+		&& !is_quote(line[i + 1]))
 		{
 			if (!is_empty_line(line + i + 1))
 				pipe_count++;
@@ -37,11 +38,11 @@ int	check_pipe_symbol(char *line)
 		}
 		i++;
 	}
-	printf("pipe count:%d\n", pipe_count);
+	//printf("pipe count:%d\n", pipe_count);
 	return (pipe_count);
 }
 
-int is_valid_substring(char *line)
+int	is_valid_substring(char *line)
 {
 	char	*command;
 
@@ -49,17 +50,17 @@ int is_valid_substring(char *line)
 	if (access(command, 0) == 0 \
 	|| access(ft_strjoin("/bin/", command), 0) == 0)
 		return (TRUE);
-	return(FALSE);
+	return (FALSE);
 }
 
 char	*split_pipes(char *line)
 {
-	int pipe_count;
-	int	i;
-	int	j;
-	int	start;
-	char **substrings;
-	
+	int		pipe_count;
+	int		i;
+	int		j;
+	int		start;
+	char	**substrings;
+
 	pipe_count = check_pipe_symbol(line);
 	if (pipe_count <= 0)
 	{
@@ -79,7 +80,7 @@ char	*split_pipes(char *line)
 	while (line[i])
 	{
 		if (line[i + 1] == '\0' || \
-			(line[i] == '|' && !is_quote(line[i - 1]) && !is_quote(line[i + 1])))
+		(line[i] == '|' && !is_quote(line[i - 1]) && !is_quote(line[i + 1])))
 		{
 			substrings[j] = (char *)malloc(sizeof(char) * (i - start + 1));
 			if (!substrings[j])
@@ -88,7 +89,7 @@ char	*split_pipes(char *line)
 				substrings[j++] = ft_substr(line, start, i - start + 1);
 			else
 				substrings[j++] = ft_substr(line, start, i - start);
-			if(!is_valid_substring(substrings[j - 1]))
+			if (!is_valid_substring(substrings[j - 1]))
 				return (ft_strtrim(substrings[j - 1], " "));
 			start = i + 1;
 		}

@@ -6,15 +6,15 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:58:49 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/25 12:40:53 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/25 18:53:03 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void ctrl_c(int signum)
+void	ctrl_c(int signum)
 {
-    (void)signum;
+	(void)signum;
 	rl_replace_line("\0", 0);
 	write(STDERR_FILENO, "\n", 1);
 	rl_on_new_line();
@@ -22,7 +22,7 @@ void ctrl_c(int signum)
 	return ;
 }
 
-int	launch_exec(char *line, char **envp)
+int	launch_exec(char *line, char **envp, t_shell *shell)
 {
 	char	**command;
 	char	*cmd_path;
@@ -35,14 +35,14 @@ int	launch_exec(char *line, char **envp)
 		pid = fork();
 		if (pid == 0)
 			execve(cmd_path, command, envp);
-		waitpid(pid, NULL, 0);
+		waitpid(pid, &shell->exit_code, 0);
 	}
 	else if (access(command[0], 0) == 0)
 	{
 		pid = fork();
 		if (pid == 0)
 			execve(command[0], command, envp);
-		waitpid(pid, NULL, 0);
+		waitpid(pid, &shell->exit_code, 0);
 	}
 	else
 		return (FALSE);

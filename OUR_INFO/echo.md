@@ -1,7 +1,7 @@
 ### VARIABLES
 #     check:
 ```
-    "e"c"h"o      '-n'     "$USER hello" '$USER' $USER "world\""
+    "e"c"h"o  '-n'   "$USER hello" '$USER' $USER "world\"" $?hello
 ```
 ## CHECK COMMAND IF it is BUILTIN
 # type -a echo
