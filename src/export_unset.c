@@ -6,7 +6,7 @@
 /*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:20:15 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/26 11:49:18 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/01/26 14:08:44 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_env	*create_new_env_node(char *name, char *value)
 	return (new);
 }
 
-int	add_env_var(char *line, t_env *env)
+int	add_env_var(char *line, t_shell *shell)
 {
 	char	*name;
 	char	*value;
@@ -73,22 +73,25 @@ int	add_env_var(char *line, t_env *env)
 	int		i;
 
 	line = skip_command_name(line);
+	if (is_empty_line(line))
+	{
+		print_env(shell->env);
+		return (TRUE);
+	}
 	i = 0;
 	while (line[i] && (ft_isalnum(line[i]) || line[i] == '_'))
 		i++;
-	if (line[i++] != '=' || i == 0)
-	{
-		printf("minishell: error while creating a new variable\n");
-		exit(EXIT_FAILURE);
-	}
+	if (line[i++] != '=')
+		return (FALSE);
 	len = i;
 	while (line[len] && line[len] != ' ')
 		len++;
 	name = ft_substr(line, 0, i - 1);
 	value = ft_substr(line, i, len);
-	if (find_env_var(name, env))
-		replace_env_var_value(name, value, env);
+	if (find_env_var(name, shell->env))
+		replace_env_var_value(name, value, shell->env);
 	else
-		lstadd_back(&env, create_new_env_node(name, value));
+		lstadd_back(&shell->env, create_new_env_node(name, value));
+	shell->exit_code = 0;
 	return (TRUE);
 }

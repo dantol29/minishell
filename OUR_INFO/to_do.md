@@ -9,17 +9,20 @@ success - exit code 0
 [ ] ctrl-\ does nothing
 [ ] check heredoc with pipe/pipes
 [ ] check if gnl has to be in the libft
-[ ] Fix history (what is wrong?)
 
 26.01
-[ ] if something after env return error
-[ ] echo $? + $?
-[x] add \0  for ft split_pipes for substrings[j](array of arrays)
-[ ] stop cat after cat << A
-[ ] exit code 130 (global variable?)
 [ ] < redirect input
 [ ] > redirect output
 [ ] >> redirect output in append mode
+[ ] cat >> file.txt | cat >> bla.txt only first redirection is done
+[ ] echo $? + $? (expr)
+[ ] divide split_pipe function
+[x] exit code 130 after ctrl+c
+[x] "bin/ls" '/bin/ls'
+[x] if just export print all env
+[x] if something after env return error
+[x] add \0  for ft split_pipes for substrings[j](array of arrays)
+[x] stop cat after cat << A
 
 25.01
 [x] exit code 1 (error)

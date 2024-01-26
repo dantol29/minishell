@@ -6,7 +6,7 @@
 /*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:12:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/26 11:47:10 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/01/26 14:50:49 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,47 +66,55 @@ char	*find_command(char *line)
 	return (extract_command(line, count_letters));
 }
 
-static int	choose_function(char *line, char *command, char **envp, t_shell *shell)
+static int	builtins(char *line, char *command, t_shell *shell)
 {
 	if (ft_strcmp("echo", command) || ft_strcmp("/bin/echo", command))
 		check_echo_line(line, shell);
 	else if ((ft_strcmp("env", command) || ft_strcmp("/bin/env", command)) && \
 	is_empty_line(skip_command_name(line)))
-		print_env(shell->env);
-	else if (ft_strcmp("export", command))
-		add_env_var(line, shell->env);
-	else if (ft_strcmp("unset", command))
-		unset_env_var(skip_command_name(line), &shell->env);
-	else if (ft_strcmp("pwd", command) || ft_strcmp("/bin/pwd", command))
-		printf("%s\n", getcwd(NULL, 0));
-	else if (ft_strcmp("cd", command))
-		cd(line, shell->env);
-	else if (ft_strcmp("exit", command))
-		printf("exit\n");
-	else if (launch_exec(line, envp, shell) == FALSE)
 	{
-		printf("%s: command not found\n", command);
-		exit(127);
+		print_env(shell->env);
+		shell->exit_code = 0;
 	}
+	else if (ft_strcmp("export", command))
+		add_env_var(line, shell);
+	else if (ft_strcmp("unset", command))
+	{
+		unset_env_var(skip_command_name(line), &shell->env);
+		shell->exit_code = 0;
+	}
+	else if (ft_strcmp("pwd", command) || ft_strcmp("/bin/pwd", command))
+	{
+		printf("%s\n", getcwd(NULL, 0));
+		shell->exit_code = 0;
+	}
+	else if (ft_strcmp("cd", command))
+		cd(line, shell);
+	else if (ft_strcmp("exit", command))
+	{
+		printf("exit\n");
+		exit(EXIT_SUCCESS);
+	}
+	else
+		return (FALSE);
 	return (TRUE);
 }
 
 void	launch_commands(char *line, t_shell *shell, char **envp)
 {
 	char	*command;
-	int		pid;
 
-	pid = fork();
-	if (pid == 0)
+	command = find_command(line);
+	line = run_heredoc(line, command);
+	if (command == NULL || line == NULL || is_empty_line(line))
+		shell->exit_code = 0;
+	else if (!check_quotes(line))
+		shell->exit_code = 1;
+	else if (builtins(line, command, shell))
+		return ;
+	else if (launch_exec(line, command, envp, shell) == FALSE)
 	{
-		command = find_command(line);
-		line = run_heredoc(line, command);
-		if (command == NULL || line == NULL || is_empty_line(line))
-			exit(0);
-		if (!check_quotes(line))
-			exit(EXIT_FAILURE);
-		if (choose_function(line, command, envp, shell))
-			exit(EXIT_SUCCESS);
+		shell->exit_code = 127;
+		printf("%s: command not found\n", command);
 	}
-	waitpid(pid, &shell->exit_code, 0);
 }

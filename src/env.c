@@ -6,7 +6,7 @@
 /*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:00:47 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/26 11:37:17 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/01/26 14:38:48 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,10 @@ int	print_env_var(char *line, t_shell *shell, int i, int *invalid_var)
 	start = i;
 	if (line[i] == '?')
 	{
-		ft_putnbr_fd(shell->exit_code / 256, 1);
+		if (g_ctrl_c_status == 130)
+			ft_putnbr_fd(130, 1);
+		else
+			ft_putnbr_fd(shell->exit_code, 1);
 		return (i);
 	}
 	while (line[i] && line[i] != ' ' && !is_quote(line[i]))

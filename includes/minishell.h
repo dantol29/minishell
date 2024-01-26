@@ -6,7 +6,7 @@
 /*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/26 11:02:32 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/01/26 14:36:47 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@
 #include <readline/readline.h>
 // Error handling
 #include <errno.h>
+#include "../libft/libft.h"
+
 #define TRUE 1
 #define FALSE 0
 
@@ -60,10 +62,10 @@ typedef struct s_shell
 	t_env	*env;
 }	t_shell;
 
-#include "../libft/libft.h"
+extern int	g_ctrl_c_status;
 
 void	launch_commands(char *line, t_shell *shell, char **envp);
-int		launch_exec(char *line, char **envp, t_shell *shell);
+int		launch_exec(char *line, char *cmd, char **envp, t_shell *shell);
 char	*find_command(char *line);
 
 // echo
@@ -88,13 +90,13 @@ void	print_env(t_env *env);
 char	*get_env_value(char *variable_name, t_env *lst);
 
 // export and unset
-int		add_env_var(char *line, t_env *env);
+int		add_env_var(char *line, t_shell *shell);
 t_env	*create_new_env_node(char *name, char *value);
 void	replace_env_var_value(char *variable_name, char *new_value, t_env *lst);
 void	unset_env_var(char *env_name, t_env **lst);
 
 // cd
-void	cd(char *line, t_env *env);
+void	cd(char *line, t_shell *shell);
 
 // pipe
 int		check_pipe_symbol(char *line);
