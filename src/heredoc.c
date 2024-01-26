@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:15:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/01/25 18:50:22 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/26 11:05:07 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,11 @@ static int	heredoc_cat(char *line, int i)
 	}
 	start = 0;
 	if (is_empty_line(line + i))
+	{
 		while (start < j)
 			printf("%s", save_cat[start++]);
+		return (-1);
+	}
 	return (i);
 }
 
@@ -121,7 +124,11 @@ char	*run_heredoc(char *line, char *command)
 		return (NULL);
 	}
 	if (ft_strcmp("cat", command))
+	{
 		i = heredoc_cat(line, i);
+		if (i == -1)
+			return (NULL);
+	}
 	else
 		i = heredoc_read(line, i);
 	return (ft_strjoin(ft_substr(line, 0, before_heredoc), line + i));

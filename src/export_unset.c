@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_unset.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:20:15 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/24 15:35:25 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/26 11:49:18 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,13 @@ int	add_env_var(char *line, t_env *env)
 	while (line[i] && (ft_isalnum(line[i]) || line[i] == '_'))
 		i++;
 	if (line[i++] != '=' || i == 0)
-		return (FALSE);
+	{
+		printf("minishell: error while creating a new variable\n");
+		exit(EXIT_FAILURE);
+	}
 	len = i;
 	while (line[len] && line[len] != ' ')
 		len++;
-	if (!(is_empty_line(line + len)))
-		return (FALSE);
 	name = ft_substr(line, 0, i - 1);
 	value = ft_substr(line, i, len);
 	if (find_env_var(name, env))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/25 17:23:39 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/26 11:02:32 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,9 @@ void	cd(char *line, t_env *env);
 // pipe
 int		check_pipe_symbol(char *line);
 char	*split_pipes(char *line);
+
+// free
+void    free_double_array(char **array, int size);
 
 // save all env variables in a linked list
 void	save_envp(t_shell *shell, char **envp);

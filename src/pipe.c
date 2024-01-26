@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:14:45 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/25 18:55:15 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/26 11:02:49 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,16 @@ char	*split_pipes(char *line)
 			else
 				substrings[j++] = ft_substr(line, start, i - start);
 			if (!is_valid_substring(substrings[j - 1]))
-				return (ft_strtrim(substrings[j - 1], " "));
+			{
+				printf("%s: command not found\n", ft_strtrim(substrings[j - 1], " "));
+				substrings[j] = NULL;
+				free_double_array(substrings, j);
+				return (NULL);
+			}
 			start = i + 1;
 		}
 		i++;
 	}
+	substrings[j] = NULL;
 	return (line);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launch_commands.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:12:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/25 18:51:13 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/26 11:47:10 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,17 +66,15 @@ char	*find_command(char *line)
 	return (extract_command(line, count_letters));
 }
 
-static int	choose(char *line, char *command, char **envp, t_shell *shell)
+static int	choose_function(char *line, char *command, char **envp, t_shell *shell)
 {
 	if (ft_strcmp("echo", command) || ft_strcmp("/bin/echo", command))
 		check_echo_line(line, shell);
-	else if (ft_strcmp("env", command) || ft_strcmp("/bin/env", command))
+	else if ((ft_strcmp("env", command) || ft_strcmp("/bin/env", command)) && \
+	is_empty_line(skip_command_name(line)))
 		print_env(shell->env);
 	else if (ft_strcmp("export", command))
-	{
-		if (!add_env_var(line, shell->env))
-			printf("error while creating a new variable\n");
-	}
+		add_env_var(line, shell->env);
 	else if (ft_strcmp("unset", command))
 		unset_env_var(skip_command_name(line), &shell->env);
 	else if (ft_strcmp("pwd", command) || ft_strcmp("/bin/pwd", command))
@@ -104,10 +102,10 @@ void	launch_commands(char *line, t_shell *shell, char **envp)
 		command = find_command(line);
 		line = run_heredoc(line, command);
 		if (command == NULL || line == NULL || is_empty_line(line))
-			exit(1);
+			exit(0);
 		if (!check_quotes(line))
-			exit(1);
-		if (choose(line, command, envp, shell))
+			exit(EXIT_FAILURE);
+		if (choose_function(line, command, envp, shell))
 			exit(EXIT_SUCCESS);
 	}
 	waitpid(pid, &shell->exit_code, 0);

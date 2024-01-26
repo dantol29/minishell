@@ -12,6 +12,9 @@ success - exit code 0
 [ ] Fix history (what is wrong?)
 
 26.01
+[ ] if something after env return error
+[ ] echo $? + $?
+[x] add \0  for ft split_pipes for substrings[j](array of arrays)
 [ ] stop cat after cat << A
 [ ] exit code 130 (global variable?)
 [ ] < redirect input
@@ -25,10 +28,9 @@ success - exit code 0
 [x] echo $?
 [x] cat << A (print everything that is entered)
 [x] cat << A file.txt (print only file.txt)
-[x] add \0 (substring does it for us:)
 [x] check if command exists between pipes
 [x] split pipes
-// Free day Alena
+
 
 24.01
 [x] divide line between pipes and save in substrings
