@@ -5,20 +5,23 @@ command not found - exit code 127
 error - exit code 1
 success - exit code 0
 
-27.01
+28.01
 [ ] ctrl-\ does nothing
 [ ] check heredoc with pipe/pipes
 [ ] check if gnl has to be in the libft
+[ ] cat >> file.txt | cat >> bla.txt only first redirection is done
+[ ] >> redirect output in append mode
 
-26.01
+27.01
 [ ] < redirect input
 [ ] > redirect output
-[ ] >> redirect output in append mode
-[ ] cat >> file.txt | cat >> bla.txt only first redirection is done
 [ ] echo $? + $? (expr)
 [ ] divide split_pipe function
+[ ] ctrl+c exit cat
+
+26.01
 [x] exit code 130 after ctrl+c
-[x] "bin/ls" '/bin/ls'
+[x] "/bin/ls" '/bin/ls' "/bin/ls" "-l""a"
 [x] if just export print all env
 [x] if something after env return error
 [x] add \0  for ft split_pipes for substrings[j](array of arrays)
