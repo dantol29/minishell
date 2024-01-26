@@ -12,6 +12,7 @@
 
 
 ## NOT VALID 
+[x] cat "<< <<" A
 [x] """ echo <<A
 [x]  <<"
 [x] echo " <<A
@@ -34,7 +35,7 @@
 
 ## CAT AND HEREDOC -  prints  strings, after exit heredoc
 
-[ ] our_github_minishell cat <<A
+[x] our_github_minishell cat <<A
     heredoc> dsaf
     heredoc> fsdaf
     heredoc> 111111111111

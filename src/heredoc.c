@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:15:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/01/26 11:05:07 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/01/26 18:25:24 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	check_invalid_heredoc(char *line, int i)
 {
 	while (line[i])
 	{
-		if (line[i] == '<')
+		if (line[i] == '<' || is_quote(line[i]))
 			return (-1);
 		i++;
 	}
@@ -80,8 +80,7 @@ static int	heredoc_cat(char *line, int i)
 
 	j = 0;
 	start = i;
-	while (line[i] && line[i] != ' ')
-		i++;
+	i = skip_until_char(line, i, ' ', 0);
 	exit_heredoc = ft_strjoin(ft_substr(line, start, i - start), "\n");
 	write(1, "heredoc> ", 9);
 	get_line = get_next_line(0);
@@ -92,33 +91,27 @@ static int	heredoc_cat(char *line, int i)
 		write(1, "heredoc> ", 9);
 		get_line = get_next_line(0);
 	}
+	if (!is_empty_line(line + i))
+		return (i);
 	start = 0;
-	if (is_empty_line(line + i))
-	{
-		while (start < j)
-			printf("%s", save_cat[start++]);
-		return (-1);
-	}
-	return (i);
+	while (start < j)
+		printf("%s", save_cat[start++]);
+	return (-1);
 }
 
 char	*run_heredoc(char *line, char *command)
 {
 	int		i;
 	int		before_heredoc;
-	int		heredoc_status;
 
-	heredoc_status = is_heredoc(line);
-	if (!heredoc_status)
+	if (!is_heredoc(line))
 		return (line);
 	i = 0;
 	while (line[i] && line[i] != '<')
 		i++;
 	before_heredoc = i;
-	i += 2;
-	while (line[i] && line[i] == ' ')
-		i++;
-	if (!line[i] || heredoc_status == -1)
+	i = skip_until_char(line, i + 2, ' ', 1);
+	if (!line[i] || is_heredoc(line) == -1)
 	{
 		printf("heredoc: syntax error\n");
 		return (NULL);
