@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:12:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/27 17:25:04 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/27 17:27:09 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	launch_commands(char *line, t_shell *shell, char **envp)
 
 	command = find_command(line);
 	line = run_heredoc(line, command);
-	old_fd = redirections(line, shell);
+	old_fd = redirections(&line, shell);
 	if (old_fd == -1)
 		return ;
 	if (command == NULL || line == NULL || is_empty_line(line))
