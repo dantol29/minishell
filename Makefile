@@ -5,7 +5,8 @@ LIBFT = libft
 
 SOURCES = src/main.c src/save_env.c src/echo.c src/utils.c \
 		src/env.c src/launch_commands.c src/pipe.c src/heredoc.c \
-		src/get_next_line.c src/cd.c src/export_unset.c src/free.c
+		src/get_next_line.c src/cd_pwd_exit.c src/export_unset.c \
+		src/free.c src/redirections.c
 
 OBJECTS = $(SOURCES:.c=.o)
 
@@ -22,9 +23,6 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 	rm -f $(LIBFT)/libft.a
-
-mini: re
-	./minishell
 
 norm :
 	@norminette ./includes/minishell.h $(SOURCES)

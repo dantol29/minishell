@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launch_commands.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:12:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/26 14:50:49 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/01/27 17:06:25 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,17 +84,11 @@ static int	builtins(char *line, char *command, t_shell *shell)
 		shell->exit_code = 0;
 	}
 	else if (ft_strcmp("pwd", command) || ft_strcmp("/bin/pwd", command))
-	{
-		printf("%s\n", getcwd(NULL, 0));
-		shell->exit_code = 0;
-	}
+		pwd(shell);
 	else if (ft_strcmp("cd", command))
 		cd(line, shell);
 	else if (ft_strcmp("exit", command))
-	{
-		printf("exit\n");
-		exit(EXIT_SUCCESS);
-	}
+		ft_exit(line, shell);
 	else
 		return (FALSE);
 	return (TRUE);
@@ -103,18 +97,27 @@ static int	builtins(char *line, char *command, t_shell *shell)
 void	launch_commands(char *line, t_shell *shell, char **envp)
 {
 	char	*command;
+	int		old_fd;
 
 	command = find_command(line);
 	line = run_heredoc(line, command);
+	old_fd = redirections(&line, shell);
+	if (old_fd == -1)
+		return ;
 	if (command == NULL || line == NULL || is_empty_line(line))
 		shell->exit_code = 0;
 	else if (!check_quotes(line))
 		shell->exit_code = 1;
 	else if (builtins(line, command, shell))
-		return ;
+		(void)envp;
 	else if (launch_exec(line, command, envp, shell) == FALSE)
 	{
 		shell->exit_code = 127;
 		printf("%s: command not found\n", command);
+	}
+	if (old_fd > 0)
+	{
+		dup2(old_fd, 1);
+		close(old_fd);
 	}
 }

@@ -15,9 +15,13 @@ success - exit code 0
 27.01
 [ ] < redirect input
 [ ] > redirect output
-[ ] echo $? + $? (expr)
+[x] exit errors (non-integer arguments, too many arg)
+[x] echo $USER$USER
+[x] expr $USER$USER
+[x] expr $? + $?
 [ ] divide split_pipe function
-[ ] ctrl+c exit cat
+[ ] ctrl+c exit heredoc (130)
+[ ] ctrl+c exit cat (130)
 
 26.01
 [x] exit code 130 after ctrl+c

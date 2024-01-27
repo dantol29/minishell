@@ -27,7 +27,7 @@
 [x]  hello$VAR									$bla$VAR							
 [x] "$USER"										$akurmyza
 [x] echo '$BLABLA'								$BLABLA
-[] echo $? + $?
+
 #  NOT VALID VARIABLES: 
 [x] _ $USER (_ in begin)						$_akurmyza: command not found
 [x]$USEr (Small letter, not the same as valid $USER from env)  //  Retturn without empty line 
@@ -35,6 +35,7 @@
 [x] echo "Hello$World!"							$Hello!
  
  # OUR TESTS
+[x] echo hello$USER$USER						hellodtolmaco dtolmaco
 [x] echo "$USER jhjhjvhjvgjg"					$akurmyza jhjhjvhjvgjg
 [x] echo "$USER'' " jhjhjvhjvgjg				$akurmyza''  jhjhjvhjvgjg
 [x] echo "'"$USER"'"							$'dtolmaco'

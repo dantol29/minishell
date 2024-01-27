@@ -1,16 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   cd_pwd_exit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 13:53:41 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/01/26 14:13:48 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/01/27 11:41:06 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	ft_exit(char *line, t_shell *shell)
+{
+	char	*exit_arg;
+	int		i;
+
+	line = skip_command_name(line);
+	exit_arg = find_command(line);
+	line = skip_command_name(line);
+	if (!is_empty_line(line))
+	{
+		printf("minishell: exit: too many arguments\n");
+		shell->exit_code = 1;
+		return ;
+	}
+	i = 0;
+	if (exit_arg[i] == '-' || exit_arg[i] == '+')
+		i++;
+	while (exit_arg[i] && ft_isdigit(exit_arg[i]))
+		i++;
+	if (exit_arg[i] && !ft_isdigit(exit_arg[i]))
+	{
+		printf("minishell: exit: numeric argument required\n");
+		shell->exit_code = 1;
+		return ;
+	}
+	printf("exit\n");
+	exit(ft_atoi(exit_arg));
+}
+
+void	pwd(t_shell *shell)
+{
+	printf("%s\n", getcwd(NULL, 0));
+	shell->exit_code = 0;
+}
 
 void	cd(char *line, t_shell *shell)
 {

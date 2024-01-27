@@ -49,12 +49,12 @@
 
 ### Your shell must implement the following builtins:
 [x] echo   with option -n
-[ ] cd     with only a relative or absolute path
+[x] cd     with only a relative or absolute path
 [x] pwd    with no options
 [x] export with no options
 [x] unset  with no options
 [x] env    with no options or arguments
-[ ] exit   with no options
+[x] exit   with no options
 
 - The readline() function can cause memory leaks. You don’t have to fix them.
 - But that doesn’t mean your own code, yes the code you wrote, can have memory leaks.

@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/26 18:13:12 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/27 17:15:41 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,9 @@ void	check_echo_line(char *line, t_shell *shell);
 char   *run_heredoc(char *line, char *command);
 int		is_heredoc(char *line);
 
+// redirections
+int	redirections(char **line, t_shell *shell);
+
 // utils
 int		ft_strcmp(const char *str1, const char *str2);
 int		is_empty_line(char *line);
@@ -96,11 +99,13 @@ void	replace_env_var_value(char *variable_name, char *new_value, t_env *lst);
 void	unset_env_var(char *env_name, t_env **lst);
 int		skip_until_char(char *line, int i, char c, char mode);
 
-// cd
+// cd_pwd_shell
 void	cd(char *line, t_shell *shell);
+void	ft_exit(char *line, t_shell *shell);
+void	pwd(t_shell *shell);
 
 // pipe
-int		check_pipe_symbol(char *line);
+int	check_symbol(char *line, char c);
 char	*split_pipes(char *line);
 
 // free

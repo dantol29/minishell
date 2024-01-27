@@ -6,40 +6,40 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:14:45 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/26 18:37:43 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/27 15:37:56 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	check_pipe_symbol(char *line)
+int	check_symbol(char *line, char c)
 {
 	int	i;
 	int	status;
-	int	pipe_count;
+	int	count;
 
 	i = 0;
 	status = 0;
-	pipe_count = 0;
-	if (line[0] == '|')
-		return (-1);
+	count = 0;
 	while (line[i])
 	{
-		if (line[i] != '|' && line[i] != ' ' && !is_quote(line[i]))
+		if (line[i] != c && line[i] != ' ' && !is_quote(line[i]))
 			status = 1;
-		if (status == 1 && line[i] == '|' && !is_quote(line[i - 1]) \
+		if (status == 0 && line[i] == c)
+			return (-1);
+		if (status == 1 && line[i] == c && !is_quote(line[i - 1]) \
 		&& !is_quote(line[i + 1]))
 		{
 			if (!is_empty_line(line + i + 1))
-				pipe_count++;
+				count++;
 			else
 				return (-1);
 			status = 0;
 		}
 		i++;
 	}
-	//printf("pipe count:%d\n", pipe_count);
-	return (pipe_count);
+	printf("%c count:%d\n", c, count);
+	return (count);
 }
 
 int	is_valid_substring(char *line)
@@ -61,7 +61,7 @@ char	*split_pipes(char *line)
 	int		start;
 	char	**substrings;
 
-	pipe_count = check_pipe_symbol(line);
+	pipe_count = check_symbol(line, '|');
 	if (pipe_count <= 0)
 	{
 		if (pipe_count == -1)

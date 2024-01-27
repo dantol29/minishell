@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:00:47 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/26 18:39:54 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/27 11:48:14 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ int	print_env_var(char *line, t_shell *shell, int i, int *invalid_var)
 		if (g_ctrl_c_status == 130)
 			ft_putnbr_fd(130, 1);
 		else
-			ft_putnbr_fd(shell->exit_code / 256, 1);
+			ft_putnbr_fd(shell->exit_code, 1);
 		return (i);
 	}
-	while (line[i] && line[i] != ' ' && !is_quote(line[i]))
+	while (line[i] && line[i] != ' '&& line[i] != '$' && !is_quote(line[i]))
 		i++;
 	print_env_var_value(ft_substr(line, start, i - start), shell->env);
 	if (!find_env_var(ft_substr(line, start, i - start), shell->env))
