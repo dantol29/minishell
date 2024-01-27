@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 14:16:12 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/27 17:09:01 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/27 17:21:46 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,21 @@ char	*extract_redirection(char *line, char **filename)
 	return (line);
 }
 
-int	redirections(char **line, t_shell *shell)
+int	redirections(char *line, t_shell *shell)
 {
 	int		new;
 	int		old;
 	char	*filename;
 
-	if (check_symbol(*line, '>') == -1)
+	if (check_symbol(line, '>') == -1)
 	{
 		write(2, "minishell: syntax error\n", 24);
 		shell->exit_code = 1;
 		return (-1);
 	}
-	if (check_symbol(*line, '>') == 0)
+	if (check_symbol(line, '>') == 0)
 		return (0);
-	*line = extract_redirection(*line, &filename);
+	line = extract_redirection(line, &filename);
 	new = open(filename,  O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (new == -1)
     {
