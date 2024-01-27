@@ -5,23 +5,27 @@ command not found - exit code 127
 error - exit code 1
 success - exit code 0
 
-28.01
+08.01
 [ ] ctrl-\ does nothing
 [ ] check heredoc with pipe/pipes
 [ ] check if gnl has to be in the libft
 [ ] cat >> file.txt | cat >> bla.txt only first redirection is done
+[ ] divide split_pipe function
+[ ] ctrl+c exit heredoc (130)
+[ ] ctrl+c exit cat (130)
+
+// holidays
+
+28.01
 [ ] >> redirect output in append mode
+[ ] < redirect input
 
 27.01
-[ ] < redirect input
-[ ] > redirect output
+[x] > redirect output
 [x] exit errors (non-integer arguments, too many arg)
 [x] echo $USER$USER
 [x] expr $USER$USER
 [x] expr $? + $?
-[ ] divide split_pipe function
-[ ] ctrl+c exit heredoc (130)
-[ ] ctrl+c exit cat (130)
 
 26.01
 [x] exit code 130 after ctrl+c

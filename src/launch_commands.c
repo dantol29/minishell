@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:12:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/27 17:27:09 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/27 18:07:23 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,13 +97,9 @@ static int	builtins(char *line, char *command, t_shell *shell)
 void	launch_commands(char *line, t_shell *shell, char **envp)
 {
 	char	*command;
-	int		old_fd;
 
 	command = find_command(line);
 	line = run_heredoc(line, command);
-	old_fd = redirections(&line, shell);
-	if (old_fd == -1)
-		return ;
 	if (command == NULL || line == NULL || is_empty_line(line))
 		shell->exit_code = 0;
 	else if (!check_quotes(line))
@@ -114,10 +110,5 @@ void	launch_commands(char *line, t_shell *shell, char **envp)
 	{
 		shell->exit_code = 127;
 		printf("%s: command not found\n", command);
-	}
-	if (old_fd > 0)
-	{
-		dup2(old_fd, 1);
-		close(old_fd);
 	}
 }

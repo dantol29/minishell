@@ -6,18 +6,24 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 14:16:12 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/27 17:26:46 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/27 18:27:04 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char	*extract_redirection(char *line, char **filename)
+int	extract_redirection(char *line, int redirection_count, t_shell *shell, char **envp)
 {
 	int		i;
 	int		start;
+	int		count;
+	int		new;
+	int		old;
+	char	*filenames[redirection_count + 1];
 
 	i = 0;
+	count = 0;
+	filenames[redirection_count] = NULL;
 	while(line[i])
 	{
 		if (line[i] && line[i] == '>' && !is_quote(line[i - 1]) && !is_quote(line[i + 1]))
@@ -26,37 +32,47 @@ char	*extract_redirection(char *line, char **filename)
 			i = skip_until_char(line, i, ' ', 1);
 			while (line[i] && line[i] != ' ')
 				i++;
-			*filename = ft_substr(line, start, i - start);
+			filenames[count] = ft_strtrim(ft_substr(line, start, i - start), " ");
 			line = ft_strjoin(ft_substr(line, 0, start - 2), ft_substr(line, i, ft_strlen(line) - i));
+			count++;
+			i = -1;
 		}
 		i++;
 	}
-	return (line);
+	i = 0;
+	old = dup(1);
+	while (i < redirection_count)
+	{
+		new = open(filenames[i],  O_RDWR | O_CREAT | O_TRUNC, 0644);
+		if (new == -1)
+    	{
+			perror("open");
+			shell->exit_code = 1;
+			return (-1);
+		}
+		dup2(new, 1);
+		launch_commands(line, shell, envp);
+		i++;
+		//free(filenames[i]);
+	}
+	//free(filenames);
+	if (redirection_count <= 0)
+		return (0);
+	return (old);
 }
 
-int	redirections(char **line, t_shell *shell)
+int	redirections(char **line, t_shell *shell, char **envp)
 {
-	int		new;
-	int		old;
-	char	*filename;
+	int		redirection_count;
 
-	if (check_symbol(*line, '>') == -1)
+	redirection_count = check_symbol(*line, '>');
+	if (redirection_count == -1)
 	{
 		write(2, "minishell: syntax error\n", 24);
 		shell->exit_code = 1;
 		return (-1);
 	}
-	if (check_symbol(*line, '>') == 0)
+	if (redirection_count == 0)
 		return (0);
-	*line = extract_redirection(*line, &filename);
-	new = open(filename,  O_RDWR | O_CREAT | O_TRUNC, 0644);
-	if (new == -1)
-    {
-		perror("open");
-		shell->exit_code = 1;
-		return (-1);
-	}
-	old = dup(1);
-	dup2(new, 1);
-	return (old);
+	return (extract_redirection(*line, redirection_count, shell, envp));
 }

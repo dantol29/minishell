@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:58:49 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/27 13:50:12 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/27 18:20:20 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
 	char	*line;
+	int		old_fd;
 
 	(void)argv;
 	(void)argc;
@@ -116,11 +117,15 @@ int	main(int argc, char **argv, char **envp)
 	{
 		line = ft_strtrim(line, " ");
 		line = split_pipes(line);
-		if (line)
-		{
+		old_fd = redirections(&line, &shell, envp);
+		if (line && old_fd == 0)
 			launch_commands(line, &shell, envp);
-			add_history(line);
+		if (old_fd > 0)
+		{
+			dup2(old_fd, 1);
+			close(old_fd);
 		}
+		add_history(line);
 		g_ctrl_c_status = 0;
 		line = readline("minishell$ ");
 	}
