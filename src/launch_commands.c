@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launch_commands.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:12:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/27 18:07:23 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/28 11:10:42 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,8 @@ void	launch_commands(char *line, t_shell *shell, char **envp)
 	else if (!check_quotes(line))
 		shell->exit_code = 1;
 	else if (builtins(line, command, shell))
-		(void)envp;
-	else if (launch_exec(line, command, envp, shell) == FALSE)
+		(void)shell->envp;
+	else if (launch_exec(line, command, shell, envp) == FALSE)
 	{
 		shell->exit_code = 127;
 		printf("%s: command not found\n", command);

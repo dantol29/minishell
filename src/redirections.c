@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 14:16:12 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/27 18:27:04 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/28 11:31:31 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,7 @@ int	extract_redirection(char *line, int redirection_count, t_shell *shell, char 
 		dup2(new, 1);
 		launch_commands(line, shell, envp);
 		i++;
-		//free(filenames[i]);
 	}
-	//free(filenames);
 	if (redirection_count <= 0)
 		return (0);
 	return (old);

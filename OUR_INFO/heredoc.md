@@ -12,6 +12,7 @@
 
 
 ## NOT VALID 
+[ ] if heredoc with multiple pipes
 [x] cat "<< <<" A
 [x] """ echo <<A
 [x]  <<"
@@ -19,7 +20,6 @@
 [x] echo  <<A     "				    //  END = |A     "| 
 [X] echo <<"A"						// Error?
 [x] '<<>>' "<<" (text)
-[ ] if heredoc with multiple pipes
 [x] if heredoc inside the quotes
 [x] "echo <<A" minishell: error while looking for matching quote
 [x]	a << A						//starts heredoc, print command not found for a

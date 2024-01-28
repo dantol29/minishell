@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/27 18:09:55 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/28 13:06:24 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,14 @@ typedef struct s_env
 typedef struct s_shell
 {
 	int		exit_code;
+	char	**envp;
 	t_env	*env;
 }	t_shell;
 
 extern int	g_ctrl_c_status;
 
 void	launch_commands(char *line, t_shell *shell, char **envp);
-int		launch_exec(char *line, char *cmd, char **envp, t_shell *shell);
+int		launch_exec(char *line, char *cmd, t_shell *shell, char **envp);
 char	*find_command(char *line);
 
 // echo
@@ -105,8 +106,8 @@ void	ft_exit(char *line, t_shell *shell);
 void	pwd(t_shell *shell);
 
 // pipe
-int	check_symbol(char *line, char c);
-char	*split_pipes(char *line);
+int		check_symbol(char *line, char c);
+void	manage_pipes(char *line, t_shell *shell, char **envp);
 
 // free
 void    free_double_array(char **array, int size);

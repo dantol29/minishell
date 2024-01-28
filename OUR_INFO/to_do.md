@@ -1,11 +1,10 @@
 add NEW TODO's to the TOP. []=todo [x] = done
-info about exit codes https://www.redhat.com/sysadmin/exit-codes-demystified
-ctr+c - exit code 130
-command not found - exit code 127
-error - exit code 1
-success - exit code 0
+
+Start minishell: make && ./minishell
+
 
 08.01
+[ ] echo a > 4.txt b > 5.txt  c << A
 [ ] ctrl-\ does nothing
 [ ] check heredoc with pipe/pipes
 [ ] check if gnl has to be in the libft

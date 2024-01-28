@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:58:49 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/27 18:20:20 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/28 14:23:29 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ char	*change_env_var(char *line, t_shell *shell)
 	return (line);
 }
 
-int	launch_exec(char *line, char *cmd, char **envp, t_shell *shell)
+int	launch_exec(char *line, char *cmd, t_shell *shell, char **envp)
 {
 	char	**flags;
 	char	*cmd_path;
-	int		pid;
+	//int		pid;
 	int		i;
 
 	line = skip_command_name(line);
@@ -81,19 +81,19 @@ int	launch_exec(char *line, char *cmd, char **envp, t_shell *shell)
 	cmd_path = ft_strjoin("/bin/", cmd);
 	if (access(cmd_path, 0) == 0)
 	{
-		pid = fork();
-		if (pid == 0)
-			execve(cmd_path, flags, envp);
-		waitpid(pid, &shell->exit_code, 0);
-		shell->exit_code /= 256;
+		//pid = fork();
+		//if (pid == 0)
+		execve(cmd_path, flags, envp);
+		//waitpid(pid, &shell->exit_code, 0);
+		//shell->exit_code /= 256;
 	}
 	else if (access(cmd, 0) == 0)
 	{
-		pid = fork();
-		if (pid == 0)
-			execve(cmd, flags, envp);
-		waitpid(pid, &shell->exit_code, 0);
-		shell->exit_code /= 256;
+		//pid = fork();
+		//if (pid == 0)
+		execve(cmd, flags, envp);
+		//waitpid(pid, &shell->exit_code, 0);
+		//shell->exit_code /= 256;
 	}
 	else
 		return (FALSE);
@@ -104,10 +104,11 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
 	char	*line;
-	int		old_fd;
+	//int		old_fd;
 
 	(void)argv;
 	(void)argc;
+	shell.envp = envp;
 	shell.exit_code = 0;
 	g_ctrl_c_status = 0;
 	save_envp(&shell, envp);
@@ -116,15 +117,15 @@ int	main(int argc, char **argv, char **envp)
 	while (line != NULL)
 	{
 		line = ft_strtrim(line, " ");
-		line = split_pipes(line);
-		old_fd = redirections(&line, &shell, envp);
-		if (line && old_fd == 0)
-			launch_commands(line, &shell, envp);
-		if (old_fd > 0)
-		{
-			dup2(old_fd, 1);
-			close(old_fd);
-		}
+		manage_pipes(line, &shell, envp);
+		//old_fd = redirections(&line, &shell);
+		// if (line && old_fd == 0)
+		// 	launch_commands(line, &shell);
+		// if (old_fd > 0)
+		// {
+		// 	dup2(old_fd, 1);
+		// 	close(old_fd);
+		// }
 		add_history(line);
 		g_ctrl_c_status = 0;
 		line = readline("minishell$ ");
