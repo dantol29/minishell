@@ -6,7 +6,7 @@
 /*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:12:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/28 11:10:42 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/01/28 18:06:21 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,10 @@ char	*find_command(char *line)
 			count_letters++;
 		i++;
 	}
-	if (count_quotes % 2 != 0)
-	{
-		printf("minishell: error while looking for matching quote\n");
-		return (NULL);
-	}
-	return (extract_command(line, count_letters));
+	if (count_quotes % 2 == 0)
+		return (extract_command(line, count_letters));
+	printf("minishell: error while looking for matching quote\n");
+	return (NULL);
 }
 
 static int	builtins(char *line, char *command, t_shell *shell)
@@ -97,15 +95,24 @@ static int	builtins(char *line, char *command, t_shell *shell)
 void	launch_commands(char *line, t_shell *shell, char **envp)
 {
 	char	*command;
+	int		old_fd;
 
+	old_fd = 0;
 	command = find_command(line);
+	old_fd = redirections(&line, shell, envp);
+	if (old_fd > 0)
+	{
+		dup2(old_fd, 1);
+		close(old_fd);
+		return ;
+	}	
 	line = run_heredoc(line, command);
 	if (command == NULL || line == NULL || is_empty_line(line))
 		shell->exit_code = 0;
 	else if (!check_quotes(line))
 		shell->exit_code = 1;
 	else if (builtins(line, command, shell))
-		(void)shell->envp;
+		(void)envp;
 	else if (launch_exec(line, command, shell, envp) == FALSE)
 	{
 		shell->exit_code = 127;

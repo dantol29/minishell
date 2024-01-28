@@ -6,7 +6,7 @@
 /*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 14:16:12 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/28 11:31:31 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/01/28 18:06:13 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ int	extract_redirection(char *line, int redirection_count, t_shell *shell, char 
 		launch_commands(line, shell, envp);
 		i++;
 	}
-	if (redirection_count <= 0)
-		return (0);
 	return (old);
 }
 

@@ -6,7 +6,7 @@
 /*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:14:45 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/28 14:48:41 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/01/28 18:26:04 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	check_symbol(char *line, char c)
 	count = 0;
 	while (line[i])
 	{
+		if (is_quote(line[i]))
+			i = skip_until_char(line, i, line[i], 2);
 		if (line[i] != c && line[i] != ' ' && !is_quote(line[i]))
 			status = 1;
 		if (status == 0 && line[i] == c)
@@ -83,43 +85,50 @@ int	split_pipes(char *line, t_shell *shell, char **substrings)
 	return (j);
 }
 
-void	launch_pipes(char **substrings ,t_shell *shell, char **envp)
+void	launch_pipes(char **substrings ,t_shell *shell, char **envp, int num_commands)
 {
-	int		tube[2];
+	int		tube[2 * num_commands];
 	int		pid;
-	int		pid2;
+	int		i;
+	int		j;
+	int		current_pipe;
 
-
-	pipe(tube);
-	pid = fork();
-	if (pid == 0)
+	shell->is_pipe = TRUE;
+	i = 0;
+	while (i < num_commands)
+		pipe(tube + i++ * 2);
+	i = 0;
+	current_pipe = 0;
+	while (i < num_commands)
 	{
-		dup2(tube[1], 1);
-		close(tube[0]);
-		close(tube[1]);
-		launch_commands(substrings[0], shell, envp);
-		exit(EXIT_SUCCESS);
+		pid = fork();
+		if (pid == 0)
+		{
+			if (i != num_commands - 1)
+				dup2(tube[current_pipe + 1], 1);
+			if (i != 0)
+				dup2(tube[current_pipe - 2], 0);
+			j = 0;
+			while (j < 2 * (num_commands))
+        		close(tube[j++]);
+			launch_commands(substrings[i], shell, envp);
+			exit(EXIT_SUCCESS);
+		}
+		current_pipe += 2;
+		i++;
 	}
-	pid2 = fork();
-	if (pid2 == 0)
-	{
-		dup2(tube[0], 0);
-		close(tube[1]);
-		close(tube[0]);
-		launch_commands(substrings[1], shell, envp);
-		exit(EXIT_SUCCESS);
-	}
-	close(tube[0]);
-	close(tube[1]);
-	waitpid(pid, &shell->exit_code, 0);
-	waitpid(pid2, &shell->exit_code, 0);
+	i = 0;
+	while (i < 2 * (num_commands))
+    	close(tube[i++]);
+	i = -1;
+  	while (++i < num_commands) 
+		wait(NULL);
 }
 
 void	manage_pipes(char *line, t_shell *shell, char **envp)
 {
 	int		pipe_count;
-	int		split_count;
-	//int		i;
+	int		num_commands;
 	char	**substrings;
 
 	pipe_count = check_symbol(line, '|');
@@ -130,21 +139,14 @@ void	manage_pipes(char *line, t_shell *shell, char **envp)
 			printf("syntax error near '|'\n");
 			return ;
 		}
+		shell->is_pipe = FALSE;
 		launch_commands(line, shell, envp);
 		return ;
 	}
 	substrings = (char **)malloc(sizeof(char *) * (pipe_count + 1));
-	if (!substrings)
+	num_commands = split_pipes(line, shell, substrings);
+	if (num_commands == -1)
 		return ;
-	split_count = split_pipes(line, shell, substrings);
-	if (split_count == -1)
-		return ;
-	launch_pipes(substrings, shell, envp);
-	// i = 0;
-	// while(i < split_count)
-	// {
-	// 	printf("c:%s\n", substrings[i]);
-	// 	launch_commands(substrings[i++], shell, envp);
-	// }
+	launch_pipes(substrings, shell, envp, num_commands);
 	return ;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_unset.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:20:15 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/26 18:13:18 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/01/28 18:23:36 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,12 @@ int	skip_until_char(char *line, int i, char c, char mode)
 	else if (mode == 1)
 	{
 		while (line[i] && line[i] == c)
+			i++;
+	}
+	else if (mode == 2)
+	{
+		i++;
+		while (line[i] && line[i] != c)
 			i++;
 	}
 	return (i);

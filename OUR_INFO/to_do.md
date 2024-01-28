@@ -9,15 +9,20 @@ Start minishell: make && ./minishell
 [ ] check heredoc with pipe/pipes
 [ ] check if gnl has to be in the libft
 [ ] cat >> file.txt | cat >> bla.txt only first redirection is done
-[ ] divide split_pipe function
-[ ] ctrl+c exit heredoc (130)
-[ ] ctrl+c exit cat (130)
-
-// holidays
-
-28.01
 [ ] >> redirect output in append mode
 [ ] < redirect input
+[ ] ctrl+c exit heredoc (130)
+[ ] ctrl+c exit cat (130)
+[ ] x=y                     echo $x     y
+[ ] unset PATH - commands should not work
+
+29.01 - 07.01 // holidays
+
+28.01
+[x] divide split_pipe function
+[x] exit - exit from parent process
+[x] echo "cat lol.c | cat > lol.c"
+[x] PIPES!!!! :)))))))
 
 27.01
 [x] > redirect output

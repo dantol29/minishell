@@ -76,3 +76,4 @@
 [x] echo -nnnnnnnnnnnnn							$
 [x] echo "-n -n -n"								$-n -n -n
 [x] echo -n -n -n -n
+[ ] echo -"n" a

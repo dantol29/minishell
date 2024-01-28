@@ -6,7 +6,7 @@
 /*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 10:41:15 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/01/26 11:02:02 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/01/28 18:26:12 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,10 @@ void	free_double_array(char **array, int size)
 		i++;
 	}
 	free(array);
+}
+
+void	ft_error(char *message)
+{
+	perror(message);
+    exit(EXIT_FAILURE);
 }

@@ -6,7 +6,7 @@
 /*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:58:49 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/28 14:23:29 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/01/28 18:02:37 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ int	launch_exec(char *line, char *cmd, t_shell *shell, char **envp)
 {
 	char	**flags;
 	char	*cmd_path;
-	//int		pid;
 	int		i;
+	int		pid;
 
 	line = skip_command_name(line);
 	flags = ft_split(ft_strjoin(ft_strjoin(cmd, " "), line), ' ');
@@ -79,25 +79,35 @@ int	launch_exec(char *line, char *cmd, t_shell *shell, char **envp)
 		i++;
 	}
 	cmd_path = ft_strjoin("/bin/", cmd);
-	if (access(cmd_path, 0) == 0)
+	if (shell->is_pipe == FALSE)
 	{
-		//pid = fork();
-		//if (pid == 0)
-		execve(cmd_path, flags, envp);
-		//waitpid(pid, &shell->exit_code, 0);
-		//shell->exit_code /= 256;
+		if (access(cmd_path, 0) == 0)
+		{
+			pid = fork();
+			if (pid == 0)
+				execve(cmd_path, flags, envp);
+			waitpid(pid, &shell->exit_code, 0);
+			shell->exit_code /= 256;
+			return (TRUE);
+		}
+		else if (access(cmd, 0) == 0)
+		{
+			pid = fork();
+			if (pid == 0)
+				execve(cmd, flags, envp);
+			waitpid(pid, &shell->exit_code, 0);
+			shell->exit_code /= 256;
+			return (TRUE);
+		}
 	}
-	else if (access(cmd, 0) == 0)
+	else if (shell->is_pipe == TRUE)
 	{
-		//pid = fork();
-		//if (pid == 0)
-		execve(cmd, flags, envp);
-		//waitpid(pid, &shell->exit_code, 0);
-		//shell->exit_code /= 256;
+		if (access(cmd_path, 0) == 0)
+			execve(cmd_path, flags, envp);
+		else if (access(cmd, 0) == 0)
+			execve(cmd, flags, envp);
 	}
-	else
-		return (FALSE);
-	return (TRUE);
+	return (FALSE);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -108,7 +118,6 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argv;
 	(void)argc;
-	shell.envp = envp;
 	shell.exit_code = 0;
 	g_ctrl_c_status = 0;
 	save_envp(&shell, envp);

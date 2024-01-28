@@ -6,7 +6,7 @@
 /*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/28 13:06:24 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/01/28 18:26:40 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef struct s_env
 typedef struct s_shell
 {
 	int		exit_code;
-	char	**envp;
+	int		is_pipe;
 	t_env	*env;
 }	t_shell;
 
@@ -111,6 +111,9 @@ void	manage_pipes(char *line, t_shell *shell, char **envp);
 
 // free
 void    free_double_array(char **array, int size);
+
+// errors
+void	ft_error(char *message);
 
 // save all env variables in a linked list
 void	save_envp(t_shell *shell, char **envp);
