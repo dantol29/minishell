@@ -6,7 +6,7 @@
 /*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:58:49 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/28 18:02:37 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/02/08 09:55:56 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ char	*change_env_var(char *line, t_shell *shell)
 	return (line);
 }
 
-int	launch_exec(char *line, char *cmd, t_shell *shell, char **envp)
+// int	launch_exec(char *line, char *cmd, t_shell *shell, char **envp)
+int	launch_exec(char *line, char *cmd, t_shell *shell)
 {
 	char	**flags;
 	char	*cmd_path;
@@ -85,7 +86,7 @@ int	launch_exec(char *line, char *cmd, t_shell *shell, char **envp)
 		{
 			pid = fork();
 			if (pid == 0)
-				execve(cmd_path, flags, envp);
+				execve(cmd_path, flags, shell->current_envp);
 			waitpid(pid, &shell->exit_code, 0);
 			shell->exit_code /= 256;
 			return (TRUE);
@@ -94,7 +95,7 @@ int	launch_exec(char *line, char *cmd, t_shell *shell, char **envp)
 		{
 			pid = fork();
 			if (pid == 0)
-				execve(cmd, flags, envp);
+				execve(cmd, flags, shell->current_envp);
 			waitpid(pid, &shell->exit_code, 0);
 			shell->exit_code /= 256;
 			return (TRUE);
@@ -103,9 +104,9 @@ int	launch_exec(char *line, char *cmd, t_shell *shell, char **envp)
 	else if (shell->is_pipe == TRUE)
 	{
 		if (access(cmd_path, 0) == 0)
-			execve(cmd_path, flags, envp);
+			execve(cmd_path, flags, shell->current_envp);
 		else if (access(cmd, 0) == 0)
-			execve(cmd, flags, envp);
+			execve(cmd, flags, shell->current_envp);
 	}
 	return (FALSE);
 }
@@ -114,7 +115,6 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
 	char	*line;
-	//int		old_fd;
 
 	(void)argv;
 	(void)argc;
@@ -126,15 +126,7 @@ int	main(int argc, char **argv, char **envp)
 	while (line != NULL)
 	{
 		line = ft_strtrim(line, " ");
-		manage_pipes(line, &shell, envp);
-		//old_fd = redirections(&line, &shell);
-		// if (line && old_fd == 0)
-		// 	launch_commands(line, &shell);
-		// if (old_fd > 0)
-		// {
-		// 	dup2(old_fd, 1);
-		// 	close(old_fd);
-		// }
+		manage_pipes(line, &shell);
 		add_history(line);
 		g_ctrl_c_status = 0;
 		line = readline("minishell$ ");

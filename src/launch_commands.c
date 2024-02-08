@@ -6,7 +6,7 @@
 /*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:12:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/28 18:06:21 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/02/08 09:54:23 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,14 +92,15 @@ static int	builtins(char *line, char *command, t_shell *shell)
 	return (TRUE);
 }
 
-void	launch_commands(char *line, t_shell *shell, char **envp)
+void	launch_commands(char *line, t_shell *shell)
 {
 	char	*command;
 	int		old_fd;
 
 	old_fd = 0;
+
 	command = find_command(line);
-	old_fd = redirections(&line, shell, envp);
+	old_fd = redirections(&line, shell);
 	if (old_fd > 0)
 	{
 		dup2(old_fd, 1);
@@ -112,8 +113,8 @@ void	launch_commands(char *line, t_shell *shell, char **envp)
 	else if (!check_quotes(line))
 		shell->exit_code = 1;
 	else if (builtins(line, command, shell))
-		(void)envp;
-	else if (launch_exec(line, command, shell, envp) == FALSE)
+		(void)line;
+	else if (launch_exec(line, command, shell) == FALSE)
 	{
 		shell->exit_code = 127;
 		printf("%s: command not found\n", command);

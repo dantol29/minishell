@@ -6,7 +6,7 @@
 /*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/28 18:26:40 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/02/08 09:55:04 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,14 @@ typedef struct s_shell
 {
 	int		exit_code;
 	int		is_pipe;
+	char	**current_envp;
 	t_env	*env;
 }	t_shell;
 
 extern int	g_ctrl_c_status;
 
-void	launch_commands(char *line, t_shell *shell, char **envp);
-int		launch_exec(char *line, char *cmd, t_shell *shell, char **envp);
+void	launch_commands(char *line, t_shell *shell);
+int		launch_exec(char *line, char *cmd, t_shell *shell);
 char	*find_command(char *line);
 
 // echo
@@ -77,7 +78,7 @@ char   *run_heredoc(char *line, char *command);
 int		is_heredoc(char *line);
 
 // redirections
-int	redirections(char **line, t_shell *shell, char **envp);
+int	redirections(char **line, t_shell *shell);
 
 // utils
 int		ft_strcmp(const char *str1, const char *str2);
@@ -107,7 +108,7 @@ void	pwd(t_shell *shell);
 
 // pipe
 int		check_symbol(char *line, char c);
-void	manage_pipes(char *line, t_shell *shell, char **envp);
+void	manage_pipes(char *line, t_shell *shell);
 
 // free
 void    free_double_array(char **array, int size);

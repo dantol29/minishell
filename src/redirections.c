@@ -6,13 +6,13 @@
 /*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 14:16:12 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/28 18:06:13 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/02/08 09:54:57 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	extract_redirection(char *line, int redirection_count, t_shell *shell, char **envp)
+int	extract_redirection(char *line, int redirection_count, t_shell *shell)
 {
 	int		i;
 	int		start;
@@ -51,13 +51,13 @@ int	extract_redirection(char *line, int redirection_count, t_shell *shell, char 
 			return (-1);
 		}
 		dup2(new, 1);
-		launch_commands(line, shell, envp);
+		launch_commands(line, shell);
 		i++;
 	}
 	return (old);
 }
 
-int	redirections(char **line, t_shell *shell, char **envp)
+int	redirections(char **line, t_shell *shell)
 {
 	int		redirection_count;
 
@@ -70,5 +70,5 @@ int	redirections(char **line, t_shell *shell, char **envp)
 	}
 	if (redirection_count == 0)
 		return (0);
-	return (extract_redirection(*line, redirection_count, shell, envp));
+	return (extract_redirection(*line, redirection_count, shell));
 }

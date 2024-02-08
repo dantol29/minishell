@@ -6,7 +6,7 @@
 /*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:14:45 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/28 18:26:04 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/02/08 09:53:43 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	split_pipes(char *line, t_shell *shell, char **substrings)
 	return (j);
 }
 
-void	launch_pipes(char **substrings ,t_shell *shell, char **envp, int num_commands)
+void	launch_pipes(char **substrings ,t_shell *shell, int num_commands)
 {
 	int		tube[2 * num_commands];
 	int		pid;
@@ -111,7 +111,7 @@ void	launch_pipes(char **substrings ,t_shell *shell, char **envp, int num_comman
 			j = 0;
 			while (j < 2 * (num_commands))
         		close(tube[j++]);
-			launch_commands(substrings[i], shell, envp);
+			launch_commands(substrings[i], shell);
 			exit(EXIT_SUCCESS);
 		}
 		current_pipe += 2;
@@ -125,7 +125,7 @@ void	launch_pipes(char **substrings ,t_shell *shell, char **envp, int num_comman
 		wait(NULL);
 }
 
-void	manage_pipes(char *line, t_shell *shell, char **envp)
+void	manage_pipes(char *line, t_shell *shell)
 {
 	int		pipe_count;
 	int		num_commands;
@@ -140,13 +140,13 @@ void	manage_pipes(char *line, t_shell *shell, char **envp)
 			return ;
 		}
 		shell->is_pipe = FALSE;
-		launch_commands(line, shell, envp);
+		launch_commands(line, shell);
 		return ;
 	}
 	substrings = (char **)malloc(sizeof(char *) * (pipe_count + 1));
 	num_commands = split_pipes(line, shell, substrings);
 	if (num_commands == -1)
 		return ;
-	launch_pipes(substrings, shell, envp, num_commands);
+	launch_pipes(substrings, shell, num_commands);
 	return ;
 }

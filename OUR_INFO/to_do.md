@@ -23,6 +23,8 @@ Start minishell: make && ./minishell
 [x] exit - exit from parent process
 [x] echo "cat lol.c | cat > lol.c"
 [x] PIPES!!!! :)))))))
+https://github.com/dantol29/minishell.git+
+
 
 27.01
 [x] > redirect output
