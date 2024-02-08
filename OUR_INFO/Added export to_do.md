@@ -4,6 +4,7 @@ Start minishell: make && ./minishell
 
 
 08.01
+[] export (without arguments prints env in lphabetical order)
 [ ] echo a > 4.txt b > 5.txt  c << A
 [ ] ctrl-\ does nothing
 [ ] check heredoc with pipe/pipes
