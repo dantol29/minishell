@@ -20,6 +20,7 @@ Optional
 [ ] check heredoc with pipe/pipes
 [ ] cat >> file.txt | cat >> bla.txt only first redirection is done
 [ ] if heredoc then pipe should wait
+[x] norminette code cleaning
 [x] syntax error - exit code 1
 [x] export ls="ls -l -F"
 [x] unset PATH - commands should not work

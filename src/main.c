@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:58:49 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/08 11:38:36 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/08 15:43:05 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,26 @@ void	ctrl_c(int signum)
 	rl_redisplay();
 	return ;
 }
+
+void	free_linked_list(t_shell *shell)
+{
+
+	t_env	*next_node;
+	t_env	*current;
+
+	if (shell->env == NULL)
+		return ;
+	current = shell->env;
+	while (current)
+	{
+		next_node = current->next;
+		free(current->value);
+		free(current->name);
+		current = next_node;
+	}
+	shell->env = NULL;
+}
+
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -46,5 +66,6 @@ int	main(int argc, char **argv, char **envp)
 		line = readline("minishell$ ");
 	}
 	free(line);
+	free_linked_list(&shell);
 	printf("exit\n");
 }
