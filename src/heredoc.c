@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:15:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/01/28 14:36:47 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/02/08 11:57:46 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ char	*run_heredoc(char *line, char *command)
 		printf("heredoc: syntax error\n");
 		return (NULL);
 	}
-	if (ft_strcmp("cat", command))
+	if (ft_strncmp("cat", command, 3) == 0)
 	{
 		i = heredoc_cat(line, i);
 		if (i == -1)

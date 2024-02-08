@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:50:22 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/27 13:59:47 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/08 11:13:27 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	print_inside_quot(char *line, int i, t_shell *shell, int *inval_var)
 
 	symbol = line[i];
 	if (line[i - 1] == ' ')
-		write(1, " ", 1);
+		printf(" ");
 	if (symbol == '$')
 		return (print_env_var(line, shell, i, inval_var));
 	i++;
@@ -31,7 +31,7 @@ static int	print_inside_quot(char *line, int i, t_shell *shell, int *inval_var)
 		if (symbol == '\"' && line[i] == '$')
 			i = print_env_var(line, shell, i, inval_var);
 		else
-			write(1, &line[i], 1);
+			printf("%c", line[i]);
 		i++;
 	}
 	return (i);
@@ -52,10 +52,10 @@ static void	print_echo_line(char *line, t_shell *shell)
 		else if (line[i] != ' ')
 		{
 			if (invalid_var == 0 && line[i - 1] == ' ')
-				write(1, " ", 1);
+				printf(" ");
 			if (line[i] == '\\' && line[i + 1])
 				i++;
-			write(1, &line[i], 1);
+			printf("%c", line[i]);
 		}
 		i++;
 	}
@@ -110,7 +110,7 @@ void	check_echo_line(char *line, t_shell *shell)
 	line = skip_command_name(line);
 	if (is_empty_line(line))
 	{
-		write(1, "\n", 1);
+		printf("\n");
 		return ;
 	}
 	line = check_flag_n(line, &flag);
@@ -119,6 +119,6 @@ void	check_echo_line(char *line, t_shell *shell)
 		return ;
 	print_echo_line(line, shell);
 	if (flag)
-		write(1, "\n", 1);
+		printf("\n");
 	shell->exit_code = 0;
 }

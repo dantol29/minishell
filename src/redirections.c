@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 14:16:12 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/08 09:54:57 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/02/08 11:57:05 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	redirections(char **line, t_shell *shell)
 	redirection_count = check_symbol(*line, '>');
 	if (redirection_count == -1)
 	{
-		write(2, "minishell: syntax error\n", 24);
+		printf("minishell: syntax error\n");
 		shell->exit_code = 1;
 		return (-1);
 	}

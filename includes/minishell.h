@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/08 09:55:04 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/02/08 11:49:48 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ typedef struct s_shell
 extern int	g_ctrl_c_status;
 
 void	launch_commands(char *line, t_shell *shell);
-int		launch_exec(char *line, char *cmd, t_shell *shell);
 char	*find_command(char *line);
 
 // echo
@@ -110,6 +109,10 @@ void	pwd(t_shell *shell);
 int		check_symbol(char *line, char c);
 void	manage_pipes(char *line, t_shell *shell);
 
+// execve
+int		launch_exec(char *line, char *cmd, t_shell *shell);
+char	*get_path(char **splited_path, char *command);
+
 // free
 void    free_double_array(char **array, int size);
 
@@ -119,6 +122,7 @@ void	ft_error(char *message);
 // save all env variables in a linked list
 void	save_envp(t_shell *shell, char **envp);
 void	lstadd_back(t_env **lst, t_env *new);
+char	**update_envp(t_shell *shell);
 
 // gnl
 char	*get_next_line(int fd);

@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:00:47 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/27 11:48:14 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/08 11:10:59 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	print_env_var_value(char *variable_name, t_env *lst)
 	{
 		if (ft_strcmp(tmp->name, variable_name))
 		{
-			write(1, tmp->value, sizeof(tmp->value));
+			printf("%s", tmp->value);
 			break ;
 		}
 		tmp = tmp->next;

@@ -2,19 +2,22 @@ add NEW TODO's to the TOP. []=todo [x] = done
 
 Start minishell: make && ./minishell
 
-
-08.01
-[ ] echo a > 4.txt b > 5.txt  c << A
-[ ] ctrl-\ does nothing
-[ ] check heredoc with pipe/pipes
-[ ] check if gnl has to be in the libft
-[ ] cat >> file.txt | cat >> bla.txt only first redirection is done
+09.01
 [ ] >> redirect output in append mode
 [ ] < redirect input
 [ ] ctrl+c exit heredoc (130)
 [ ] ctrl+c exit cat (130)
+[ ] ctrl-\ does nothingvvvvv
+[ ] check if gnl has to be in the libft
+ 
+08.01
+[ ] echo a > 4.txt b > 5.txt  c << A
+[ ] check heredoc with pipe/pipes
+[ ] cat >> file.txt | cat >> bla.txt only first redirection is done
 [ ] x=y                     echo $x     y
-[ ] unset PATH - commands should not work
+[ ] if heredoc then pipe should wait
+[ ] export ls="ls -l -F"
+[x] unset PATH - commands should not work
 
 29.01 - 07.01 // holidays
 

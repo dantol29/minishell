@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   save_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 13:35:22 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/08 09:52:20 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/02/08 11:01:13 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,26 @@ void	lstadd_back(t_env **lst, t_env *new)
 	last->next = new;
 }
 
+char	**update_envp(t_shell *shell)
+{
+	int		i;
+	char	**new;
+	t_env	*tmp;
+
+	i = lstsize(shell->env);
+	new = malloc(sizeof(char *) * (i + 1));
+	if (!new)
+		return (NULL);
+	i = 0;
+	tmp = shell->env;
+	while (tmp)
+	{
+		new[i++] = ft_strjoin(tmp->name, ft_strjoin("=", tmp->value));
+		tmp = tmp->next; 
+	}
+	return (new);
+}
+
 /*save enviromental variables in a linked list*/
 void	save_envp(t_shell *shell, char **envp)
 {
@@ -83,4 +103,5 @@ void	save_envp(t_shell *shell, char **envp)
 		shell->current_envp[i] = envp[i];
 		i++;
 	}
+	shell->current_envp[i] = NULL;
 }
