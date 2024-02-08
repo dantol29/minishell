@@ -6,11 +6,25 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 11:38:13 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/08 12:12:53 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/08 15:22:34 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+char	*skip_env_var(char *before_var, char *after_var, int *i)
+{
+	*i = -1;
+	return (ft_strjoin(before_var, after_var));
+}
+
+char	*exec_env_value(char *before_v, char *v, char *after_v, t_shell *shell)
+{
+	char	*value;
+
+	value = ft_strjoin(get_env_value(v, shell->env), after_v);
+	return (ft_strjoin(before_v, value));
+}
 
 static char	*change_env_var(char *line, t_shell *shell)
 {
@@ -26,42 +40,19 @@ static char	*change_env_var(char *line, t_shell *shell)
 		if (line[i++] == '$')
 		{
 			start = i;
-			while (line[i] && line[i] != ' ' && line[i] != '$' && !is_quote(line[i]))
+			while (line[i] && line[i] != ' ' && \
+			line[i] != '$' && !is_quote(line[i]))
 				i++;
 			var = ft_substr(line, start, i - start);
 			after_var = ft_substr(line, i, ft_strlen(line) - i);
 			before_var = ft_substr(line, 0, start - 1);
 			if (find_env_var(var, shell->env))
-				line = ft_strjoin(before_var, \
-				ft_strjoin(get_env_value(var, shell->env), after_var));
+				line = exec_env_value(before_var, var, after_var, shell);
 			else
-			{
-				line = ft_strjoin(before_var, after_var);
-				i = -1;
-			}
+				line = skip_env_var(before_var, var, &i);
 		}
 	}
 	return (line);
-}
-
-char	*get_path(char **splited_path, char *command)
-{
-	char	*cmd;
-	char	*temp;
-
-	if (access(command, X_OK) == 0)
-		return (command);
-	while (*splited_path)
-	{
-		temp = ft_strjoin(*splited_path, "/");
-		cmd = ft_strjoin(temp, command);
-		free(temp);
-		if (access(cmd, X_OK) == 0)
-			return (cmd);
-		free(cmd);
-		splited_path++;
-	}
-	return (NULL);
 }
 
 static char	**execve_flags(char *line, char *cmd, t_shell *shell)
@@ -88,15 +79,11 @@ int	launch_exec(char *line, char *cmd, t_shell *shell)
 {
 	char	**flags;
 	char	*cmd_path;
-	char	*path;
 	int		pid;
 
 	shell->current_envp = update_envp(shell);
 	flags = execve_flags(line, cmd, shell);
-	path = get_env_value("PATH", shell->env);
-	if (!path)
-		return (FALSE);
-	cmd_path = get_path(ft_split(path, ':'), cmd);
+	cmd_path = get_executable_path(shell, cmd);
 	if (!cmd_path)
 		return (FALSE);
 	if (shell->is_pipe == FALSE)
@@ -109,6 +96,6 @@ int	launch_exec(char *line, char *cmd, t_shell *shell)
 		return (TRUE);
 	}
 	else if (shell->is_pipe == TRUE)
-			execve(cmd_path, flags, shell->current_envp);
+		execve(cmd_path, flags, shell->current_envp);
 	return (FALSE);
 }

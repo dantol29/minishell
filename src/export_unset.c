@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_unset.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:20:15 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/28 18:23:36 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/02/08 13:57:40 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,7 @@ int	skip_until_char(char *line, int i, char c, char mode)
 
 int	add_env_var(char *line, t_shell *shell)
 {
-	char	*name;
-	int		len;
+	char	*value;
 	int		i;
 
 	line = skip_command_name(line);
@@ -103,13 +102,12 @@ int	add_env_var(char *line, t_shell *shell)
 		i++;
 	if (line[i++] != '=')
 		return (FALSE);
-	len = skip_until_char(line, i, ' ', 0);
-	name = ft_substr(line, 0, i - 1);
-	if (find_env_var(name, shell->env))
-		replace_env_var_value(name, ft_substr(line, i, len - 1), shell->env);
+	value = find_command(line + i);
+	if (find_env_var(ft_substr(line, 0, i - 1), shell->env))
+		replace_env_var_value(ft_substr(line, 0, i - 1), value, shell->env);
 	else
 		lstadd_back(&shell->env, \
-		create_new_env_node(name, ft_substr(line, i, len - 1)));
+		create_new_env_node(ft_substr(line, 0, i - 1), value));
 	shell->exit_code = 0;
 	return (TRUE);
 }

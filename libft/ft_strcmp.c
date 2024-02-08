@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/26 10:41:15 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/08 14:42:54 by dtolmaco         ###   ########.fr       */
+/*   Created: 2024/02/08 15:02:59 by dtolmaco          #+#    #+#             */
+/*   Updated: 2024/02/08 15:03:25 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-void	free_double_array(char **array, int size)
+int	ft_strcmp(const char *str1, const char *str2)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
-	while (i < size)
-	{
-		free(array[i]);
+	while (str1[i] && str1[i] == str2[i])
 		i++;
-	}
-	free(array);
-}
-
-void	ft_error(char *message)
-{
-	perror(message);
-	exit(EXIT_FAILURE);
+	if (str1[i] == str2[i])
+		return (1);
+	return (0);
 }

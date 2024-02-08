@@ -2,6 +2,11 @@ add NEW TODO's to the TOP. []=todo [x] = done
 
 Start minishell: make && ./minishell
 
+Optional
+[ ] ctrl+d in heredoc should display heredoc
+[ ] x=y    echo $x     y
+[ ] export in alphabetical order
+
 09.01
 [ ] >> redirect output in append mode
 [ ] < redirect input
@@ -9,14 +14,14 @@ Start minishell: make && ./minishell
 [ ] ctrl+c exit cat (130)
 [ ] ctrl-\ does nothingvvvvv
 [ ] check if gnl has to be in the libft
- 
+
 08.01
 [ ] echo a > 4.txt b > 5.txt  c << A
 [ ] check heredoc with pipe/pipes
 [ ] cat >> file.txt | cat >> bla.txt only first redirection is done
-[ ] x=y                     echo $x     y
 [ ] if heredoc then pipe should wait
-[ ] export ls="ls -l -F"
+[x] syntax error - exit code 1
+[x] export ls="ls -l -F"
 [x] unset PATH - commands should not work
 
 29.01 - 07.01 // holidays

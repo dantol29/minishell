@@ -6,22 +6,39 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:51:29 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/01/24 15:27:25 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/08 15:25:23 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	ft_strcmp(const char *str1, const char *str2)
+int	check_symbol(char *line, char c)
 {
-	size_t	i;
+	int	i;
+	int	status;
+	int	count;
 
-	i = 0;
-	while (str1[i] && str1[i] == str2[i])
-		i++;
-	if (str1[i] == str2[i])
-		return (TRUE);
-	return (FALSE);
+	i = -1;
+	status = 0;
+	count = 0;
+	while (line[++i])
+	{
+		if (is_quote(line[i]))
+			i = skip_until_char(line, i, line[i], 2);
+		if (line[i] != c && line[i] != ' ' && !is_quote(line[i]))
+			status = 1;
+		if (status == 0 && line[i] == c)
+			return (-1);
+		if (status == 1 && line[i] == c && !is_quote(line[i - 1]) \
+		&& !is_quote(line[i + 1]))
+		{
+			if (is_empty_line(line + i + 1))
+				return (-1);
+			count++;
+			status = 0;
+		}
+	}
+	return (count);
 }
 
 int	is_empty_line(char *line)

@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:50:22 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/08 11:13:27 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/08 14:23:45 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,32 @@ static void	print_echo_line(char *line, t_shell *shell)
 	}
 }
 
+static int	flag_in_quotes(char *line, int *flag, int *i, int *j)
+{
+	char	symbol;
+	int		tmp_i;
+
+	tmp_i = *i;
+	symbol = line[tmp_i++];
+	if (line[tmp_i++] != '-')
+		return (*j);
+	while (line[tmp_i] && line[tmp_i] == 'n')
+		tmp_i++;
+	if (line[tmp_i++] != symbol)
+		return (*j);
+	if (line[tmp_i] != ' ' && line[tmp_i] != '\0')
+		return (*j);
+	*flag = 0;
+	*j = tmp_i;
+	*i = tmp_i;
+	return (TRUE);
+}
+
 /*checks echo -n flag*/
 static char	*check_flag_n(char *line, int *flag)
 {
 	int		i;
 	int		j;
-	char	symbol;
 
 	i = 0;
 	j = 0;
@@ -74,17 +94,8 @@ static char	*check_flag_n(char *line, int *flag)
 	{
 		if (is_quote(line[i]))
 		{
-			symbol = line[i++];
-			if (line[i++] != '-')
+			if (!flag_in_quotes(line, flag, &i, &j))
 				return (line + j);
-			while (line[i] && line[i] == 'n')
-				i++;
-			if (line[i++] != symbol)
-				return (line + j);
-			if (line[i] != ' ' && line[i] != '\0')
-				return (line + j);
-			*flag = 0;
-			j = i;
 		}
 		else if (line[i] == '-')
 		{

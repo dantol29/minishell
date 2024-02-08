@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/08 11:49:48 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/08 15:18:20 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,9 @@ void	pwd(t_shell *shell);
 // pipe
 int		check_symbol(char *line, char c);
 void	manage_pipes(char *line, t_shell *shell);
+
+// path
+char *get_executable_path(t_shell *shell, char *cmd);
 
 // execve
 int		launch_exec(char *line, char *cmd, t_shell *shell);

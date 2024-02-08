@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 14:16:12 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/08 11:57:05 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/08 15:24:26 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	extract_redirection(char *line, int redirection_count, t_shell *shell)
 	i = 0;
 	count = 0;
 	filenames[redirection_count] = NULL;
-	while(line[i])
+	while (line[i])
 	{
 		if (line[i] && line[i] == '>' && !is_quote(line[i - 1]) && !is_quote(line[i + 1]))
 		{
@@ -43,9 +43,9 @@ int	extract_redirection(char *line, int redirection_count, t_shell *shell)
 	old = dup(1);
 	while (i < redirection_count)
 	{
-		new = open(filenames[i],  O_RDWR | O_CREAT | O_TRUNC, 0644);
+		new = open(filenames[i], O_RDWR | O_CREAT | O_TRUNC, 0644);
 		if (new == -1)
-    	{
+		{
 			perror("open");
 			shell->exit_code = 1;
 			return (-1);

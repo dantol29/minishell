@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launch_commands.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:12:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/08 09:54:23 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/02/08 14:44:48 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ void	launch_commands(char *line, t_shell *shell)
 	int		old_fd;
 
 	old_fd = 0;
-
 	command = find_command(line);
 	old_fd = redirections(&line, shell);
 	if (old_fd > 0)
@@ -106,7 +105,7 @@ void	launch_commands(char *line, t_shell *shell)
 		dup2(old_fd, 1);
 		close(old_fd);
 		return ;
-	}	
+	}
 	line = run_heredoc(line, command);
 	if (command == NULL || line == NULL || is_empty_line(line))
 		shell->exit_code = 0;
