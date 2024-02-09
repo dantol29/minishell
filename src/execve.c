@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 11:38:13 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/08 15:22:34 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/09 15:53:33 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,23 +55,56 @@ static char	*change_env_var(char *line, t_shell *shell)
 	return (line);
 }
 
+static int	count_flags(char *line)
+{
+	int 	i;
+	int 	count;
+	int		symbol;
+
+	i = 0;
+	count = 0;
+	while(line[i])
+	{
+		if (line[i] != ' ' && !is_quote(line[i]))
+		{
+			count++;
+			while (line[i] && line[i] != ' ')
+				i++;
+		}
+		if (is_quote(line[i]))
+		{
+			symbol = line[i++];
+			count++;
+			while(line[i] && line[i] != symbol)
+				i++;
+		}
+		i++;
+	}
+	return (count);
+}
+
 static char	**execve_flags(char *line, char *cmd, t_shell *shell)
 {
 	char	**flags;
+	int		flag_count;
 	int		i;
 
 	line = skip_command_name(line);
-	flags = ft_split(ft_strjoin(ft_strjoin(cmd, " "), line), ' ');
+	flag_count = count_flags(line);
+	flags = malloc(sizeof(char *) * (flag_count + 2));
+	flags[0] = cmd;
 	i = 1;
-	while (flags[i])
+	while (i < flag_count + 1)
 	{
-		flags[i] = find_command(flags[i]);
-		if (ft_strcmp(flags[i], "$?"))
+		flags[i] = find_command(line);
+		line += ft_strlen(flags[i]) + 1;
+		if (ft_strcmp(flags[i], "$?") && !ft_strcmp(cmd, "awk"))
 			flags[i] = ft_itoa(shell->exit_code);
-		else
+		else if (!ft_strcmp(cmd, "awk"))
 			flags[i] = change_env_var(flags[i], shell);
 		i++;
 	}
+	flags[flag_count + 1] = NULL;
 	return (flags);
 }
 

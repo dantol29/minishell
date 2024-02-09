@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:12:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/08 14:44:48 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/09 13:21:57 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static char	*extract_command(char *line, int count_letters)
 		i++;
 	}
 	cmd[count_letters] = '\0';
-	return (cmd);
+	return (ft_strtrim(cmd, " "));
 }
 
 /*find command in the line ("echo" .....)*/
@@ -58,10 +58,10 @@ char	*find_command(char *line)
 			count_letters++;
 		i++;
 	}
-	if (count_quotes % 2 == 0)
-		return (extract_command(line, count_letters));
-	printf("minishell: error while looking for matching quote\n");
-	return (NULL);
+	//if (count_quotes % 2 == 0)
+	return (extract_command(line, count_letters));
+	//printf("minishell: error while looking for matching quote\n");
+	//return (NULL);
 }
 
 static int	builtins(char *line, char *command, t_shell *shell)

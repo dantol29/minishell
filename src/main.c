@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:58:49 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/09 08:49:11 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/02/09 17:22:29 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,17 @@ void	ctrl_c(int signum)
 	return ;
 }
 
+void	ctrl_nothing(int signum)
+{
+	(void)signum;
+	g_ctrl_c_status = 130;
+	rl_replace_line("  ", 0);
+	//write(STDERR_FILENO, "\n", 1);
+	rl_on_new_line();
+	rl_redisplay();
+	return ;
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
@@ -36,6 +47,7 @@ int	main(int argc, char **argv, char **envp)
 	g_ctrl_c_status = 0;
 	save_envp(&shell, envp);
 	signal(SIGINT, ctrl_c);
+	signal(SIGQUIT, ctrl_nothing);
 	line = readline("minishell$ ");
 	while (line != NULL)
 	{
@@ -46,6 +58,6 @@ int	main(int argc, char **argv, char **envp)
 		line = readline("minishell$ ");
 	}
 	free(line);
-	free_linked_list(&shell);
+	//free_linked_list(&shell);
 	printf("exit\n");
 }

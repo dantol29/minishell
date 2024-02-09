@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:15:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/08 11:57:46 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/09 17:04:32 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ static int	heredoc_read(char *line, int i)
 	exit_heredoc = ft_strjoin(ft_substr(line, start, i - start), "\n");
 	write(1, "heredoc> ", 9);
 	get_line = get_next_line(0);
-	while (get_line != NULL && !ft_strcmp(get_line, exit_heredoc))
+	while (get_line != NULL && !ft_strcmp(get_line, exit_heredoc) \
+	&& g_ctrl_c_status != 130)
 	{
 		free(get_line);
 		write(1, "heredoc> ", 9);
@@ -84,7 +85,8 @@ static int	heredoc_cat(char *line, int i)
 	exit_heredoc = ft_strjoin(ft_substr(line, start, i - start), "\n");
 	write(1, "heredoc> ", 9);
 	get_line = get_next_line(0);
-	while (get_line != NULL && !ft_strcmp(get_line, exit_heredoc))
+	while (get_line != NULL && !ft_strcmp(get_line, exit_heredoc) \
+	&& g_ctrl_c_status != 130)
 	{
 		save_cat[j++] = ft_substr(get_line, 0, ft_strlen(get_line));
 		free(get_line);
@@ -94,7 +96,7 @@ static int	heredoc_cat(char *line, int i)
 	if (!is_empty_line(line + i))
 		return (i);
 	start = 0;
-	while (start < j)
+	while (start < j && g_ctrl_c_status != 130)
 		printf("%s", save_cat[start++]);
 	return (-1);
 }
@@ -124,5 +126,7 @@ char	*run_heredoc(char *line, char *command)
 	}
 	else
 		i = heredoc_read(line, i);
+	if (g_ctrl_c_status == 130)
+		return (NULL);
 	return (ft_strjoin(ft_substr(line, 0, before_heredoc), line + i));
 }

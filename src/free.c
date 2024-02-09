@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 10:41:15 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/09 08:45:45 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/02/09 16:08:34 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	ft_error(char *message)
 
 void	free_linked_list(t_shell *shell)
 {
-
 	t_env	*next_node;
 	t_env	*current;
 
@@ -43,8 +42,16 @@ void	free_linked_list(t_shell *shell)
 	while (current)
 	{
 		next_node = current->next;
-		free(current->value);
-		free(current->name);
+		if (current->value)
+		{
+			printf("%s\n", current->value);
+			free(current->value);
+		}
+		if (current->name)
+		{
+			printf("%s\n", current->name);
+			free(current->name);
+		}
 		current = next_node;
 	}
 	shell->env = NULL;
