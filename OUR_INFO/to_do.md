@@ -18,6 +18,20 @@ Optional
 [ ]ctrl-\ in an empty prompt should not do anything. (Our: exit + coredumped)
 [ ] ctrl-D in an empty prompt should quit minishell --> RELAUNCH! (our: exit and coredumped)
 [ ] (AWK??)Execute commands but this time without any path (ls, wc, awk and so forth). (AWK??)
+[ ] Segmfold, eror for matching quote
+        awk '{print $1}' Makefile (it instructs AWK to print the first field of each line of Makefile)
+        awk '{print $1}' Makefile
+        minishell: error while looking for matching quote
+        zsh: segmentation fault (core dumped)  ./minishell
+[ ] Not working awk.Segmfold, eror for matching quote
+        Bash: 
+         awk '{print $1}' <Makefile>
+         bash: syntax error near unexpected token `newline')
+         Our:
+        awk '{print $1}' <Makefile>
+        minishell: syntax error
+        minishell: error while looking for matching quote
+    zsh: segmentation fault (core dumped)  ./minishell (segmentation fault (core dumped))
 [ ]$ cat|cat|ls
      1.txt   cat.txt         includes  'lol.c"'    minishell   README.md   venv
     2.txt   DOCUMENTATION   libft      Makefile   OUR_INFO    src
