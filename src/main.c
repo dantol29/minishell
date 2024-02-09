@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:58:49 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/08 15:43:05 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/09 08:49:11 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,26 +24,6 @@ void	ctrl_c(int signum)
 	rl_redisplay();
 	return ;
 }
-
-void	free_linked_list(t_shell *shell)
-{
-
-	t_env	*next_node;
-	t_env	*current;
-
-	if (shell->env == NULL)
-		return ;
-	current = shell->env;
-	while (current)
-	{
-		next_node = current->next;
-		free(current->value);
-		free(current->name);
-		current = next_node;
-	}
-	shell->env = NULL;
-}
-
 
 int	main(int argc, char **argv, char **envp)
 {

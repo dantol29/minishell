@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/08 15:18:20 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/09 08:48:30 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ char	*get_path(char **splited_path, char *command);
 
 // free
 void    free_double_array(char **array, int size);
+void	free_linked_list(t_shell *shell);
 
 // errors
 void	ft_error(char *message);
