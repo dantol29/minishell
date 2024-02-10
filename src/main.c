@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:58:49 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/09 17:22:29 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/10 15:13:39 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,19 @@ void	ctrl_c(int signum)
 {
 	(void)signum;
 	g_ctrl_c_status = 130;
-	rl_replace_line("\0", 0);
-	write(STDERR_FILENO, "\n", 1);
+	
+	write(1, "\n", 1);
 	rl_on_new_line();
+	rl_replace_line("", 0);
 	rl_redisplay();
-	return ;
 }
 
 void	ctrl_nothing(int signum)
 {
 	(void)signum;
-	g_ctrl_c_status = 130;
 	rl_replace_line("  ", 0);
-	//write(STDERR_FILENO, "\n", 1);
 	rl_on_new_line();
 	rl_redisplay();
-	return ;
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -49,7 +46,7 @@ int	main(int argc, char **argv, char **envp)
 	signal(SIGINT, ctrl_c);
 	signal(SIGQUIT, ctrl_nothing);
 	line = readline("minishell$ ");
-	while (line != NULL)
+	while (line != NULL) //1
 	{
 		line = ft_strtrim(line, " ");
 		manage_pipes(line, &shell);
@@ -61,3 +58,7 @@ int	main(int argc, char **argv, char **envp)
 	//free_linked_list(&shell);
 	printf("exit\n");
 }
+/* if (!line) 
+
+line == '\0' // enter
+*/

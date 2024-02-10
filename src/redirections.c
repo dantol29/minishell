@@ -6,69 +6,117 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 14:16:12 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/08 15:24:26 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/10 16:55:04 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	extract_redirection(char *line, int redirection_count, t_shell *shell)
+int	open_file(char **filenames, char *redir, int i, t_shell *shell)
 {
-	int		i;
-	int		start;
-	int		count;
-	int		new;
-	int		old;
-	char	*filenames[redirection_count + 1];
+	int	new;
 
-	i = 0;
-	count = 0;
-	filenames[redirection_count] = NULL;
-	while (line[i])
+	new = 0;
+	if (ft_strcmp(redir, ">"))
+		new = open(filenames[i + 1], O_RDWR | O_CREAT | O_TRUNC, 0644);
+	else if (ft_strcmp(redir, "<"))
+		new = open(filenames[i + 1], O_RDWR, 0644);
+	if (new == -1)
 	{
-		if (line[i] && line[i] == '>' && !is_quote(line[i - 1]) && !is_quote(line[i + 1]))
-		{
-			start = ++i;
-			i = skip_until_char(line, i, ' ', 1);
-			while (line[i] && line[i] != ' ')
-				i++;
-			filenames[count] = ft_strtrim(ft_substr(line, start, i - start), " ");
-			line = ft_strjoin(ft_substr(line, 0, start - 2), ft_substr(line, i, ft_strlen(line) - i));
-			count++;
-			i = -1;
-		}
-		i++;
-	}
-	i = 0;
-	old = dup(1);
-	while (i < redirection_count)
-	{
-		new = open(filenames[i], O_RDWR | O_CREAT | O_TRUNC, 0644);
-		if (new == -1)
-		{
-			perror("open");
-			shell->exit_code = 1;
-			return (-1);
-		}
-		dup2(new, 1);
-		launch_commands(line, shell);
-		i++;
-	}
-	return (old);
-}
-
-int	redirections(char **line, t_shell *shell)
-{
-	int		redirection_count;
-
-	redirection_count = check_symbol(*line, '>');
-	if (redirection_count == -1)
-	{
-		printf("minishell: syntax error\n");
+		perror("open");
 		shell->exit_code = 1;
 		return (-1);
 	}
-	if (redirection_count == 0)
+	if (ft_strcmp(redir, ">"))
+		dup2(new, 1);
+	else if (ft_strcmp(redir, "<"))
+		dup2(new, 0);
+	return (0);
+}
+
+int	*launch_redirections(char *line, char **filenames, int redirection_count, t_shell *shell)
+{
+	int		*old;
+	int		i;
+
+	old = malloc(sizeof(int) * 2);
+	old[1] = dup(1);
+	old[0] = dup(0);
+	i = 0;
+	while (i < redirection_count * 2)
+	{
+		if (ft_strcmp(filenames[i], "<") || ft_strcmp(filenames[i], ">"))
+		{
+			if (open_file(filenames, filenames[i], i, shell) == -1)
+			{
+				old[0] = -1;
+				return (old);
+			}
+		}
+		i++;
+	}
+	launch_commands(line, shell);
+	return (old);
+}
+
+int	extract_input_output(char **line, char **file, int i, int *count)
+{
+	int		start;
+	char	*tmp;
+
+	tmp = *line;
+	start = ++i;
+	i = skip_until_char(tmp, i, ' ', 1);
+	i = skip_until_char(tmp, i, ' ', 0);
+	*file = ft_strtrim(ft_substr(tmp, start, i - start), " ");
+	tmp = ft_strjoin(ft_substr(tmp, 0, start - 2), ft_substr(tmp, i, ft_strlen(tmp) - i));
+	*count += 1;
+	*line = tmp;
+	return (-1);
+}
+
+int	*extract_redirection(char *line, int redirection_count, t_shell *shell)
+{
+	int		i;
+	int		count;
+	char	**filenames;
+
+	i = 0;
+	count = 0;
+	filenames = malloc(sizeof(char *) * (redirection_count * 2 + 1));
+	filenames[redirection_count * 2] = NULL;
+	while (line[i])
+	{
+		if (line[i] && (line[i] == '>' || line[i] == '<') && \
+		!is_quote(line[i - 1]) && !is_quote(line[i + 1]))
+		{
+			filenames[count] = "<";
+			if (line[i] == '>')
+				filenames[count] = ">";
+			i = extract_input_output(&line, &filenames[++count], i, &count);
+		}
+		i++;
+	}
+	return (launch_redirections(line, filenames, redirection_count, shell));
+}
+
+int	*redirections(char **line, t_shell *shell)
+{
+	int		output_redirections;
+	int		input_redirections;
+	int		*error;
+
+	output_redirections = check_symbol(*line, '>');
+	input_redirections = check_symbol(*line, '<');
+	if (output_redirections == -1 || input_redirections == -1)
+	{
+		printf("minishell: syntax error\n");
+		shell->exit_code = 1;
+		error = malloc(sizeof(int) * 1);
+		error[0] = -1;
+		return (error);
+	}
+	if (output_redirections == 0 && input_redirections == 0)
 		return (0);
-	return (extract_redirection(*line, redirection_count, shell));
+	return (extract_redirection(*line, output_redirections + input_redirections, shell));
 }

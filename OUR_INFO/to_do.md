@@ -17,11 +17,11 @@ Optional
 10.01
 [ ] when ctrl+c is pressed after blocking command (cat) minishell$ is displayed 2 times
 [ ] >> redirect output in append mode
-[ ] < redirect input
-[ ] echo a > 4.txt b > 5.txt  c << A
+[ ] echo a > 4.txt b > 5.txt cat << A
 [ ] check heredoc with pipe/pipes
-[ ] cat >> file.txt | cat >> bla.txt only first redirection is done
 [ ] if heredoc then pipe should wait
+[x] wc -l < 2.txt > 4.txt
+[x] < redirect input :)))))
 
 09.01
 [x] ctrl-\ does nothing
