@@ -11,14 +11,21 @@ Bonus
 
 Optional
 [ ] ctrl+d in heredoc should display heredoc
-[ ] x=y    echo $x     y
+[ ] x=y    echo $x     y  (local variables)
 [ ] export in alphabetical order
 
-10.01
+11.01
 [ ] when ctrl+c is pressed after blocking command (cat) minishell$ is displayed 2 times
 [ ] echo a > 4.txt b > 5.txt cat << A
 [ ] check heredoc with pipe/pipes
 [ ] if heredoc then pipe should wait
+[ ] export A- , export =, export 123, export GHOST=123 | env | grep GHOST (exit code 1)
+[ ] cd $PWD, cd $PWD hi, cd 123123
+[ ] exit hello (exit code 2), exit 42 world (exit code 1)
+[ ] cat minishell.h | grep ");"$ (exit code 1)
+[ ] echo "> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<" 
+
+10.01
 [x] wc -l < 2.txt > 4.txt
 [x] >> redirect output in append mode
 [x] < redirect input :)))))
