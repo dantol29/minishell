@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/10 15:33:14 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/10 17:54:25 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	check_echo_line(char *line, t_shell *shell);
 
 // heredoc
 char   *run_heredoc(char *line, char *command);
-int		is_heredoc(char *line);
+int		check_double_symbol(char *line, char c);
 
 // redirections
 int	*redirections(char **line, t_shell *shell);

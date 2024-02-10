@@ -6,47 +6,38 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:15:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/09 17:04:32 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/10 18:01:37 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	check_invalid_heredoc(char *line, int i)
-{
-	while (line[i])
-	{
-		if (line[i] == '<' || is_quote(line[i]))
-			return (-1);
-		i++;
-	}
-	return (i);
-}
-
-//  expects substring  between pipes and without command
-int	is_heredoc(char *line)
+//  finds heredoc or append redirection in a line
+int	check_double_symbol(char *line, char c)
 {
 	int	i;
+	int	status;
 	int	count;
 
-	i = 0;
+	i = -1;
+	status = 0;
 	count = 0;
-	while (line[i])
+	while (line[++i])
 	{
-		if (line[i] == '<' && line[i + 1] == '<' \
-		&& !is_quote(line[i - 1]))
+		if (is_quote(line[i]))
+			i = skip_until_char(line, i, line[i], 2);
+		if (line[i] != c && line[i] != ' ' && !is_quote(line[i]))
+			status = 1;
+		if (status == 1 && line[i] == c && line[i + 1] == c && !is_quote(line[i - 1]) \
+		&& !is_quote(line[i + 2]) && line[i + 2] != c && line[i - 1] != c)
 		{
-			i += 2;
-			if (is_empty_line(line))
-				return (-1);
-			i = check_invalid_heredoc(line, i);
-			if (i == -1)
+			if (is_empty_line(line + i + 2))
 				return (-1);
 			count++;
+			status = 0;
 		}
-		i++;
 	}
-	return (count == 1);
+	return (count);
 }
 
 static int	heredoc_read(char *line, int i)
@@ -106,14 +97,14 @@ char	*run_heredoc(char *line, char *command)
 	int		i;
 	int		before_heredoc;
 
-	if (!is_heredoc(line))
+	if (check_double_symbol(line, '<') == 0)
 		return (line);
 	i = 0;
 	while (line[i] && line[i] != '<')
 		i++;
 	before_heredoc = i;
 	i = skip_until_char(line, i + 2, ' ', 1);
-	if (!line[i] || is_heredoc(line) == -1)
+	if (!line[i] || check_double_symbol(line, '<') == -1)
 	{
 		printf("heredoc: syntax error\n");
 		return (NULL);

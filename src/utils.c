@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:51:29 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/09 12:22:29 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/10 17:38:47 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,8 @@ int	check_symbol(char *line, char c)
 			i = skip_until_char(line, i, line[i], 2);
 		if (line[i] != c && line[i] != ' ' && !is_quote(line[i]))
 			status = 1;
-		if (status == 0 && line[i] == c)
-			return (-1);
 		if (status == 1 && line[i] == c && !is_quote(line[i - 1]) \
-		&& !is_quote(line[i + 1]))
+		&& !is_quote(line[i + 1]) && line[i + 1] != c && line[i - 1] != c)
 		{
 			if (is_empty_line(line + i + 1))
 				return (-1);
