@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:15:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/11 18:40:55 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/11 18:47:05 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ int	check_double_symbol(char *line, char c)
 			i = skip_until_char(line, i, line[i], 2);
 		if (line[i] != c && line[i] != ' ' && !is_quote(line[i]))
 			status = 1;
-		if (status == 1 && line[i] == '<' && line[i + 1] == '<' && line[i + 2] == '<')
-			return (-1);
 		if (status == 1 && line[i] == c && line[i + 1] == c && !is_quote(line[i - 1]) \
 		&& !is_quote(line[i + 2]) && line[i + 2] != c && line[i - 1] != c)
 		{
@@ -71,6 +69,7 @@ static int	heredoc_read(char *line, int i)
 		}
 		free(get_line);
 	}
+	free(exit_heredoc);
 	return (i);
 }
 
@@ -98,6 +97,7 @@ static int	heredoc_cat(char *line, int i, t_shell *shell)
 		save_cat[j++] = ft_substr(get_line, 0, ft_strlen(get_line));
 		free(get_line);
 	}
+	free(exit_heredoc);
 	if (!is_empty_line(line + i))
 		return (i);
 	start = 0;

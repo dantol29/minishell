@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:58:49 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/11 17:14:51 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/02/11 18:46:12 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		line = readline("\033[1;38;5;199mminishell $ \033[0m");
-		// line = readline("minishell$ ");
 		if (line == NULL)
 			break ;
 		line = ft_strtrim(line, " ");
