@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 11:38:13 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/09 15:53:33 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/11 13:06:15 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*exec_env_value(char *before_v, char *v, char *after_v, t_shell *shell)
 	return (ft_strjoin(before_v, value));
 }
 
-static char	*change_env_var(char *line, t_shell *shell)
+char	*change_env_var(char *line, t_shell *shell)
 {
 	int		i;
 	int		start;

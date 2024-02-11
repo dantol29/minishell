@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:15:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/10 18:01:37 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/11 13:07:41 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ char	*run_heredoc(char *line, char *command)
 	i = skip_until_char(line, i + 2, ' ', 1);
 	if (!line[i] || check_double_symbol(line, '<') == -1)
 	{
-		printf("heredoc: syntax error\n");
+		write(2, "heredoc: syntax error\n", 22);
 		return (NULL);
 	}
 	if (ft_strncmp("cat", command, 3) == 0)

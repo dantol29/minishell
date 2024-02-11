@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:20:15 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/08 13:57:40 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/11 13:06:58 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,28 @@ int	add_env_var(char *line, t_shell *shell)
 		return (TRUE);
 	}
 	i = 0;
+	if (line[0] != '_' && !ft_isalpha(line[0]))
+	{
+		write(2, "minishell: export: not a valid identifier\n", 42);
+		shell->exit_code = 1;
+		return (FALSE);
+	}
 	while (line[i] && (ft_isalnum(line[i]) || line[i] == '_'))
 		i++;
-	if (line[i++] != '=')
+	if ((line[i] != '=' && !is_empty_line(line + i)) ||\
+	(line[i] != '_' && !ft_isalpha(line[i]) && !is_empty_line(line + i) && line[i] != '='))
+	{
+		write(2, "minishell: export: not a valid identifier\n", 42);
+		shell->exit_code = 1;
 		return (FALSE);
+	}
+	i++;
 	value = find_command(line + i);
+	if (!value || is_empty_line(value))
+	{
+		shell->exit_code = 0;
+		return (FALSE);
+	}
 	if (find_env_var(ft_substr(line, 0, i - 1), shell->env))
 		replace_env_var_value(ft_substr(line, 0, i - 1), value, shell->env);
 	else

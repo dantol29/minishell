@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:50:22 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/08 14:23:45 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/11 13:05:32 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ static int	print_inside_quot(char *line, int i, t_shell *shell, int *inval_var)
 		if (line[i] == '\\' && symbol != '\'' && \
 		(line[i + 1] == '\\' || line[i + 1] == '\"'))
 			i++;
-		if (symbol == '\"' && line[i] == '$')
+		if (symbol == '\"' && line[i] == '$' && !is_empty_line(line + i + 1) \
+		&& line[i + 1] != ' ' && !is_quote(line[i + 1]))
 			i = print_env_var(line, shell, i, inval_var);
 		else
 			printf("%c", line[i]);
@@ -47,7 +48,8 @@ static void	print_echo_line(char *line, t_shell *shell)
 	invalid_var = 0;
 	while (line[i])
 	{
-		if (is_quote(line[i]) || line[i] == '$')
+		if (is_quote(line[i]) || (line[i] == '$' && !is_empty_line(line + i + 1) \
+		&& line[i + 1] != ' ' && !is_quote(line[i + 1])))
 			i = print_inside_quot(line, i, shell, &invalid_var);
 		else if (line[i] != ' ')
 		{

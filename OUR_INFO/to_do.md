@@ -19,11 +19,11 @@ Optional
 [ ] echo a > 4.txt b > 5.txt cat << A
 [ ] check heredoc with pipe/pipes
 [ ] if heredoc then pipe should wait
-[ ] export A- , export =, export 123, export GHOST=123 | env | grep GHOST (exit code 1)
-[ ] cd $PWD, cd $PWD hi, cd 123123
-[ ] exit hello (exit code 2), exit 42 world (exit code 1)
-[ ] cat minishell.h | grep ");"$ (exit code 1)
-[ ] echo "> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<" 
+[x] export hello , export =, export 123, export GHOST=123 | env | grep GHOST (exit code 1)
+[x] cd $PWD, cd $OLDPWD, cd 123123
+[x] exit hello (exit code 2), exit 42 world (exit code 1)
+[x] echo $
+[x] echo "> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<" 
 
 10.01
 [x] wc -l < 2.txt > 4.txt

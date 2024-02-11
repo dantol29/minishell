@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:12:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/10 16:21:54 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/11 13:08:10 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,7 @@ char	*find_command(char *line)
 			count_letters++;
 		i++;
 	}
-	//if (count_quotes % 2 == 0)
 	return (extract_command(line, count_letters));
-	//printf("minishell: error while looking for matching quote\n");
-	//return (NULL);
 }
 
 static int	builtins(char *line, char *command, t_shell *shell)
@@ -119,6 +116,7 @@ void	launch_commands(char *line, t_shell *shell)
 	else if (launch_exec(line, command, shell) == FALSE)
 	{
 		shell->exit_code = 127;
-		printf("%s: command not found\n", command);
+		write(2, command, ft_strlen(command));
+		write(2, " : command not found\n", 21);
 	}
 }

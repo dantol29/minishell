@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:14:45 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/08 15:21:52 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/11 13:08:58 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	is_valid_substring(char **substrings, int j, t_shell *shell)
 	path = get_executable_path(shell, command);
 	if (path)
 		return (TRUE);
-	printf("%s: command not found\n", substrings[j - 1]);
+	write(2, substrings[j - 1], ft_strlen(substrings[j - 1]));
+	write(2, ": command not found\n", 20);
 	shell->exit_code = 127;
 	free_double_array(substrings, j);
 	return (FALSE);
@@ -115,7 +116,7 @@ void	manage_pipes(char *line, t_shell *shell)
 	{
 		if (pipe_count == -1)
 		{
-			printf("syntax error near '|'\n");
+			write(2, "syntax error near '|'\n", 22);
 			shell->exit_code = 1;
 			return ;
 		}

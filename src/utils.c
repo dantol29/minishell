@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:51:29 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/10 17:38:47 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/11 13:09:59 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	check_quotes(char *line)
 			}
 			if (line[i] != symbol)
 			{
-				printf("minishell: error while looking for matching quote\n");
+				write(2, "minishell: error while looking for matching quote\n", 50);
 				return (FALSE);
 			}
 		}

@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/10 17:54:25 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/11 13:04:18 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ extern int	g_ctrl_c_status;
 
 void	launch_commands(char *line, t_shell *shell);
 char	*find_command(char *line);
+char	*change_env_var(char *line, t_shell *shell);
 
 // echo
 void	check_echo_line(char *line, t_shell *shell);
