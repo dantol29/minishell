@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:15:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/11 15:46:22 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/11 18:07:28 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ static int	heredoc_read(char *line, int i)
 		}
 		free(get_line);
 	}
+	free(exit_heredoc);
 	return (i);
 }
 
@@ -95,6 +96,7 @@ static int	heredoc_cat(char *line, int i, t_shell *shell)
 		save_cat[j++] = ft_substr(get_line, 0, ft_strlen(get_line));
 		free(get_line);
 	}
+	free(exit_heredoc);
 	if (!is_empty_line(line + i))
 		return (i);
 	start = 0;

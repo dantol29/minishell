@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 14:16:12 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/11 13:09:22 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/11 18:04:33 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,13 @@ int	*launch_redirections(char *line, char **filenames, int redirection_count, t_
 			if (open_file(filenames, filenames[i], i, shell) == -1)
 			{
 				old[0] = -1;
+				//free_double_array(filenames, redirection_count * 2 + 1);
 				return (old);
 			}
 		}
 		i++;
 	}
+	//free_double_array(filenames, redirection_count * 2 + 1);
 	launch_commands(line, shell);
 	return (old);
 }

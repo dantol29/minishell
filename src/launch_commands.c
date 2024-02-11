@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:12:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/11 16:24:28 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/11 17:15:52 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,14 +96,15 @@ void	launch_commands(char *line, t_shell *shell)
 
 	command = find_command(line);
 	old_fd = redirections(&line, shell);
-	if (old_fd && old_fd[0] == -1)
-		return ;
-	if (old_fd && old_fd > 0)
+	if (old_fd && (old_fd > 0 || old_fd[0] == -1))
 	{
-		dup2(old_fd[0], 0);
-		dup2(old_fd[1], 1);
-		close(old_fd[0]);
-		close(old_fd[1]);
+		if (old_fd > 0)
+		{
+			dup2(old_fd[0], 0);
+			dup2(old_fd[1], 1);
+			close(old_fd[0]);
+			close(old_fd[1]);
+		}
 		free(command);
 		free(old_fd);
 		return ;
