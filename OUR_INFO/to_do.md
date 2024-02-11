@@ -10,15 +10,20 @@ Bonus
 [X] echo '"$USER"' should print "$USER".
 
 Optional
-[ ] ctrl+d in heredoc should display heredoc
 [ ] x=y    echo $x     y  (local variables)
 [ ] export in alphabetical order
 
 11.01
+[ ] CLEANNNN FREAKING memory !!!!!!!
 [ ] when ctrl+c is pressed after blocking command (cat) minishell$ is displayed 2 times
-[ ] check heredoc with pipe/pipes
 [ ] if heredoc then pipe should wait
-[ ] heredoc ctrl+c
+[x] cat << A
+	> "$USER"	
+	> '$USER'
+	> A
+	"dtolmaco"
+	'dtolmaco'
+[x] heredoc ctrl+c
 [x] heredoc ctrl+\
 [x] export hello , export =, export 123, export GHOST=123 | env | grep GHOST (exit code 1)
 [x] cd $PWD, cd $OLDPWD, cd 123123

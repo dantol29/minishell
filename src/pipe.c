@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:14:45 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/11 13:08:58 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/11 16:19:20 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,16 @@ int	is_valid_substring(char **substrings, int j, t_shell *shell)
 
 	command = find_command(substrings[j - 1]);
 	path = get_executable_path(shell, command);
+	free(command);
 	if (path)
+	{
+		free(path);
 		return (TRUE);
+	}
 	write(2, substrings[j - 1], ft_strlen(substrings[j - 1]));
 	write(2, ": command not found\n", 20);
 	shell->exit_code = 127;
-	free_double_array(substrings, j);
+	free(path);
 	return (FALSE);
 }
 
@@ -102,7 +106,9 @@ void	launch_pipes(char **substrings, t_shell *shell, int num_commands)
 		close(tube[i++]);
 	i = -1;
 	while (++i < num_commands) 
-		wait(NULL);
+		waitpid(-1, &shell->exit_code, 0);
+	shell->exit_code /= 256;
+	free(tube);
 }
 
 void	manage_pipes(char *line, t_shell *shell)
@@ -126,8 +132,8 @@ void	manage_pipes(char *line, t_shell *shell)
 	}
 	substrings = (char **)malloc(sizeof(char *) * (pipe_count + 1));
 	num_commands = split_pipes(line, shell, substrings);
-	if (num_commands == -1)
-		return ;
-	launch_pipes(substrings, shell, num_commands);
+	if (num_commands != -1)
+		launch_pipes(substrings, shell, num_commands);
+	free_double_array(substrings, pipe_count + 1);
 	return ;
 }

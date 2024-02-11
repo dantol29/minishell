@@ -6,11 +6,18 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:15:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/11 13:48:34 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/11 15:46:22 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	ctrl_c_heredoc(int signum)
+{
+	(void)signum;
+	ioctl(STDIN_FILENO, TIOCSTI, "\n");
+	g_ctrl_c_status = 130;
+}
 
 //  finds heredoc or append redirection in a line
 int	check_double_symbol(char *line, char c)
@@ -64,7 +71,7 @@ static int	heredoc_read(char *line, int i)
 	return (i);
 }
 
-static int	heredoc_cat(char *line, int i)
+static int	heredoc_cat(char *line, int i, t_shell *shell)
 {
 	int		start;
 	int		j;
@@ -72,6 +79,7 @@ static int	heredoc_cat(char *line, int i)
 	char	*get_line;
 	char	*save_cat[1024];
 
+	signal(SIGINT, ctrl_c_heredoc);
 	j = 0;
 	start = i;
 	i = skip_until_char(line, i, ' ', 0);
@@ -91,11 +99,11 @@ static int	heredoc_cat(char *line, int i)
 		return (i);
 	start = 0;
 	while (start < j && g_ctrl_c_status != 130)
-		printf("%s\n", save_cat[start++]);
+		printf("%s\n", change_env_var(save_cat[start++], shell));
 	return (-1);
 }
 
-char	*run_heredoc(char *line, char *command)
+char	*run_heredoc(char *line, char *command, t_shell *shell)
 {
 	int		i;
 	int		before_heredoc;
@@ -114,7 +122,7 @@ char	*run_heredoc(char *line, char *command)
 	}
 	if (ft_strncmp("cat", command, 3) == 0)
 	{
-		i = heredoc_cat(line, i);
+		i = heredoc_cat(line, i, shell);
 		if (i == -1)
 			return (NULL);
 	}

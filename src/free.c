@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 10:41:15 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/09 16:08:34 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/11 16:16:56 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	free_double_array(char **array, int size)
 	int	i;
 
 	i = 0;
-	while (i < size)
+	while (array[i] && i < size)
 	{
 		free(array[i]);
 		i++;

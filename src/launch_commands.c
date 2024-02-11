@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:12:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/11 13:08:10 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/11 16:24:28 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,11 @@ void	launch_commands(char *line, t_shell *shell)
 		dup2(old_fd[1], 1);
 		close(old_fd[0]);
 		close(old_fd[1]);
+		free(command);
+		free(old_fd);
 		return ;
 	}
-	line = run_heredoc(line, command);
+	line = run_heredoc(line, command, shell);
 	if (command == NULL || line == NULL || is_empty_line(line))
 		shell->exit_code = 0;
 	else if (!check_quotes(line))
@@ -119,4 +121,6 @@ void	launch_commands(char *line, t_shell *shell)
 		write(2, command, ft_strlen(command));
 		write(2, " : command not found\n", 21);
 	}
+	free(command);
+	free(old_fd);
 }
