@@ -13,7 +13,15 @@ Optional
 [ ] x=y    echo $x     y  (local variables)
 [ ] export in alphabetical order
 
-11.01
+12.02. 
+
+11.02
+[x] Today is alredy 12 of FEBRUARY, not January!!
+     Minishell is amasing to forget about  time and sleep!
+[ ] cat <<EOF | grep "ABC" ()
+    > ABC
+    > EOF
+    ABC
 [ ] CLEANNNN FREAKING memory !!!!!!!
 [ ] when ctrl+c is pressed after blocking command (cat) minishell$ is displayed 2 times
 [ ] if heredoc then pipe should wait
