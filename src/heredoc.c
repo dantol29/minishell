@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:15:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/11 18:37:03 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/11 18:38:08 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	check_double_symbol(char *line, char c)
 	return (count);
 }
 
+
 static int	heredoc_read(char *line, int i)
 {
 	int		start;
@@ -70,7 +71,6 @@ static int	heredoc_read(char *line, int i)
 		}
 		free(get_line);
 	}
-	free(exit_heredoc);
 	return (i);
 }
 
@@ -98,7 +98,6 @@ static int	heredoc_cat(char *line, int i, t_shell *shell)
 		save_cat[j++] = ft_substr(get_line, 0, ft_strlen(get_line));
 		free(get_line);
 	}
-	free(exit_heredoc);
 	if (!is_empty_line(line + i))
 		return (i);
 	start = 0;
@@ -126,6 +125,7 @@ char	*run_heredoc(char *line, char *command, t_shell *shell)
 	}
 	if (ft_strncmp("cat", command, 3) == 0)
 	{
+		//check_symbol(line, '|');
 		i = heredoc_cat(line, i, shell);
 		if (i == -1)
 			return (NULL);
