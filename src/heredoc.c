@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:15:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/11 18:07:28 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/11 18:37:03 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	check_double_symbol(char *line, char c)
 			i = skip_until_char(line, i, line[i], 2);
 		if (line[i] != c && line[i] != ' ' && !is_quote(line[i]))
 			status = 1;
+		if (status == 1 && line[i] == '<' && line[i + 1] == '<' && line[i + 2] == '<')
+			return (-1);
 		if (status == 1 && line[i] == c && line[i + 1] == c && !is_quote(line[i - 1]) \
 		&& !is_quote(line[i + 2]) && line[i + 2] != c && line[i - 1] != c)
 		{
