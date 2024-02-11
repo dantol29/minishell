@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:58:49 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/10 18:42:03 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/11 13:16:05 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,6 @@ void	ctrl_c(int signum)
 	rl_redisplay();
 }
 
-void	ctrl_nothing(int signum)
-{
-	(void)signum;
-	rl_replace_line("  ", 0);
-	rl_on_new_line();
-	rl_redisplay();
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
@@ -43,7 +35,7 @@ int	main(int argc, char **argv, char **envp)
 	g_ctrl_c_status = 0;
 	save_envp(&shell, envp);
 	signal(SIGINT, ctrl_c);
-	signal(SIGQUIT, ctrl_nothing);
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		line = readline("minishell$ ");

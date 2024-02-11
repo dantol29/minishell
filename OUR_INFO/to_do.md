@@ -16,9 +16,10 @@ Optional
 
 11.01
 [ ] when ctrl+c is pressed after blocking command (cat) minishell$ is displayed 2 times
-[ ] echo a > 4.txt b > 5.txt cat << A
 [ ] check heredoc with pipe/pipes
 [ ] if heredoc then pipe should wait
+[ ] heredoc ctrl+c
+[x] heredoc ctrl+\
 [x] export hello , export =, export 123, export GHOST=123 | env | grep GHOST (exit code 1)
 [x] cd $PWD, cd $OLDPWD, cd 123123
 [x] exit hello (exit code 2), exit 42 world (exit code 1)

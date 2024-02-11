@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:15:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/11 13:07:41 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/11 13:48:34 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,17 @@ static int	heredoc_read(char *line, int i)
 	start = i;
 	while (line[i] && line[i] != ' ')
 		i++;
-	exit_heredoc = ft_strjoin(ft_substr(line, start, i - start), "\n");
-	write(1, "heredoc> ", 9);
-	get_line = get_next_line(0);
-	while (get_line != NULL && !ft_strcmp(get_line, exit_heredoc) \
-	&& g_ctrl_c_status != 130)
+	exit_heredoc = ft_substr(line, start, i - start);
+	while (1)
 	{
+		get_line = readline("> ");
+		if (get_line == NULL || ft_strcmp(get_line, exit_heredoc) \
+		|| g_ctrl_c_status == 130)
+		{
+			free(get_line);
+			break ;
+		}
 		free(get_line);
-		write(1, "heredoc> ", 9);
-		get_line = get_next_line(0);
 	}
 	return (i);
 }
@@ -73,22 +75,23 @@ static int	heredoc_cat(char *line, int i)
 	j = 0;
 	start = i;
 	i = skip_until_char(line, i, ' ', 0);
-	exit_heredoc = ft_strjoin(ft_substr(line, start, i - start), "\n");
-	write(1, "heredoc> ", 9);
-	get_line = get_next_line(0);
-	while (get_line != NULL && !ft_strcmp(get_line, exit_heredoc) \
-	&& g_ctrl_c_status != 130)
+	exit_heredoc = ft_substr(line, start, i - start);
+	while (1)
 	{
+		get_line = readline("> ");
+		if (g_ctrl_c_status == 130 || !get_line || ft_strcmp(get_line, exit_heredoc))
+		{
+			free(get_line);
+			break ;
+		}
 		save_cat[j++] = ft_substr(get_line, 0, ft_strlen(get_line));
 		free(get_line);
-		write(1, "heredoc> ", 9);
-		get_line = get_next_line(0);
 	}
 	if (!is_empty_line(line + i))
 		return (i);
 	start = 0;
 	while (start < j && g_ctrl_c_status != 130)
-		printf("%s", save_cat[start++]);
+		printf("%s\n", save_cat[start++]);
 	return (-1);
 }
 
