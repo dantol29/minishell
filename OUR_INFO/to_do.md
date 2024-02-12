@@ -18,6 +18,14 @@ Optional
     ABC
 
 12.02. 
+[]grep B <<A
+	> B
+	> C
+	> A
+	B
+[] <<A
+	<<A : command not found (not working heredoc)
+
 [ ] exit 42 42 (too many arguments)
 [ ] CLEANNNN FREAKING memory !!!!!!!
 [ ] when ctrl+c is pressed after blocking command (cat) minishell$ is displayed 2 times

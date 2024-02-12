@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:14:45 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/11 16:19:20 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/12 22:06:08 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,10 +113,12 @@ void	launch_pipes(char **substrings, t_shell *shell, int num_commands)
 
 void	manage_pipes(char *line, t_shell *shell)
 {
+	int	is_heredoc;
 	int		pipe_count;
 	int		num_commands;
 	char	**substrings;
 
+	is_heredoc = (check_double_symbol(line, '<') != -1);
 	pipe_count = check_symbol(line, '|');
 	if (pipe_count <= 0)
 	{
