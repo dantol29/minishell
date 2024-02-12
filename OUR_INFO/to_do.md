@@ -17,7 +17,26 @@ Optional
     > EOF
     ABC
 
-12.02. 
+13.02. 
+[ ] exit 42 42 (too many arguments)
+[ ] CLEANNNN FREAKING memory !!!!!!!
+[ ] when ctrl+c is pressed after blocking command (cat) minishell$ is displayed 2 times
+[ ] display heredoc with pipe
+
+[] start programm: ls works only after secontd type ls
+[] exit doesn't work from 1 time
+	minishell $ exit
+	exit
+	minishell $ exit
+	exit
+[ ] CMD <<A  (wc -l <<A) working wrong(must first start CMD (execve,etc))
+	1. start CMD (execve,etc)
+	2. set pipe to pid stdin
+	3. read lines in loop until end of heredoc
+	3a. send every line to pid stdin (`write(fd, line, len)` probably)
+	4. close pipe after heredoc done
+	5 (CMD should know stdin is closed, so should process and exit)
+[ ] wc -l <<A
 []grep B <<A
 	> B
 	> C
@@ -26,10 +45,15 @@ Optional
 [] <<A
 	<<A : command not found (not working heredoc)
 
-[ ] exit 42 42 (too many arguments)
-[ ] CLEANNNN FREAKING memory !!!!!!!
-[ ] when ctrl+c is pressed after blocking command (cat) minishell$ is displayed 2 times
-[ ] display heredoc wiht pipe
+[] echo <<A (called not ctrl_c_heredoc, but main ctrl_c)
+	> a
+	> ^C
+	ctrl_c: 2
+[ ] can be only 1 signal handler set. Need to set in struct is_ctrl_c in heredoc. And then reset main ctrl_c.
+
+
+12.02
+
 
 11.02
 [x] cat << A
