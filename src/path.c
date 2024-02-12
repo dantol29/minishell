@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 14:40:45 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/08 15:17:57 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/12 17:07:14 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ char	*get_path(char **splited_path, char *command)
 	char	*cmd;
 	char	*temp;
 
+	if (opendir(command))
+		return (NULL);
 	if (access(command, X_OK) == 0)
 		return (command);
 	while (*splited_path)

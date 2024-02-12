@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:20:15 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/11 13:06:58 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/12 17:01:42 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,15 @@ void	unset_env_var(char *env_name, t_env **lst)
 	current = *lst;
 	prev = NULL;
 	if (!find_env_var(env_name, *lst))
+	{
+		free(env_name);
 		return ;
+	}
 	if (current != NULL && ft_strcmp(current->name, env_name))
 	{
 		*lst = current->next;
 		free(current);
+		free(env_name);
 		return ;
 	}
 	while (current && !ft_strcmp(current->name, env_name))
@@ -49,6 +53,7 @@ void	unset_env_var(char *env_name, t_env **lst)
 		current = current->next;
 	}
 	prev->next = current->next;
+	free(env_name);
 	free(current);
 }
 
@@ -65,30 +70,23 @@ t_env	*create_new_env_node(char *name, char *value)
 	return (new);
 }
 
-int	skip_until_char(char *line, int i, char c, char mode)
-{
-	if (mode == 0)
-	{
-		while (line[i] && line[i] != c)
-			i++;
-	}
-	else if (mode == 1)
-	{
-		while (line[i] && line[i] == c)
-			i++;
-	}
-	else if (mode == 2)
-	{
-		i++;
-		while (line[i] && line[i] != c)
-			i++;
-	}
-	return (i);
-}
-
-int	add_env_var(char *line, t_shell *shell)
+static void	add_env_var(char *line, int i, t_shell *shell)
 {
 	char	*value;
+
+	value = find_command(line + i);
+	if (!value || is_empty_line(value))
+		return ;
+	value = change_env_var(value, shell);
+	if (find_env_var(ft_substr(line, 0, i - 1), shell->env))
+		replace_env_var_value(ft_substr(line, 0, i - 1), value, shell->env);
+	else
+		lstadd_back(&shell->env, \
+		create_new_env_node(ft_substr(line, 0, i - 1), value));
+}
+
+int	export(char *line, t_shell *shell)
+{
 	int		i;
 
 	line = skip_command_name(line);
@@ -99,32 +97,13 @@ int	add_env_var(char *line, t_shell *shell)
 	}
 	i = 0;
 	if (line[0] != '_' && !ft_isalpha(line[0]))
-	{
-		write(2, "minishell: export: not a valid identifier\n", 42);
-		shell->exit_code = 1;
-		return (FALSE);
-	}
+		return (ft_error("minishell: export: not a valid identifier\n", shell));
 	while (line[i] && (ft_isalnum(line[i]) || line[i] == '_'))
 		i++;
 	if ((line[i] != '=' && !is_empty_line(line + i)) ||\
 	(line[i] != '_' && !ft_isalpha(line[i]) && !is_empty_line(line + i) && line[i] != '='))
-	{
-		write(2, "minishell: export: not a valid identifier\n", 42);
-		shell->exit_code = 1;
-		return (FALSE);
-	}
-	i++;
-	value = find_command(line + i);
-	if (!value || is_empty_line(value))
-	{
-		shell->exit_code = 0;
-		return (FALSE);
-	}
-	if (find_env_var(ft_substr(line, 0, i - 1), shell->env))
-		replace_env_var_value(ft_substr(line, 0, i - 1), value, shell->env);
-	else
-		lstadd_back(&shell->env, \
-		create_new_env_node(ft_substr(line, 0, i - 1), value));
+		return (ft_error("minishell: export: not a valid identifier\n", shell));
+	add_env_var(line, i + 1, shell);
 	shell->exit_code = 0;
 	return (TRUE);
 }

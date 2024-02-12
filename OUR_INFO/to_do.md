@@ -12,17 +12,18 @@ Bonus
 Optional
 [ ] x=y    echo $x     y  (local variables)
 [ ] export in alphabetical order
-
-12.02. 
-
-11.02
 [ ] cat <<EOF | grep "ABC" ()
     > ABC
     > EOF
     ABC
+
+12.02. 
+[ ] exit 42 42 (too many arguments)
 [ ] CLEANNNN FREAKING memory !!!!!!!
 [ ] when ctrl+c is pressed after blocking command (cat) minishell$ is displayed 2 times
-[ ] if heredoc then pipe should wait
+[ ] display heredoc wiht pipe
+
+11.02
 [x] cat << A
 	> "$USER"	
 	> '$USER'

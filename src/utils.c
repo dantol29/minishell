@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:51:29 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/11 13:09:59 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/12 17:03:04 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,27 @@ int	is_empty_line(char *line)
 		i++;
 	}
 	return (TRUE);
+}
+
+int	skip_until_char(char *line, int i, char c, char mode)
+{
+	if (mode == 0)
+	{
+		while (line[i] && line[i] != c)
+			i++;
+	}
+	else if (mode == 1)
+	{
+		while (line[i] && line[i] == c)
+			i++;
+	}
+	else if (mode == 2)
+	{
+		i++;
+		while (line[i] && line[i] != c)
+			i++;
+	}
+	return (i);
 }
 
 char	*skip_command_name(char *line)

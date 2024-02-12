@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 14:16:12 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/11 18:04:33 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/12 17:06:13 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,8 +122,7 @@ int	*redirections(char **line, t_shell *shell)
 	append_redir = check_double_symbol(*line, '>');
 	if (output_redir == -1 || input_redir == -1 || append_redir == -1)
 	{
-		write(2, "minishell: syntax error\n", 24);
-		shell->exit_code = 1;
+		ft_error("minishell: syntax error\n", shell);
 		error = malloc(sizeof(int) * 1);
 		error[0] = -1;
 		return (error);

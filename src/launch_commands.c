@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:12:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/11 17:15:52 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/12 17:16:13 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static int	builtins(char *line, char *command, t_shell *shell)
 		shell->exit_code = 0;
 	}
 	else if (ft_strcmp("export", command))
-		add_env_var(line, shell);
+		export(line, shell);
 	else if (ft_strcmp("unset", command))
 	{
 		unset_env_var(skip_command_name(line), &shell->env);
@@ -89,6 +89,19 @@ static int	builtins(char *line, char *command, t_shell *shell)
 	return (TRUE);
 }
 
+static void	close_redirections(int *old_fd, char *command)
+{
+	if (old_fd[0] != -1)
+	{
+		dup2(old_fd[0], 0);
+		dup2(old_fd[1], 1);
+		close(old_fd[0]);
+		close(old_fd[1]);
+	}
+	free(command);
+	free(old_fd);
+}
+
 void	launch_commands(char *line, t_shell *shell)
 {
 	char	*command;
@@ -97,18 +110,7 @@ void	launch_commands(char *line, t_shell *shell)
 	command = find_command(line);
 	old_fd = redirections(&line, shell);
 	if (old_fd && (old_fd > 0 || old_fd[0] == -1))
-	{
-		if (old_fd > 0)
-		{
-			dup2(old_fd[0], 0);
-			dup2(old_fd[1], 1);
-			close(old_fd[0]);
-			close(old_fd[1]);
-		}
-		free(command);
-		free(old_fd);
-		return ;
-	}
+		return (close_redirections(old_fd, command));
 	line = run_heredoc(line, command, shell);
 	if (command == NULL || line == NULL || is_empty_line(line))
 		shell->exit_code = 0;

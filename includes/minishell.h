@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/11 14:07:48 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/12 17:02:26 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	print_env(t_env *env);
 char	*get_env_value(char *variable_name, t_env *lst);
 
 // export and unset
-int		add_env_var(char *line, t_shell *shell);
+int		export(char *line, t_shell *shell);
 t_env	*create_new_env_node(char *name, char *value);
 void	replace_env_var_value(char *variable_name, char *new_value, t_env *lst);
 void	unset_env_var(char *env_name, t_env **lst);
@@ -105,6 +105,9 @@ int		skip_until_char(char *line, int i, char c, char mode);
 void	cd(char *line, t_shell *shell);
 void	ft_exit(char *line, t_shell *shell);
 void	pwd(t_shell *shell);
+
+// error
+int	ft_error(char *line, t_shell *shell);
 
 // pipe
 int		check_symbol(char *line, char c);
@@ -120,9 +123,6 @@ char	*get_path(char **splited_path, char *command);
 // free
 void    free_double_array(char **array, int size);
 void	free_linked_list(t_shell *shell);
-
-// errors
-void	ft_error(char *message);
 
 // save all env variables in a linked list
 void	save_envp(t_shell *shell, char **envp);
