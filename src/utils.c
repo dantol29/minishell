@@ -6,11 +6,39 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:51:29 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/12 17:03:04 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/12 18:09:02 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	count_flags(char *line)
+{
+	int		i;
+	int		count;
+	int		symbol;
+
+	i = 0;
+	count = 0;
+	while (line[i])
+	{
+		if (line[i] != ' ' && !is_quote(line[i]))
+		{
+			count++;
+			while (line[i] && line[i] != ' ')
+				i++;
+		}
+		if (is_quote(line[i]))
+		{
+			symbol = line[i++];
+			count++;
+			while (line[i] && line[i] != symbol)
+				i++;
+		}
+		i++;
+	}
+	return (count);
+}
 
 int	check_symbol(char *line, char c)
 {
@@ -109,7 +137,8 @@ int	check_quotes(char *line)
 			}
 			if (line[i] != symbol)
 			{
-				write(2, "minishell: error while looking for matching quote\n", 50);
+				write(2, \
+				"minishell: error while looking for matching quote\n", 50);
 				return (FALSE);
 			}
 		}

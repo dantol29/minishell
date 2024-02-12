@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:20:15 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/12 17:01:42 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/12 17:56:08 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,9 @@ int	export(char *line, t_shell *shell)
 		return (ft_error("minishell: export: not a valid identifier\n", shell));
 	while (line[i] && (ft_isalnum(line[i]) || line[i] == '_'))
 		i++;
-	if ((line[i] != '=' && !is_empty_line(line + i)) ||\
-	(line[i] != '_' && !ft_isalpha(line[i]) && !is_empty_line(line + i) && line[i] != '='))
+	if ((line[i] != '=' && !is_empty_line(line + i)) || \
+	(line[i] != '_' && !ft_isalpha(line[i]) && \
+	!is_empty_line(line + i) && line[i] != '='))
 		return (ft_error("minishell: export: not a valid identifier\n", shell));
 	add_env_var(line, i + 1, shell);
 	shell->exit_code = 0;

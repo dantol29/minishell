@@ -6,13 +6,13 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 14:40:45 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/12 17:07:14 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/12 17:51:18 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char *get_executable_path(t_shell *shell, char *cmd)
+char	*get_executable_path(t_shell *shell, char *cmd)
 {
 	char	*path;
 	char	*cmd_path;

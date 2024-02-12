@@ -6,13 +6,13 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 11:38:13 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/12 17:13:10 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/12 17:55:25 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char	*skip_env_var(char *before_var, char *after_var, int *i)
+static char	*skip_env_var(char *before_var, char *after_var, int *i)
 {
 	*i = -1;
 	return (ft_strjoin(before_var, after_var));
@@ -53,34 +53,6 @@ char	*change_env_var(char *line, t_shell *shell)
 		}
 	}
 	return (line);
-}
-
-static int	count_flags(char *line)
-{
-	int 	i;
-	int 	count;
-	int		symbol;
-
-	i = 0;
-	count = 0;
-	while(line[i])
-	{
-		if (line[i] != ' ' && !is_quote(line[i]))
-		{
-			count++;
-			while (line[i] && line[i] != ' ')
-				i++;
-		}
-		if (is_quote(line[i]))
-		{
-			symbol = line[i++];
-			count++;
-			while(line[i] && line[i] != symbol)
-				i++;
-		}
-		i++;
-	}
-	return (count);
 }
 
 static char	**execve_flags(char *line, char *cmd, t_shell *shell)

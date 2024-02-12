@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:15:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/11 18:47:05 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/12 18:08:30 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ int	check_double_symbol(char *line, char c)
 			i = skip_until_char(line, i, line[i], 2);
 		if (line[i] != c && line[i] != ' ' && !is_quote(line[i]))
 			status = 1;
-		if (status == 1 && line[i] == c && line[i + 1] == c && !is_quote(line[i - 1]) \
+		if (status == 1 && line[i] == c && \
+		line[i + 1] == c && !is_quote(line[i - 1]) \
 		&& !is_quote(line[i + 2]) && line[i + 2] != c && line[i - 1] != c)
 		{
 			if (is_empty_line(line + i + 2))
@@ -46,7 +47,6 @@ int	check_double_symbol(char *line, char c)
 	}
 	return (count);
 }
-
 
 static int	heredoc_read(char *line, int i)
 {
@@ -89,7 +89,8 @@ static int	heredoc_cat(char *line, int i, t_shell *shell)
 	while (1)
 	{
 		get_line = readline("> ");
-		if (g_ctrl_c_status == 130 || !get_line || ft_strcmp(get_line, exit_heredoc))
+		if (g_ctrl_c_status == 130 || !get_line \
+		|| ft_strcmp(get_line, exit_heredoc))
 		{
 			free(get_line);
 			break ;
@@ -125,7 +126,6 @@ char	*run_heredoc(char *line, char *command, t_shell *shell)
 	}
 	if (ft_strncmp("cat", command, 3) == 0)
 	{
-		//check_symbol(line, '|');
 		i = heredoc_cat(line, i, shell);
 		if (i == -1)
 			return (NULL);
