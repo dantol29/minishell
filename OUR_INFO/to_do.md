@@ -20,7 +20,7 @@ Optional
 14.02
 [ ] minishell $ < Makefile < abcder cat > out
 	Segmentation fault (core dumped)
-13.02. 
+
 
 # EXIT:
 [ ] Current: ($ exit 42 42) completely exit from minishell
@@ -48,28 +48,22 @@ Aborted (core dumped)
 	2  5              includes  Makefile   minishell_tester  README.md  venv
 	3  DOCUMENTATION  libft     minishell  OUR_INFO          src
 	Xminishell $ 
-
-[ ] Logik for CMD <<A  (wc -l <<A) working wrong(must first start CMD (execve,etc))
-	1. start CMD (execve,etc)
-	2. set pipe to pid stdin
-	3. read lines in loop until end of heredoc
-	3a. send every line to pid stdin (`write(fd, line, len)` probably)
-	4. close pipe after heredoc done
-	5 (CMD should know stdin is closed, so should process and exit)
-[ ] can be only 1 signal handler set. Need to set in struct is_ctrl_c in heredoc. And then reset main ctrl_c.
 [ ] <<A <<B multiple heredocs
 
 14.02
 [ ] Clean more memory
+[ ] need to add launch cmd to heredoc
 
 13.02
 [x] A LOT of memory cleaned !!
 [x] count and save heredocs
 [x] $EMPTY echo a
 [x] $? echo a
+[x] heredoc: start rewriting, finds all eof, can write in tmp_heredoc.txt(need to add launch cmd)
 
 12.02
 [x] memory cleaning
+[x] find a lot of bugs for heredoc
 
 11.02
 [x] cat << A

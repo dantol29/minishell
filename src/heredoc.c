@@ -6,7 +6,7 @@
 /*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:15:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/13 19:42:49 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/02/13 23:27:15 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,18 @@ int	check_double_symbol(char *line, char c)
 	return (count);
 }
 
-static void	heredoc_read(char *exit_heredoc)
+static void	heredoc_read(char *exit_heredoc, t_shell *shell)
 {
 	char	*get_line;
+	int	fd;
 
+	fd = open("tmp_heredoc.txt", O_RDWR | O_CREAT | O_APPEND, 0644);
+	if (fd == -1)
+	{
+		perror("open");
+		shell->exit_code = 1;
+		return ;
+	}
 	while (1)
 	{
 		get_line = readline("> ");
@@ -55,13 +63,15 @@ static void	heredoc_read(char *exit_heredoc)
 			free(get_line);
 			break ;
 		}
+		write(fd, get_line, ft_strlen(get_line));
+		write(fd, "\n", 1);
 		free(get_line);
 	}
-
+	close(fd);
 	//printf("exit:%s:\n", exit_heredoc);
 }
 
-char ** save_eof_heredoc(char *line, int count)
+char **save_eof_heredoc(char *line, int count, t_shell *shell)
 {
 	int		i;
 	int		j;
@@ -91,16 +101,26 @@ char ** save_eof_heredoc(char *line, int count)
 		while (line[i] && line[i] != ' ')
 			i++;
 		eof_heredoc[j] = ft_strtrim(ft_substr(line, start, i - start), " ");
-		heredoc_read(eof_heredoc[j]);
+		heredoc_read(eof_heredoc[j], shell);
 		i++;
 		j++;
 	}
 	return (eof_heredoc);
 }
 
-void	launch_heredoc(char *line, int count)
+void	launch_heredoc(char *line, int count, t_shell *shell)
 {
-	save_eof_heredoc(line, count);
+	char **eof_heredoc;
+	int i;
+	
+	i = 0;
+	eof_heredoc = save_eof_heredoc(line, count, shell);
+	while (i < count)
+	{
+		heredoc_read(eof_heredoc[i], shell);
+		i++;	
+	}
+	
 }
 
 char	*run_heredoc(char *line, char *command, t_shell *shell)
@@ -118,28 +138,23 @@ char	*run_heredoc(char *line, char *command, t_shell *shell)
 		write(2, "heredoc: syntax error\n", 22);
 		return (NULL);
 	}
-	launch_heredoc(line, count);
+	launch_heredoc(line, count, shell);
 	if (g_ctrl_c_status == 130)
 		return (NULL);
 	return (NULL);
 	//return (ft_strjoin(ft_substr(line, 0, before_heredoc), line + i));
 }
 
-int	open_tmp_heredoc(char *line, t_shell *shell)
-{
-	int	new;
+// int	open_tmp_heredoc(char *line, t_shell *shell)
+// {
+// 	int	fd;
 
-	new = 0;
-	if (ft_strcmp(line, "<<"))
-		new = open("tmp_heredoc.txt", O_RDWR | O_CREAT | O_APPEND, 0644);
-	if (new == -1)
-	{
-		perror("open");
-		shell->exit_code = 1;
-		return (-1);
-	}
-	// if (ft_strcmp(redir, ">>"))
-	dup2(new, 1);
-
-	return (0);
-}
+// 	fd = open("tmp_heredoc.txt", O_RDWR | O_CREAT | O_APPEND, 0644);
+// 	if (fd == -1)
+// 	{
+// 		perror("open");
+// 		shell->exit_code = 1;
+// 		return (-1);
+// 	}
+// 	return (fd);
+// }
