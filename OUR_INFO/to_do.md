@@ -17,11 +17,48 @@ Optional
     > EOF
     ABC
 
-12.02. 
+13.02. 
+
+# EXIT:
+[ ] Current: ($ exit 42 42) completely exit from minishell
+	$ exit 42 42
+	exit
 [ ] exit 42 42 (too many arguments)
+# Memory:
 [ ] CLEANNNN FREAKING memory !!!!!!!
 [ ] when ctrl+c is pressed after blocking command (cat) minishell$ is displayed 2 times
-[ ] display heredoc wiht pipe
+[ ] display heredoc with pipe
+
+# Heredoc:
+[ ] wc -l <<A
+[] command before heredoc is not working (grep B  <<A)
+	$grep B <<A
+	> B
+	> A
+	^C
+[] simple heredoc is not working <<A
+	<<A : command not found (not working heredoc)
+[] echo <<A (called not ctrl_c_heredoc, but main ctrl_c, doesn't exit, needs press Enter)
+	$ echo <<A
+	> a
+	> b
+	> ^C
+	ctrl_c: 2
+[ ] Logik for CMD <<A  (wc -l <<A) working wrong(must first start CMD (execve,etc))
+	1. start CMD (execve,etc)
+	2. set pipe to pid stdin
+	3. read lines in loop until end of heredoc
+	3a. send every line to pid stdin (`write(fd, line, len)` probably)
+	4. close pipe after heredoc done
+	5 (CMD should know stdin is closed, so should process and exit)
+[ ] can be only 1 signal handler set. Need to set in struct is_ctrl_c in heredoc. And then reset main ctrl_c.
+
+
+12.02
+[x]  memory cleaning, optimization and norminette
+[x] test minishell for different types of heredocs with commands, 
+	problem with CTR+C and echo_heredoc (calls not original ctrl_heredoc)
+	All bugs added as tasks for 13.02
 
 11.02
 [x] cat << A
