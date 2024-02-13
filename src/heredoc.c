@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:15:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/12 18:08:30 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/13 10:57:10 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@ void	ctrl_c_heredoc(int signum)
 	ioctl(STDIN_FILENO, TIOCSTI, "\n");
 	g_ctrl_c_status = 130;
 }
+
+// int count_herdoc(char *line)
+// {
+
+// }
+
 
 //  finds heredoc or append redirection in a line
 int	check_double_symbol(char *line, char c)

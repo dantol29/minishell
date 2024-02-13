@@ -6,7 +6,7 @@
 /*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:58:49 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/12 23:20:16 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/02/13 11:32:50 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,12 @@ int	g_ctrl_c_status;
 
 void	ctrl_c(int signum)
 {
-	printf("ctrl_c: %d", signum);
 	(void)signum;
 	g_ctrl_c_status = 130;
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
-	//rl_redisplay();
+	rl_redisplay();
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -39,7 +38,6 @@ int	main(int argc, char **argv, char **envp)
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
-		printf("X");
 		line = readline("\033[1;38;5;199mminishell $ \033[0m");
 		if (line == NULL)
 			break ;

@@ -23,6 +23,7 @@ Optional
 [ ] Current: ($ exit 42 42) completely exit from minishell
 	$ exit 42 42
 	exit
+	
 [ ] exit 42 42 (too many arguments)
 # Memory:
 [ ] CLEANNNN FREAKING memory !!!!!!!
@@ -38,12 +39,11 @@ Optional
 	^C
 [] simple heredoc is not working <<A
 	<<A : command not found (not working heredoc)
-[] echo <<A (called not ctrl_c_heredoc, but main ctrl_c, doesn't exit, needs press Enter)
-	$ echo <<A
-	> a
-	> b
-	> ^C
-	ctrl_c: 2
+[ ] CMD $ cat <<A | ls
+	2  5              includes  Makefile   minishell_tester  README.md  venv
+	3  DOCUMENTATION  libft     minishell  OUR_INFO          src
+	Xminishell $ 
+
 [ ] Logik for CMD <<A  (wc -l <<A) working wrong(must first start CMD (execve,etc))
 	1. start CMD (execve,etc)
 	2. set pipe to pid stdin
