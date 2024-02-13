@@ -16,7 +16,10 @@ Optional
     > ABC
     > EOF
     ABC
-
+	
+14.02
+[ ] minishell $ < Makefile < abcder cat > out
+	Segmentation fault (core dumped)
 13.02. 
 
 # EXIT:

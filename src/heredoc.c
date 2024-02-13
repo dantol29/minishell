@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:15:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/13 13:21:18 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/13 19:42:49 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,60 +42,65 @@ int	check_double_symbol(char *line, char c)
 	return (count);
 }
 
-static void	heredoc_read(char *exit_heredoc, char *command)
+static void	heredoc_read(char *exit_heredoc)
 {
-	// char	*get_line;
+	char	*get_line;
 
-	// while (1)
-	// {
-	// 	get_line = readline("> ");
-	// 	if (get_line == NULL || ft_strcmp(get_line, exit_heredoc) \
-	// 	|| g_ctrl_c_status == 130)
-	// 	{
-	// 		free(get_line);
-	// 		break ;
-	// 	}
-	// 	free(get_line);
-	// }
-	printf("command:%s:\n", command);
-	printf("exit:%s:\n", exit_heredoc);
+	while (1)
+	{
+		get_line = readline("> ");
+		if (get_line == NULL || ft_strcmp(get_line, exit_heredoc) \
+		|| g_ctrl_c_status == 130)
+		{
+			free(get_line);
+			break ;
+		}
+		free(get_line);
+	}
+
+	//printf("exit:%s:\n", exit_heredoc);
 }
 
-void	launch_heredoc(char *line, int count)
+char ** save_eof_heredoc(char *line, int count)
 {
 	int		i;
 	int		j;
 	int		start;
-	char	**exit_heredoc;
-	char	**commands;
+	char	**eof_heredoc;
 
-	exit_heredoc = malloc(sizeof(char *) * (count + 1));
-	commands = malloc(sizeof(char *) * (count + 1));
-	exit_heredoc[count] = NULL;
-	commands[count] = NULL;
+
+	eof_heredoc = malloc(sizeof(char *) * (count + 1));
+	eof_heredoc[count] = NULL;
 	i = 0;
 	j = 0;
-	while (line[i])
+	while (j < count)
 	{
 		start = i;
 		while (line[i] && line[i] != '<')
 			i++;
-		commands[j] = ft_strtrim(ft_substr(line, start, i), " ");
-		i += 2;
+		if (line[i] && line[i] == '<')
+			i += 2;
 		while (line[i] && line[i] == ' ')
 			i++;
 		if (!line[i])
 		{
 			write(2, "heredoc: syntax error\n", 22);
-			return ;
+			return (NULL) ;
 		}
 		start = i;
 		while (line[i] && line[i] != ' ')
 			i++;
-		exit_heredoc[j++] = ft_strtrim(ft_substr(line, start, i), " ");
-		heredoc_read(exit_heredoc[j - 1], commands[j - 1]);
+		eof_heredoc[j] = ft_strtrim(ft_substr(line, start, i - start), " ");
+		heredoc_read(eof_heredoc[j]);
 		i++;
+		j++;
 	}
+	return (eof_heredoc);
+}
+
+void	launch_heredoc(char *line, int count)
+{
+	save_eof_heredoc(line, count);
 }
 
 char	*run_heredoc(char *line, char *command, t_shell *shell)
@@ -118,4 +123,23 @@ char	*run_heredoc(char *line, char *command, t_shell *shell)
 		return (NULL);
 	return (NULL);
 	//return (ft_strjoin(ft_substr(line, 0, before_heredoc), line + i));
+}
+
+int	open_tmp_heredoc(char *line, t_shell *shell)
+{
+	int	new;
+
+	new = 0;
+	if (ft_strcmp(line, "<<"))
+		new = open("tmp_heredoc.txt", O_RDWR | O_CREAT | O_APPEND, 0644);
+	if (new == -1)
+	{
+		perror("open");
+		shell->exit_code = 1;
+		return (-1);
+	}
+	// if (ft_strcmp(redir, ">>"))
+	dup2(new, 1);
+
+	return (0);
 }
