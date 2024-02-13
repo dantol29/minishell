@@ -50,11 +50,11 @@ static void	print_echo_line(char *line, t_shell *shell)
 	invalid_var = 0;
 	while (line[i])
 	{
-		if (is_quote(line[i]) || (line[i] == '$' \
+		if (line[i] && (is_quote(line[i]) || (line[i] == '$' \
 		&& !is_empty_line(line + i + 1) \
-		&& line[i + 1] != ' ' && !is_quote(line[i + 1])))
+		&& line[i + 1] != ' ' && !is_quote(line[i + 1]))))
 			i = print_inside_quot(line, i, shell, &invalid_var);
-		else if (line[i] != ' ')
+		else if (line[i] && line[i] != ' ')
 		{
 			if (invalid_var == 0 && line[i - 1] == ' ')
 				printf(" ");

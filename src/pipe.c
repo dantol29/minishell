@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:14:45 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/12 23:09:51 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/02/13 13:38:28 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,6 @@ void	manage_pipes(char *line, t_shell *shell)
 	num_commands = split_pipes(line, shell, substrings);
 	if (num_commands != -1)
 		launch_pipes(substrings, shell, num_commands);
-	free_double_array(substrings, pipe_count + 1);
+	//free_double_array(substrings, 0);
 	return ;
 }

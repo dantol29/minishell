@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:15:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/13 10:57:10 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/02/13 13:21:18 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,126 +19,103 @@ void	ctrl_c_heredoc(int signum)
 	g_ctrl_c_status = 130;
 }
 
-// int count_herdoc(char *line)
-// {
-
-// }
-
-
 //  finds heredoc or append redirection in a line
 int	check_double_symbol(char *line, char c)
 {
 	int	i;
-	int	status;
 	int	count;
 
 	i = -1;
-	status = 0;
 	count = 0;
 	while (line[++i])
 	{
 		if (is_quote(line[i]))
 			i = skip_until_char(line, i, line[i], 2);
-		if (line[i] != c && line[i] != ' ' && !is_quote(line[i]))
-			status = 1;
-		if (status == 1 && line[i] == c && \
-		line[i + 1] == c && !is_quote(line[i - 1]) \
+		if (line[i] == c && line[i + 1] == c && !is_quote(line[i - 1]) \
 		&& !is_quote(line[i + 2]) && line[i + 2] != c && line[i - 1] != c)
 		{
 			if (is_empty_line(line + i + 2))
 				return (-1);
 			count++;
-			status = 0;
 		}
 	}
 	return (count);
 }
 
-static int	heredoc_read(char *line, int i)
+static void	heredoc_read(char *exit_heredoc, char *command)
 {
-	int		start;
-	char	*exit_heredoc;
-	char	*get_line;
+	// char	*get_line;
 
-	start = i;
-	while (line[i] && line[i] != ' ')
-		i++;
-	exit_heredoc = ft_substr(line, start, i - start);
-	while (1)
-	{
-		get_line = readline("> ");
-		if (get_line == NULL || ft_strcmp(get_line, exit_heredoc) \
-		|| g_ctrl_c_status == 130)
-		{
-			free(get_line);
-			break ;
-		}
-		free(get_line);
-	}
-	free(exit_heredoc);
-	return (i);
+	// while (1)
+	// {
+	// 	get_line = readline("> ");
+	// 	if (get_line == NULL || ft_strcmp(get_line, exit_heredoc) \
+	// 	|| g_ctrl_c_status == 130)
+	// 	{
+	// 		free(get_line);
+	// 		break ;
+	// 	}
+	// 	free(get_line);
+	// }
+	printf("command:%s:\n", command);
+	printf("exit:%s:\n", exit_heredoc);
 }
 
-static int	heredoc_cat(char *line, int i, t_shell *shell)
+void	launch_heredoc(char *line, int count)
 {
-	int		start;
+	int		i;
 	int		j;
-	char	*exit_heredoc;
-	char	*get_line;
-	char	*save_cat[1024];
+	int		start;
+	char	**exit_heredoc;
+	char	**commands;
 
-	signal(SIGINT, ctrl_c_heredoc);
+	exit_heredoc = malloc(sizeof(char *) * (count + 1));
+	commands = malloc(sizeof(char *) * (count + 1));
+	exit_heredoc[count] = NULL;
+	commands[count] = NULL;
+	i = 0;
 	j = 0;
-	start = i;
-	i = skip_until_char(line, i, ' ', 0);
-	exit_heredoc = ft_substr(line, start, i - start);
-	while (1)
+	while (line[i])
 	{
-		get_line = readline("> ");
-		if (g_ctrl_c_status == 130 || !get_line \
-		|| ft_strcmp(get_line, exit_heredoc))
+		start = i;
+		while (line[i] && line[i] != '<')
+			i++;
+		commands[j] = ft_strtrim(ft_substr(line, start, i), " ");
+		i += 2;
+		while (line[i] && line[i] == ' ')
+			i++;
+		if (!line[i])
 		{
-			free(get_line);
-			break ;
+			write(2, "heredoc: syntax error\n", 22);
+			return ;
 		}
-		save_cat[j++] = ft_substr(get_line, 0, ft_strlen(get_line));
-		free(get_line);
+		start = i;
+		while (line[i] && line[i] != ' ')
+			i++;
+		exit_heredoc[j++] = ft_strtrim(ft_substr(line, start, i), " ");
+		heredoc_read(exit_heredoc[j - 1], commands[j - 1]);
+		i++;
 	}
-	free(exit_heredoc);
-	if (!is_empty_line(line + i))
-		return (i);
-	start = 0;
-	while (start < j && g_ctrl_c_status != 130)
-		printf("%s\n", change_env_var(save_cat[start++], shell));
-	return (-1);
 }
 
 char	*run_heredoc(char *line, char *command, t_shell *shell)
 {
-	int		i;
-	int		before_heredoc;
-
-	if (check_double_symbol(line, '<') == 0)
-		return (line);
-	i = 0;
-	while (line[i] && line[i] != '<')
-		i++;
-	before_heredoc = i;
-	i = skip_until_char(line, i + 2, ' ', 1);
-	if (!line[i] || check_double_symbol(line, '<') == -1)
+	int		count;
+	
+	(void)command;
+	(void)shell;
+	count = check_double_symbol(line, '<');
+	//printf("count:%d\n", count);
+	if (count == 0 || count == -1)
 	{
+		if (count == 0)
+			return (line);
 		write(2, "heredoc: syntax error\n", 22);
 		return (NULL);
 	}
-	if (ft_strncmp("cat", command, 3) == 0)
-	{
-		i = heredoc_cat(line, i, shell);
-		if (i == -1)
-			return (NULL);
-	}
-	else
-		i = heredoc_read(line, i);
+	launch_heredoc(line, count);
 	if (g_ctrl_c_status == 130)
 		return (NULL);
-	return (ft_strjoin(ft_substr(line, 0, before_heredoc), line + i));
+	return (NULL);
+	//return (ft_strjoin(ft_substr(line, 0, before_heredoc), line + i));
 }

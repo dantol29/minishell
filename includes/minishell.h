@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/12 18:09:08 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/13 13:31:38 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int		is_empty_line(char *line);
 char	*skip_command_name(char *line);
 int		is_quote(char c);
 int		check_quotes(char *line);
-int	count_flags(char *line);
+int		count_flags(char *line);
 
 // env
 int		print_env_var(char *line, t_shell *shell, int i, int *invalid_var);
@@ -128,6 +128,6 @@ void	free_linked_list(t_shell *shell);
 // save all env variables in a linked list
 void	save_envp(t_shell *shell, char **envp);
 void	lstadd_back(t_env **lst, t_env *new);
-char	**update_envp(t_shell *shell);
+void	update_envp(t_shell *shell);
 
 #endif

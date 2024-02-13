@@ -29,6 +29,10 @@ Optional
 [ ] CLEANNNN FREAKING memory !!!!!!!
 [ ] when ctrl+c is pressed after blocking command (cat) minishell$ is displayed 2 times
 [ ] display heredoc with pipe
+[ ] minishell $ cd abc | cd def
+cd abc: command not found
+free(): invalid pointer
+Aborted (core dumped)
 
 # Heredoc:
 [ ] wc -l <<A
@@ -37,8 +41,6 @@ Optional
 	> B
 	> A
 	^C
-[] simple heredoc is not working <<A
-	<<A : command not found (not working heredoc)
 [ ] CMD $ cat <<A | ls
 	2  5              includes  Makefile   minishell_tester  README.md  venv
 	3  DOCUMENTATION  libft     minishell  OUR_INFO          src
@@ -52,10 +54,12 @@ Optional
 	4. close pipe after heredoc done
 	5 (CMD should know stdin is closed, so should process and exit)
 [ ] can be only 1 signal handler set. Need to set in struct is_ctrl_c in heredoc. And then reset main ctrl_c.
+[ ] <<A <<B multiple heredocs
+[x] << A
 
 
 12.02
-
+[x] memory cleaning
 
 11.02
 [x] cat << A

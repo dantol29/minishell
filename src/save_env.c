@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 13:35:22 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/08 11:01:13 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/13 13:36:25 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	lstadd_back(t_env **lst, t_env *new)
 	last->next = new;
 }
 
-char	**update_envp(t_shell *shell)
+void	update_envp(t_shell *shell)
 {
 	int		i;
 	char	**new;
@@ -71,7 +71,8 @@ char	**update_envp(t_shell *shell)
 	i = lstsize(shell->env);
 	new = malloc(sizeof(char *) * (i + 1));
 	if (!new)
-		return (NULL);
+		return ;
+	new[i] = NULL;
 	i = 0;
 	tmp = shell->env;
 	while (tmp)
@@ -79,7 +80,8 @@ char	**update_envp(t_shell *shell)
 		new[i++] = ft_strjoin(tmp->name, ft_strjoin("=", tmp->value));
 		tmp = tmp->next; 
 	}
-	return (new);
+	//free_double_array(shell->current_envp, 0);
+	shell->current_envp = new;
 }
 
 /*save enviromental variables in a linked list*/

@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 13:53:41 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/12 16:56:16 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/13 12:50:27 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	ft_exit(char *line, t_shell *shell)
 	printf("exit\n");
 	i = ft_atoi(exit_arg);
 	free(exit_arg);
+	free(line);
 	exit(i);
 }
 
