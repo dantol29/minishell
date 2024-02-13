@@ -14,7 +14,7 @@ all: $(NAME)
 
 $(NAME) : $(OBJECTS)
 		@make -C $(LIBFT)
-		$(CC) $(CFLAGS) $(OBJECTS) -L./$(LIBFT) -lft -lreadline -o $(NAME)
+		$(CC) $(CFLAGS) $(OBJECTS) -L./$(LIBFT) -lft -lreadline $(SANITAZER) -o $(NAME)
 
 clean:
 	rm -rf $(OBJECTS)

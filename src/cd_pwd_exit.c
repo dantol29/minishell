@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 13:53:41 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/13 12:50:27 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/13 18:55:15 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,11 @@ void	ft_exit(char *line, t_shell *shell)
 
 void	pwd(t_shell *shell)
 {
-	printf("%s\n", getcwd(NULL, 0));
+	char	*cwd;
+
+	cwd = getcwd(NULL, 0);
+	printf("%s\n", cwd);
+	free(cwd);
 	shell->exit_code = 0;
 }
 
@@ -74,7 +78,7 @@ void	cd(char *line, t_shell *shell)
 	}
 	else if (ft_strcmp("~", line) || is_empty_line(line))
 		chdir(get_env_value("HOME", shell->env));
-	else if (chdir(change_env_var(line, shell)) == -1)
+	else if (chdir(line) == -1)
 		return (cd_error(line, current_dir, shell));
 	replace_env_var_value("OLDPWD", current_dir, shell->env);
 	replace_env_var_value("PWD", getcwd(NULL, 0), shell->env);

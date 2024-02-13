@@ -130,7 +130,8 @@ void	check_echo_line(char *line, t_shell *shell)
 		return ;
 	}
 	line = check_flag_n(line, &flag);
-	line = ft_strtrim(line, " ");
+	while (*line && *line == ' ')
+		line++;
 	if (!check_quotes(line))
 		return ;
 	print_echo_line(line, shell);

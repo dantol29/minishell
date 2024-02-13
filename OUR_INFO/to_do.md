@@ -55,8 +55,15 @@ Aborted (core dumped)
 	5 (CMD should know stdin is closed, so should process and exit)
 [ ] can be only 1 signal handler set. Need to set in struct is_ctrl_c in heredoc. And then reset main ctrl_c.
 [ ] <<A <<B multiple heredocs
-[x] << A
 
+14.02
+[ ] Clean more memory
+
+13.02
+[x] A LOT of memory cleaned !!
+[x] count and save heredocs
+[x] $EMPTY echo a
+[x] $? echo a
 
 12.02
 [x] memory cleaning

@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:14:45 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/13 13:38:28 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/13 16:57:45 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,10 @@ int	is_valid_substring(char **substrings, int j, t_shell *shell)
 
 int	split_pipes(char *line, t_shell *shell, char **substrings)
 {
-	int	i;
-	int	j;
-	int	start;
+	int		i;
+	int		j;
+	int		start;
+	char	*tmp;
 
 	i = 0;
 	j = 0;
@@ -47,11 +48,17 @@ int	split_pipes(char *line, t_shell *shell, char **substrings)
 		(line[i] == '|' && !is_quote(line[i - 1]) && !is_quote(line[i + 1])))
 		{
 			if (line[i + 1] == '\0')
-				substrings[j++] = \
-				ft_strtrim(ft_substr(line, start, i - start + 1), " ");
+			{
+				tmp = ft_substr(line, start, i - start + 1);
+				substrings[j++] = ft_strtrim(tmp, " ");
+				free(tmp);
+			}
 			else
-				substrings[j++] = \
-				ft_strtrim(ft_substr(line, start, i - start), " ");
+			{
+				tmp = ft_substr(line, start, i - start);
+				substrings[j++] = ft_strtrim(tmp, " ");
+				free(tmp);
+			}
 			if (!is_valid_substring(substrings, j, shell))
 				return (-1);
 			start = i + 1;
@@ -126,16 +133,17 @@ void	manage_pipes(char *line, t_shell *shell)
 		{
 			write(2, "syntax error near '|'\n", 22);
 			shell->exit_code = 1;
-			return ;
+			return (free(line));
 		}
 		shell->is_pipe = FALSE;
 		launch_commands(line, shell);
-		return ;
+		return (free(line));
 	}
-	substrings = (char **)malloc(sizeof(char *) * (pipe_count + 1));
+	substrings = (char **)malloc(sizeof(char *) * (pipe_count + 1 + 1));
+	substrings[pipe_count + 1] = NULL;
 	num_commands = split_pipes(line, shell, substrings);
 	if (num_commands != -1)
 		launch_pipes(substrings, shell, num_commands);
-	//free_double_array(substrings, 0);
-	return ;
+	free_double_array(substrings);
+	return (free(line));
 }

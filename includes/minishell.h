@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/13 13:31:38 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/13 14:46:50 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ int		launch_exec(char *line, char *cmd, t_shell *shell);
 char	*get_path(char **splited_path, char *command);
 
 // free
-void    free_double_array(char **array, int size);
+void    free_double_array(char **array);
 void	free_linked_list(t_shell *shell);
 
 // save all env variables in a linked list

@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:12:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/13 13:23:59 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/13 17:35:01 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static char	*extract_command(char *line, int count_letters)
 	int		i;
 	int		j;
 	char	*cmd;
+	char	*tmp;
 
 	cmd = malloc(sizeof(char) * (count_letters + 2));
 	if (!cmd)
@@ -31,7 +32,11 @@ static char	*extract_command(char *line, int count_letters)
 		i++;
 	}
 	cmd[count_letters] = '\0';
-	return (ft_strtrim(cmd, " "));
+	tmp = ft_strdup(cmd);
+	while (*tmp && *tmp == ' ')
+		i++;
+	free(cmd);
+	return (tmp);
 }
 
 /*find command in the line ("echo" .....)*/

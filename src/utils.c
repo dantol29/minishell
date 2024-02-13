@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:51:29 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/13 12:37:44 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/13 17:02:58 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,8 @@ char	*skip_command_name(char *line)
 {
 	while (*line && *line != ' ')
 		line++;
-	line = ft_strtrim(line, " ");
+	while (*line && *line == ' ')
+		line++;
 	return (line);
 }
 

@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:58:49 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/13 13:16:39 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/13 18:39:01 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
 	char	*line;
+	char	*tmp;
 
 	(void)argv;
 	(void)argc;
@@ -41,12 +42,14 @@ int	main(int argc, char **argv, char **envp)
 		line = readline("\033[1;38;5;199mminishell $ \033[0m");
 		if (line == NULL)
 			break ;
-		line = ft_strtrim(line, " ");
-		manage_pipes(line, &shell);
 		add_history(line);
+		tmp = change_env_var(line, &shell);
+		manage_pipes(ft_strtrim(tmp, " "), &shell);
+		free(tmp);
 		g_ctrl_c_status = 0;
 	}
-	free(line);
-	//free_linked_list(&shell);
+	if (line)
+		free(line);
+	free_linked_list(&shell);
 	printf("exit\n");
 }

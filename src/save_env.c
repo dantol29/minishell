@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 13:35:22 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/13 13:36:25 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/13 16:24:12 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_env	*lstnew(char *content)
 	while (content[i] != '=')
 		i++;
 	new->name = ft_substr(content, 0, i);
-	new->value = content + i + 1;
+	new->value = ft_strdup(content + i + 1);
 	new->next = NULL;
 	return (new);
 }
@@ -66,6 +66,8 @@ void	update_envp(t_shell *shell)
 {
 	int		i;
 	char	**new;
+	char	*tmp_join;
+	char	*tmp_join2;
 	t_env	*tmp;
 
 	i = lstsize(shell->env);
@@ -77,10 +79,14 @@ void	update_envp(t_shell *shell)
 	tmp = shell->env;
 	while (tmp)
 	{
-		new[i++] = ft_strjoin(tmp->name, ft_strjoin("=", tmp->value));
+		tmp_join2 = ft_strjoin("=", tmp->value);
+		tmp_join = ft_strjoin(tmp->name, tmp_join2);
+		free(tmp_join2);
+		new[i++] = ft_strdup(tmp_join);
+		free(tmp_join);
 		tmp = tmp->next; 
 	}
-	//free_double_array(shell->current_envp, 0);
+	free_double_array(shell->current_envp);
 	shell->current_envp = new;
 }
 
@@ -102,7 +108,7 @@ void	save_envp(t_shell *shell, char **envp)
 	{
 		new = lstnew(envp[i]);
 		lstadd_back(&shell->env, new);
-		shell->current_envp[i] = envp[i];
+		shell->current_envp[i] = ft_strdup(envp[i]);
 		i++;
 	}
 	shell->current_envp[i] = NULL;
