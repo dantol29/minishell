@@ -6,7 +6,7 @@
 /*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:15:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/13 23:27:15 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/02/14 11:06:03 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ static void	heredoc_read(char *exit_heredoc, t_shell *shell)
 	while (1)
 	{
 		get_line = readline("> ");
+		printf(":%s:",get_line);
+		printf(":%s:", exit_heredoc);
 		if (get_line == NULL || ft_strcmp(get_line, exit_heredoc) \
 		|| g_ctrl_c_status == 130)
 		{
@@ -122,6 +124,44 @@ void	launch_heredoc(char *line, int count, t_shell *shell)
 	}
 	
 }
+
+// void	launch_heredoc(char *line, int count, t_shell *shell)
+// {
+// 	char **eof_heredoc;
+// 	int i;
+// 	int	fd;
+	
+// 	i = 0;
+// 	eof_heredoc = save_eof_heredoc(line, count, shell);
+// 	while (i < count)
+// 	{
+// 		// do i need to send
+// 		heredoc_read(eof_heredoc[i], shell);
+// 		fd = open("tmp_heredoc.txt", O_RDONLY);
+// 		if (fd == -1)
+// 		{
+// 			perror("open");
+// 			shell->exit_code = 1;
+// 			return (-1);
+// 		}
+// 		if (dup2(fd, STDIN_FILENO) == -1)
+// 		{
+//             perror("Failed to redirect stdin");
+//             close(fd);
+// 			shell->exit_code = 1;
+// 			return (-1);
+//         }
+// 		close(fd);
+// 		if (unlink("tmp_heredoc.txt") == -1)
+// 		{
+//             perror("Failed to delete file");
+// 			shell->exit_code = 1;
+// 			return (-1);
+//         }
+// 		i++;	
+// 	}
+	
+// }
 
 char	*run_heredoc(char *line, char *command, t_shell *shell)
 {
