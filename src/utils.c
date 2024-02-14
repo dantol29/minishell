@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:51:29 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/13 17:02:58 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/14 13:39:33 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,4 +146,27 @@ int	check_quotes(char *line)
 		i++;
 	}
 	return (TRUE);
+}
+
+//  finds heredoc or append redirection in a line
+int	check_double_symbol(char *line, char c)
+{
+	int	i;
+	int	count;
+
+	i = -1;
+	count = 0;
+	while (line[++i])
+	{
+		if (is_quote(line[i]))
+			i = skip_until_char(line, i, line[i], 2);
+		if (line[i] == c && line[i + 1] == c && !is_quote(line[i - 1]) \
+		&& !is_quote(line[i + 2]) && line[i + 2] != c && line[i - 1] != c)
+		{
+			if (is_empty_line(line + i + 2))
+				return (-1);
+			count++;
+		}
+	}
+	return (count);
 }
