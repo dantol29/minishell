@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/14 13:41:20 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/14 17:34:38 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*change_env_var(char *line, t_shell *shell);
 void	check_echo_line(char *line, t_shell *shell);
 
 // heredoc
-char   *run_heredoc(char *line, t_shell *shell);
+int		run_heredoc(char **line, int *old_fd, t_shell *shell);
 int		check_double_symbol(char *line, char c);
 char 	*remove_heredoc(char *line, char **eof_heredoc);
 char 	**save_eof_heredoc(char *line, int count);
@@ -112,11 +112,11 @@ void	pwd(t_shell *shell);
 
 // error
 int	ft_error(char *line, t_shell *shell);
-void	set_error(char *line, t_shell *shell);
+int	set_error(char *line, t_shell *shell);
 
 // pipe
 int		check_symbol(char *line, char c);
-void	manage_pipes(char *line, t_shell *shell);
+void	manage_pipes(char *line, int pipe_count, t_shell *shell);
 
 // path
 char *get_executable_path(t_shell *shell, char *cmd);

@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:12:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/14 13:48:18 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/14 14:40:03 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ void	launch_commands(char *line, t_shell *shell)
 	old_fd = redirections(&line, shell);
 	if (old_fd && (old_fd != NULL || old_fd[0] == -1))
 		return (close_redirections(old_fd, command));
-	line = run_heredoc(line, shell);
 	if (command == NULL || line == NULL || is_empty_line(line))
 		shell->exit_code = 0;
 	else if (!check_quotes(line))

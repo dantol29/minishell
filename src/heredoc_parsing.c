@@ -6,35 +6,36 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:15:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/14 13:41:02 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/14 17:58:21 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-// void	ctrl_c_heredoc(int signum)
-// {
-// 	(void)signum;
-// 	ioctl(STDIN_FILENO, TIOCSTI, "\n");
-// 	g_ctrl_c_status = 130;
-// }
+void	ctrl_c_heredoc(int signum)
+{
+	(void)signum;
+	ioctl(STDIN_FILENO, TIOCSTI, "\n");
+	g_ctrl_c_status = 130;
+}
 
 void	heredoc_read(char *exit_heredoc, t_shell *shell)
 {
 	char	*get_line;
 	int	fd;
 
+	signal(SIGINT, ctrl_c_heredoc);
+	signal(SIGQUIT, SIG_IGN);
 	fd = open("tmp_heredoc.txt", O_RDWR | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 	{
-		perror("open");
-		shell->exit_code = 1;
+		set_error("open", shell);
 		return ;
 	}
 	while (1)
 	{
 		get_line = readline("> ");
-		//get_line = change_env_var(get_line, shell);
+		get_line = change_env_var(get_line, shell);
 		if (get_line == NULL || ft_strcmp(get_line, exit_heredoc) \
 		|| g_ctrl_c_status == 130)
 		{

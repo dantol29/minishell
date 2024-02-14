@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 11:37:28 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/14 13:12:50 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/14 17:17:13 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@ int	ft_error(char *line, t_shell *shell)
 	return (FALSE);
 }
 
-void	set_error(char *line, t_shell *shell)
+int	set_error(char *line, t_shell *shell)
 {
 	perror(line);
 	shell->exit_code = 1;
+	return (FALSE);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:58:49 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/13 20:35:37 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/02/14 17:51:29 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,27 @@ void	ctrl_c(int signum)
 	rl_redisplay();
 }
 
+void	organizer(char *line, t_shell *shell)
+{
+	int	pipe_count;
+	int	old_fd;
+
+	pipe_count = check_symbol(line, '|');
+	if (pipe_count > 0)
+		manage_pipes(line, pipe_count, shell);
+	else if (pipe_count == 0)
+	{
+		shell->is_pipe = FALSE;
+		run_heredoc(&line, &old_fd, shell);
+	}
+	else if (pipe_count == -1)
+	{
+		write(2, "syntax error near '|'\n", 22);
+		shell->exit_code = 1;
+		return (free(line));
+	}
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
@@ -33,6 +54,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	(void)argc;
 	shell.exit_code = 0;
+	shell.is_pipe = FALSE;
 	g_ctrl_c_status = 0;
 	save_envp(&shell, envp);
 	signal(SIGINT, ctrl_c);
@@ -44,7 +66,7 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		add_history(line);
 		tmp = change_env_var(line, &shell);
-		manage_pipes(ft_strtrim(tmp, " "), &shell);
+		organizer(ft_strtrim(tmp, " "), &shell);
 		free(tmp);
 		g_ctrl_c_status = 0;
 	}

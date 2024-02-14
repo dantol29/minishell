@@ -16,11 +16,10 @@ Optional
     > ABC
     > EOF
     ABC
-	
-14.02
-[ ] minishell $ < Makefile < abcder cat > out
-	Segmentation fault (core dumped)
 
+# SIGNALS
+[ ] exit code 130 does not work anywhere
+[ ] when ctrl+c is pressed after blocking command (cat) minishell$ is displayed 2 times
 
 # EXIT:
 [ ] Current: ($ exit 42 42) completely exit from minishell
@@ -30,29 +29,18 @@ Optional
 [ ] exit 42 42 (too many arguments)
 # Memory:
 [ ] CLEANNNN FREAKING memory !!!!!!!
-[ ] when ctrl+c is pressed after blocking command (cat) minishell$ is displayed 2 times
-[ ] display heredoc with pipe
-[ ] minishell $ cd abc | cd def
-cd abc: command not found
-free(): invalid pointer
-Aborted (core dumped)
 
-# Heredoc:
-[ ] wc -l <<A
-[] command before heredoc is not working (grep B  <<A)
-	$grep B <<A
-	> B
-	> A
-	^C
-[ ] CMD $ cat <<A | ls
-	2  5              includes  Makefile   minishell_tester  README.md  venv
-	3  DOCUMENTATION  libft     minishell  OUR_INFO          src
-	Xminishell $ 
-[ ] <<A <<B multiple heredocs
+15.02
+[ ] < Makefile > out
+[ ] space before echo
+[ ] cat << A | wc -l (working, but exits(we have to close fd correctly))
+[ ] <<A <<B multiple heredocs (almost works) (<< : command not found)
 
 14.02
-[ ] Clean more memory
-[ ] need to add launch cmd to heredoc
+[x] wc -l <<A
+[x] << A, cat << A (basic hereodc working)
+[x] cat << A | wc -l (working, but exits)
+[x] minishell $ cd abc | cd def 
 
 13.02
 [x] A LOT of memory cleaned !!
