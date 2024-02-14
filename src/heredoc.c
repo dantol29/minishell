@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:15:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/14 11:06:03 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/02/14 13:11:54 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,29 +57,27 @@ static void	heredoc_read(char *exit_heredoc, t_shell *shell)
 	while (1)
 	{
 		get_line = readline("> ");
-		printf(":%s:",get_line);
-		printf(":%s:", exit_heredoc);
+		get_line = change_env_var(get_line, shell);
 		if (get_line == NULL || ft_strcmp(get_line, exit_heredoc) \
 		|| g_ctrl_c_status == 130)
 		{
 			free(get_line);
+			close(fd);
 			break ;
 		}
 		write(fd, get_line, ft_strlen(get_line));
 		write(fd, "\n", 1);
 		free(get_line);
 	}
-	close(fd);
-	//printf("exit:%s:\n", exit_heredoc);
 }
 
-char **save_eof_heredoc(char *line, int count, t_shell *shell)
+char **save_eof_heredoc(char *line, int count)
 {
 	int		i;
 	int		j;
-	int		start;
+	int		start_eof;
+	int		start_heredoc;
 	char	**eof_heredoc;
-
 
 	eof_heredoc = malloc(sizeof(char *) * (count + 1));
 	eof_heredoc[count] = NULL;
@@ -87,90 +85,103 @@ char **save_eof_heredoc(char *line, int count, t_shell *shell)
 	j = 0;
 	while (j < count)
 	{
-		start = i;
-		while (line[i] && line[i] != '<')
-			i++;
+		i = skip_until_char(line, i, '<', 0);
+		start_heredoc = i;
 		if (line[i] && line[i] == '<')
 			i += 2;
-		while (line[i] && line[i] == ' ')
-			i++;
+		i = skip_until_char(line, i, ' ', 1);
 		if (!line[i])
 		{
 			write(2, "heredoc: syntax error\n", 22);
 			return (NULL) ;
 		}
-		start = i;
-		while (line[i] && line[i] != ' ')
-			i++;
-		eof_heredoc[j] = ft_strtrim(ft_substr(line, start, i - start), " ");
-		heredoc_read(eof_heredoc[j], shell);
-		i++;
-		j++;
+		start_eof = i;
+		i = skip_until_char(line, i, ' ', 0);
+		eof_heredoc[j++] = ft_strtrim(ft_substr(line, start_eof, i - start_eof), " ");
 	}
 	return (eof_heredoc);
+}
+
+char	*get_line_without_heredoc(char *line, int start_heredoc, int i)
+{
+	char	*before_heredoc;
+	char	*after_heredoc;
+
+	before_heredoc = ft_substr(line, 0, start_heredoc);
+	after_heredoc = ft_substr(line, i, ft_strlen(line) - i);
+	line = ft_strjoin(before_heredoc, after_heredoc);
+	free(before_heredoc);
+	free(after_heredoc);
+	return (line);
+}
+
+char *remove_heredoc(char *line, char **eof_heredoc)
+{
+	int		i;
+	int		j;
+	int		start_heredoc;
+
+	i = 0;
+	j = 0;
+	while (eof_heredoc[j])
+	{
+		i = skip_until_char(line, i, '<', 0);
+		start_heredoc = i;
+		if (line[i] && line[i] == '<')
+			i += 2;
+		i = skip_until_char(line, i, ' ', 1);
+		if (!line[i])
+		{
+			write(2, "heredoc: syntax error\n", 22);
+			return (NULL) ;
+		}
+		i = skip_until_char(line, i, ' ', 0);
+		line = get_line_without_heredoc(line, start_heredoc, i);
+		j++;
+	}
+	return (line);
+}
+
+void	set_error(char *line, t_shell *shell)
+{
+	perror(line);
+	shell->exit_code = 1;
 }
 
 void	launch_heredoc(char *line, int count, t_shell *shell)
 {
 	char **eof_heredoc;
 	int i;
+	int	fd;
 	
 	i = 0;
-	eof_heredoc = save_eof_heredoc(line, count, shell);
+	eof_heredoc = save_eof_heredoc(line, count);
+	line = remove_heredoc(line, eof_heredoc);
+	printf("%s\n", line);
 	while (i < count)
 	{
 		heredoc_read(eof_heredoc[i], shell);
+		fd = open("tmp_heredoc.txt", O_RDONLY);
+		if (fd == -1)
+			return (set_error("open", shell));
+		if (dup2(fd, STDIN_FILENO) == -1)
+		{
+			close(fd);
+			return (set_error("Failed to redirect stdin", shell));
+		}
+		close(fd);
+		if (unlink("tmp_heredoc.txt") == -1)
+			return (set_error("Failed to delete file", shell));
 		i++;	
 	}
-	
 }
-
-// void	launch_heredoc(char *line, int count, t_shell *shell)
-// {
-// 	char **eof_heredoc;
-// 	int i;
-// 	int	fd;
-	
-// 	i = 0;
-// 	eof_heredoc = save_eof_heredoc(line, count, shell);
-// 	while (i < count)
-// 	{
-// 		// do i need to send
-// 		heredoc_read(eof_heredoc[i], shell);
-// 		fd = open("tmp_heredoc.txt", O_RDONLY);
-// 		if (fd == -1)
-// 		{
-// 			perror("open");
-// 			shell->exit_code = 1;
-// 			return (-1);
-// 		}
-// 		if (dup2(fd, STDIN_FILENO) == -1)
-// 		{
-//             perror("Failed to redirect stdin");
-//             close(fd);
-// 			shell->exit_code = 1;
-// 			return (-1);
-//         }
-// 		close(fd);
-// 		if (unlink("tmp_heredoc.txt") == -1)
-// 		{
-//             perror("Failed to delete file");
-// 			shell->exit_code = 1;
-// 			return (-1);
-//         }
-// 		i++;	
-// 	}
-	
-// }
 
 char	*run_heredoc(char *line, char *command, t_shell *shell)
 {
 	int		count;
 	
 	(void)command;
-	(void)shell;
 	count = check_double_symbol(line, '<');
-	//printf("count:%d\n", count);
 	if (count == 0 || count == -1)
 	{
 		if (count == 0)
@@ -179,22 +190,5 @@ char	*run_heredoc(char *line, char *command, t_shell *shell)
 		return (NULL);
 	}
 	launch_heredoc(line, count, shell);
-	if (g_ctrl_c_status == 130)
-		return (NULL);
 	return (NULL);
-	//return (ft_strjoin(ft_substr(line, 0, before_heredoc), line + i));
 }
-
-// int	open_tmp_heredoc(char *line, t_shell *shell)
-// {
-// 	int	fd;
-
-// 	fd = open("tmp_heredoc.txt", O_RDWR | O_CREAT | O_APPEND, 0644);
-// 	if (fd == -1)
-// 	{
-// 		perror("open");
-// 		shell->exit_code = 1;
-// 		return (-1);
-// 	}
-// 	return (fd);
-// }
