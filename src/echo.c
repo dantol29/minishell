@@ -120,22 +120,29 @@ static char	*check_flag_n(char *line, int *flag)
 /*manage echo function*/
 void	check_echo_line(char *line, t_shell *shell)
 {
-	int	flag;
+	int		flag;
+	char	*tmp;
 
 	flag = 1;
-	line = ft_strtrim(skip_command_name(line), " ");
-	if (is_empty_line(line))
+	line = skip_command_name(line);
+	tmp = ft_strtrim(line, " ");
+	if (is_empty_line(tmp))
 	{
 		printf("\n");
+		free(tmp);
 		return ;
 	}
-	line = check_flag_n(line, &flag);
-	while (*line && *line == ' ')
-		line++;
-	if (!check_quotes(line))
+	tmp = check_flag_n(tmp, &flag);
+	while (*tmp && *tmp == ' ')
+		tmp++;
+	if (!check_quotes(tmp))
+	{
+		free(tmp);
 		return ;
-	print_echo_line(line, shell);
+	}
+	print_echo_line(tmp, shell);
 	if (flag)
 		printf("\n");
 	shell->exit_code = 0;
+	free(tmp);
 }

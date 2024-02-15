@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:15:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/15 11:32:40 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/15 13:44:11 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	heredoc_read(char *exit_heredoc, t_shell *shell)
 	char	*get_line;
 	int	fd;
 
-	signal(SIGINT, ctrl_c_heredoc);
+	//signal(SIGINT, ctrl_c_heredoc);
 	signal(SIGQUIT, SIG_IGN);
 	fd = open("tmp_heredoc.txt", O_RDWR | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
@@ -53,7 +53,7 @@ char **save_eof_heredoc(char *line, int count)
 	int		i;
 	int		j;
 	int		start_eof;
-	int		start_heredoc;
+	char	*tmp;
 	char	**eof_heredoc;
 
 	eof_heredoc = malloc(sizeof(char *) * (count + 1));
@@ -63,13 +63,14 @@ char **save_eof_heredoc(char *line, int count)
 	while (j < count)
 	{
 		i = skip_until_char(line, i, '<', 0);
-		start_heredoc = i;
 		if (line[i] && line[i] == '<')
 			i += 2;
 		i = skip_until_char(line, i, ' ', 1);
 		start_eof = i;
 		i = skip_until_char(line, i, ' ', 0);
-		eof_heredoc[j++] = ft_strtrim(ft_substr(line, start_eof, i - start_eof), " ");
+		tmp = ft_substr(line, start_eof, i - start_eof);
+		eof_heredoc[j++] = ft_strtrim(tmp, " ");
+		free(tmp);
 	}
 	return (eof_heredoc);
 }
@@ -78,13 +79,18 @@ char	*get_line_without_heredoc(char *line, int start_heredoc, int i)
 {
 	char	*before_heredoc;
 	char	*after_heredoc;
+	char	*tmp;
+	char	*new;
 
 	before_heredoc = ft_substr(line, 0, start_heredoc);
 	after_heredoc = ft_substr(line, i, ft_strlen(line) - i);
-	line = ft_strjoin(before_heredoc, ft_strtrim(after_heredoc, " "));
+	tmp = ft_strtrim(after_heredoc, " ");
+	new = ft_strjoin(before_heredoc, tmp);
+	free(tmp);
 	free(before_heredoc);
 	free(after_heredoc);
-	return (line);
+	free(line);
+	return (new);
 }
 
 char *remove_heredoc(char *line, char **eof_heredoc)
@@ -92,21 +98,24 @@ char *remove_heredoc(char *line, char **eof_heredoc)
 	int		i;
 	int		j;
 	int		start_heredoc;
+	char	*tmp;
 
 	i = 0;
 	j = 0;
+	tmp = ft_strdup(line);
 	while (eof_heredoc[j])
 	{
-		i = skip_until_char(line, i, '<', 0);
+		i = skip_until_char(tmp, i, '<', 0);
 		start_heredoc = i;
-		if (line[i] && line[i] == '<')
+		if (tmp[i] && tmp[i] == '<')
 			i += 2;
-		i = skip_until_char(line, i, ' ', 1);
-		i = skip_until_char(line, i, ' ', 0);
-		line = get_line_without_heredoc(line, start_heredoc, i);
+		i = skip_until_char(tmp, i, ' ', 1);
+		i = skip_until_char(tmp, i, ' ', 0);
+		tmp = get_line_without_heredoc(tmp, start_heredoc, i);
 		i = 0;
 		j++;
 	}
-	return (line);
+	free(line);
+	return (tmp);
 }
 

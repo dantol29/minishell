@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 11:38:13 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/15 11:52:20 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/15 13:32:50 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,13 +128,13 @@ int	launch_exec(char *line, char *cmd, t_shell *shell)
 	flags = execve_flags(line, cmd, shell);
 	cmd_path = get_executable_path(shell, cmd);
 	if (!cmd_path)
+	{
+		free_double_array(flags);
 		return (FALSE);
+	}
 	pid = fork();
 	if (pid == 0)
-	{
-		signal(SIGINT, SIG_IGN);
 		execve(cmd_path, flags, shell->current_envp);
-	}
 	waitpid(pid, &shell->exit_code, 0);
 	shell->exit_code /= 256;
 	free(cmd_path);

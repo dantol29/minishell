@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:14:45 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/15 10:27:42 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/15 13:34:09 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,5 +141,5 @@ void	manage_pipes(char *line, int pipe_count, t_shell *shell)
 	if (num_commands != -1)
 		launch_pipes(substrings, shell, num_commands);
 	free_double_array(substrings);
-	return (free(line));
+	return ;
 }

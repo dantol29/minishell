@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:58:49 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/15 11:39:13 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/15 12:13:14 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	organizer(char *line, t_shell *shell)
 		shell->exit_code = 1;
 		return (free(line));
 	}
+	free(line);
 }
 
 int	main(int argc, char **argv, char **envp)
