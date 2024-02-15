@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:00:47 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/15 11:08:35 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/15 16:08:44 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,28 +40,28 @@ void	print_env_var_value(char *variable_name, t_env *lst)
 }
 
 /* i++ - to skip $ dollar sign, i-- - to not skip white space between env var*/
-int	print_env_var(char *line, t_shell *shell, int i, int *invalid_var)
-{
-	int	start;
+// int	print_env_var(char *line, t_shell *shell, int i, int *invalid_var)
+// {
+// 	int	start;
 
-	i++;
-	start = i;
-	if (line[i] == '?')
-	{
-		if (g_ctrl_c_status == 130)
-			printf("%d", 130);
-		else
-			printf("%d", shell->exit_code);
-		return (i);
-	}
-	while (line[i] && line[i] != ' ' && line[i] != '$' && !is_quote(line[i]))
-		i++;
-	print_env_var_value(ft_substr(line, start, i - start), shell->env);
-	if (!find_env_var(ft_substr(line, start, i - start), shell->env))
-		*invalid_var = 1;
-	i--;
-	return (i);
-}
+// 	i++;
+// 	start = i;
+// 	if (line[i] == '?')
+// 	{
+// 		if (g_ctrl_c_status == 130)
+// 			printf("%d", 130);
+// 		else
+// 			printf("%d", shell->exit_code);
+// 		return (i);
+// 	}
+// 	while (line[i] && line[i] != ' ' && line[i] != '$' && !is_quote(line[i]))
+// 		i++;
+// 	print_env_var_value(ft_substr(line, start, i - start), shell->env);
+// 	if (!find_env_var(ft_substr(line, start, i - start), shell->env))
+// 		*invalid_var = 1;
+// 	i--;
+// 	return (i);
+// }
 
 /*checks if the environment variable exists*/
 int	find_env_var(char *variable_name, t_env *lst)

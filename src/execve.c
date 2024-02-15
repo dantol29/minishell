@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 11:38:13 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/15 13:32:50 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/15 16:18:58 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,21 @@ char	*change_env_var(char *line, t_shell *shell)
 	{
 		if (line[i] == '\'')
 			i = skip_until_char(line, i, '\'', 2);
-		if (line[i++] == '$')
+		if (line[i] == '$' && (is_quote(line[i + 1]) || line[i + 1] == ' ' || line[i + 1] == '\0'))
+			i++;
+		if (line[i] == '$' && line[i + 1] == '?')
+		{
+			before_var =  ft_substr(line, 0, i);
+			var =  ft_substr(line, i + 1, 1);
+			after_var =  ft_substr(line, i + 2, ft_strlen(line) - i + 1);
+			free(line);
+			line = exec_env_value(before_var, var, after_var, shell);
+			free(before_var);
+			free(var);
+			free(after_var);
+			i += 2;
+		}
+		else if (line[i++] == '$')
 		{
 			start = i;
 			while (line[i] && line[i] != ' ' && \
@@ -72,7 +86,10 @@ char	*change_env_var(char *line, t_shell *shell)
 				line = exec_env_value(before_var, var, after_var, shell);
 			}
 			else
+			{
+				free(line);
 				line = skip_env_var(before_var, after_var, &i);
+			}
 			free(before_var);
 			free(var);
 			free(after_var);
@@ -94,10 +111,10 @@ static char	**execve_flags(char *line, char *cmd, t_shell *shell)
 	flags = malloc(sizeof(char *) * (flag_count + 2));
 	flags[0] = ft_strdup(cmd);
 	i = 1;
-	while (i < flag_count + 1)
+	while (i <= flag_count)
 	{
 		flags[i] = find_command(line);
-		line += ft_strlen(flags[i]) + 1;
+		line = skip_command_name(line);
 		if (ft_strcmp(flags[i], "$?") && !ft_strcmp(cmd, "awk"))
 			flags[i] = ft_itoa(130);
 		else if (!ft_strcmp(cmd, "awk"))

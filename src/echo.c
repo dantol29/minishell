@@ -15,48 +15,38 @@
 #include "../includes/minishell.h"
 
 /*echo print function*/
-static int	print_inside_quot(char *line, int i, t_shell *shell, int *inval_var)
+static int	print_inside_quot(char *line, int i)
 {
 	char	symbol;
 
 	symbol = line[i];
 	if (line[i - 1] == ' ')
 		printf(" ");
-	if (symbol == '$')
-		return (print_env_var(line, shell, i, inval_var));
 	i++;
 	while (line[i] && line[i] != symbol)
 	{
 		if (line[i] == '\\' && symbol != '\'' && \
 		(line[i + 1] == '\\' || line[i + 1] == '\"'))
 			i++;
-		if (symbol == '\"' && line[i] == '$' && !is_empty_line(line + i + 1) \
-		&& line[i + 1] != ' ' && !is_quote(line[i + 1]))
-			i = print_env_var(line, shell, i, inval_var);
-		else
-			printf("%c", line[i]);
+		printf("%c", line[i]);
 		i++;
 	}
 	return (i);
 }
 
 /*print echo*/
-static void	print_echo_line(char *line, t_shell *shell)
+static void	print_echo_line(char *line)
 {
 	int	i;
-	int	invalid_var;
 
 	i = 0;
-	invalid_var = 0;
 	while (line[i])
 	{
-		if (line[i] && (is_quote(line[i]) || (line[i] == '$' \
-		&& !is_empty_line(line + i + 1) \
-		&& line[i + 1] != ' ' && !is_quote(line[i + 1]))))
-			i = print_inside_quot(line, i, shell, &invalid_var);
+		if (line[i] && is_quote(line[i]))
+			i = print_inside_quot(line, i);
 		else if (line[i] && line[i] != ' ')
 		{
-			if (invalid_var == 0 && line[i - 1] == ' ')
+			if (line[i - 1] == ' ')
 				printf(" ");
 			if (line[i] == '\\' && line[i + 1])
 				i++;
@@ -140,9 +130,9 @@ void	check_echo_line(char *line, t_shell *shell)
 		free(tmp);
 		return ;
 	}
-	print_echo_line(tmp, shell);
+	print_echo_line(tmp);
 	if (flag)
 		printf("\n");
 	shell->exit_code = 0;
-	free(tmp);
+	//free(tmp);
 }

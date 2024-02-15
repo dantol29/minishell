@@ -12,26 +12,21 @@ Bonus
 Optional
 [ ] x=y    echo $x     y  (local variables)
 [ ] export in alphabetical order
-[ ] cat <<EOF | grep "ABC" ()
-    > ABC
-    > EOF
-    ABC
-
-# SIGNALS
-[ ] when ctrl+c is pressed after blocking command (cat) minishell$ is displayed 2 times
-
-# EXIT:
-[ ] Current: ($ exit 42 42) completely exit from minishell
-	$ exit 42 42
-	exit
-	
-[ ] exit 42 42 (too many arguments)
-# Memory:
-[ ] CLEANNNN FREAKING memory !!!!!!!
 
 15.02
 [ ] exit code 130 after cat
 [ ] exit code 130 after heredoc
+[ ] when ctrl+c is pressed after blocking command (cat) minishell$ is displayed 2 times
+[ ] exit 42 42 (too many arguments)
+[ ] cd $PWD hi (too many arguments)
+[x] /bin/ls "-l" "-a"
+[x] echo $?HELLO
+[x] cat <<EOF | grep "ABC" ()
+    > ABC
+    > EOF
+    ABC
+[x] export GHOST=123 | env (segfault)
+[x] CLEANNNN FREAKING memory !!!!!!!
 [x] separate exit to exit.c
 [x] exit code 130 works after ctrl+c
 [x] < Makefile

@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:20:15 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/13 19:24:26 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/15 15:43:47 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	replace_env_var_value(char *variable_name, char *new_value, t_env *lst)
 	{
 		if (ft_strcmp(tmp->name, variable_name))
 		{
+			free(tmp->value);
 			tmp->value = new_value;
 			break ;
 		}
@@ -37,9 +38,11 @@ void	unset_env_var(char *env_name, t_env **lst)
 	prev = NULL;
 	if (!find_env_var(env_name, *lst))
 		return ;
-	if (current != NULL && ft_strcmp(current->name, env_name))
+	if (current && ft_strcmp(current->name, env_name))
 	{
 		*lst = current->next;
+		free(current->name);
+		free(current->value);
 		free(current);
 		return ;
 	}
@@ -49,6 +52,8 @@ void	unset_env_var(char *env_name, t_env **lst)
 		current = current->next;
 	}
 	prev->next = current->next;
+	free(current->name);
+	free(current->value);
 	free(current);
 }
 
@@ -72,7 +77,10 @@ static void	add_env_var(char *line, int i, t_shell *shell)
 
 	value = find_command(line + i);
 	if (!value || is_empty_line(value))
+	{
+		free(value);
 		return ;
+	}
 	tmp = ft_substr(line, 0, i - 1);
 	value = change_env_var(value, shell);
 	if (find_env_var(tmp, shell->env))
@@ -81,9 +89,7 @@ static void	add_env_var(char *line, int i, t_shell *shell)
 		free(tmp);
 	}
 	else
-	{
 		lstadd_back(&shell->env, create_new_env_node(tmp, value));
-	}
 }
 
 int	export(char *line, t_shell *shell)

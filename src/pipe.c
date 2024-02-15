@@ -6,33 +6,33 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:14:45 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/15 13:34:09 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/15 15:13:19 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	is_valid_substring(char **substrings, int j, t_shell *shell)
-{
-	char	*command;
-	char	*path;
+// int	is_valid_substring(char **substrings, int j, t_shell *shell)
+// {
+// 	char	*command;
+// 	char	*path;
 
-	command = find_command(substrings[j - 1]);
-	path = get_executable_path(shell, command);
-	free(command);
-	if (path)
-	{
-		free(path);
-		return (TRUE);
-	}
-	write(2, substrings[j - 1], ft_strlen(substrings[j - 1]));
-	write(2, ": command not found\n", 20);
-	shell->exit_code = 127;
-	free(path);
-	return (FALSE);
-}
+// 	command = find_command(substrings[j - 1]);
+// 	path = get_executable_path(shell, command);
+// 	free(command);
+// 	if (path)
+// 	{
+// 		free(path);
+// 		return (TRUE);
+// 	}
+// 	write(2, substrings[j - 1], ft_strlen(substrings[j - 1]));
+// 	write(2, ": command not found\n", 20);
+// 	shell->exit_code = 127;
+// 	free(path);
+// 	return (FALSE);
+// }
 
-int	split_pipes(char *line, t_shell *shell, char **substrings)
+int	split_pipes(char *line, char **substrings)
 {
 	int		i;
 	int		j;
@@ -48,19 +48,11 @@ int	split_pipes(char *line, t_shell *shell, char **substrings)
 		(line[i] == '|' && !is_quote(line[i - 1]) && !is_quote(line[i + 1])))
 		{
 			if (line[i + 1] == '\0')
-			{
 				tmp = ft_substr(line, start, i - start + 1);
-				substrings[j++] = ft_strtrim(tmp, " ");
-				free(tmp);
-			}
 			else
-			{
 				tmp = ft_substr(line, start, i - start);
-				substrings[j++] = ft_strtrim(tmp, " ");
-				free(tmp);
-			}
-			if (!is_valid_substring(substrings, j, shell))
-				return (-1);
+			substrings[j++] = ft_strtrim(tmp, " ");
+			free(tmp);
 			start = i + 1;
 		}
 		i++;
@@ -137,7 +129,7 @@ void	manage_pipes(char *line, int pipe_count, t_shell *shell)
 
 	substrings = (char **)malloc(sizeof(char *) * (pipe_count + 1 + 1));
 	substrings[pipe_count + 1] = NULL;
-	num_commands = split_pipes(line, shell, substrings);
+	num_commands = split_pipes(line, substrings);
 	if (num_commands != -1)
 		launch_pipes(substrings, shell, num_commands);
 	free_double_array(substrings);

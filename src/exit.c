@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 11:54:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/15 11:55:04 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/02/15 14:30:00 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,5 @@ void	ft_exit(char *line, t_shell *shell)
 	printf("exit\n");
 	i = ft_atoi(exit_arg);
 	free(exit_arg);
-	free(line);
 	exit(i);
 }
