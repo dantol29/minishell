@@ -123,7 +123,7 @@ void	check_echo_line(char *line, t_shell *shell)
 	int	flag;
 
 	flag = 1;
-	line = skip_command_name(line);
+	line = ft_strtrim(skip_command_name(line), " ");
 	if (is_empty_line(line))
 	{
 		printf("\n");

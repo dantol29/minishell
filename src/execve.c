@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 11:38:13 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/13 18:57:41 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/15 11:07:34 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ char	*exec_env_value(char *before_v, char *v, char *after_v, t_shell *shell)
 
 	if (ft_strcmp(v, "?"))
 	{
-		tmp = ft_itoa(shell->exit_code);
+		if (g_ctrl_c_status == 130)
+			tmp = ft_itoa(130);
+		else
+			tmp = ft_itoa(shell->exit_code);
 		value = ft_strjoin(tmp, after_v);
 		free(tmp);
 	}
@@ -96,7 +99,12 @@ static char	**execve_flags(char *line, char *cmd, t_shell *shell)
 		flags[i] = find_command(line);
 		line += ft_strlen(flags[i]) + 1;
 		if (ft_strcmp(flags[i], "$?") && !ft_strcmp(cmd, "awk"))
-			flags[i] = ft_itoa(shell->exit_code);
+		{
+			// if (g_ctrl_c_status == 130)
+			flags[i] = ft_itoa(130);
+			// else
+			// 	flags[i] = ft_itoa(shell->exit_code);
+		}
 		else if (!ft_strcmp(cmd, "awk"))
 			flags[i] = change_env_var(flags[i], shell);
 		i++;

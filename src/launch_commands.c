@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:12:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/14 14:40:03 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/15 10:56:14 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static int	builtins(char *line, char *command, t_shell *shell)
 
 static void	close_redirections(int *old_fd, char *command)
 {
-	if (old_fd[0] != -1)
+	if (old_fd[0] != -1 && old_fd[0] != -2)
 	{
 		dup2(old_fd[0], 0);
 		dup2(old_fd[1], 1);
@@ -114,7 +114,7 @@ void	launch_commands(char *line, t_shell *shell)
 
 	command = find_command(line);
 	old_fd = redirections(&line, shell);
-	if (old_fd && (old_fd != NULL || old_fd[0] == -1))
+	if (old_fd && (old_fd[0] >= -2))
 		return (close_redirections(old_fd, command));
 	if (command == NULL || line == NULL || is_empty_line(line))
 		shell->exit_code = 0;

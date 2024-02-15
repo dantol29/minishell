@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:15:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/14 17:58:21 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/15 10:39:12 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ char *remove_heredoc(char *line, char **eof_heredoc)
 		i = skip_until_char(line, i, ' ', 1);
 		i = skip_until_char(line, i, ' ', 0);
 		line = get_line_without_heredoc(line, start_heredoc, i);
+		i = 0;
 		j++;
 	}
 	return (line);

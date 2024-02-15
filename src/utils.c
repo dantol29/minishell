@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:51:29 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/14 13:39:33 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/15 10:53:29 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int	check_symbol(char *line, char c)
 	i = -1;
 	status = 0;
 	count = 0;
+	if (line[0] && line[1] && line[0] == c && line[1] != c)
+		return (-2);
 	while (line[++i])
 	{
 		if (is_quote(line[i]))

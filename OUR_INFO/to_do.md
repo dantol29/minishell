@@ -18,7 +18,6 @@ Optional
     ABC
 
 # SIGNALS
-[ ] exit code 130 does not work anywhere
 [ ] when ctrl+c is pressed after blocking command (cat) minishell$ is displayed 2 times
 
 # EXIT:
@@ -31,12 +30,15 @@ Optional
 [ ] CLEANNNN FREAKING memory !!!!!!!
 
 15.02
-[ ] < Makefile > out
-[ ] space before echo
+[ ] exit code 130 after cat
+[ ] exit code 130 after heredoc
+[x] exit code 130 works after ctrl+c
+[x] < Makefile
+[x] space before echo
 [x] ls | cat << A | wc -l
 [x] ls | cat << A | cat <<B | wc -l
 [x] cat << A | wc -l 
-[ ] <<A <<B multiple heredocs (almost works) (<< : command not found)
+[x] <<A <<B multiple heredocs (almost works) (<< : command not found)
 
 14.02
 [x] wc -l <<A
