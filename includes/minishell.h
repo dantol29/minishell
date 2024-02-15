@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/14 17:34:38 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/15 11:57:43 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,8 @@ void	replace_env_var_value(char *variable_name, char *new_value, t_env *lst);
 void	unset_env_var(char *env_name, t_env **lst);
 int		skip_until_char(char *line, int i, char c, char mode);
 
-// cd_pwd_shell
+// cd_pwd
 void	cd(char *line, t_shell *shell);
-void	ft_exit(char *line, t_shell *shell);
 void	pwd(t_shell *shell);
 
 // error
@@ -124,6 +123,9 @@ char *get_executable_path(t_shell *shell, char *cmd);
 // execve
 int		launch_exec(char *line, char *cmd, t_shell *shell);
 char	*get_path(char **splited_path, char *command);
+
+//exit.c
+void	ft_exit(char *line, t_shell *shell);
 
 // free
 void    free_double_array(char **array);

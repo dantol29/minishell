@@ -32,6 +32,7 @@ Optional
 15.02
 [ ] exit code 130 after cat
 [ ] exit code 130 after heredoc
+[x] separate exit to exit.c
 [x] exit code 130 works after ctrl+c
 [x] < Makefile
 [x] space before echo
