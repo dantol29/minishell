@@ -17,48 +17,46 @@ Optional
     > EOF
     ABC
 
-13.02. 
+# SIGNALS
+[ ] when ctrl+c is pressed after blocking command (cat) minishell$ is displayed 2 times
 
 # EXIT:
 [ ] Current: ($ exit 42 42) completely exit from minishell
 	$ exit 42 42
 	exit
+	
 [ ] exit 42 42 (too many arguments)
 # Memory:
 [ ] CLEANNNN FREAKING memory !!!!!!!
-[ ] when ctrl+c is pressed after blocking command (cat) minishell$ is displayed 2 times
-[ ] display heredoc with pipe
 
-# Heredoc:
-[ ] wc -l <<A
-[] command before heredoc is not working (grep B  <<A)
-	$grep B <<A
-	> B
-	> A
-	^C
-[] simple heredoc is not working <<A
-	<<A : command not found (not working heredoc)
-[] echo <<A (called not ctrl_c_heredoc, but main ctrl_c, doesn't exit, needs press Enter)
-	$ echo <<A
-	> a
-	> b
-	> ^C
-	ctrl_c: 2
-[ ] Logik for CMD <<A  (wc -l <<A) working wrong(must first start CMD (execve,etc))
-	1. start CMD (execve,etc)
-	2. set pipe to pid stdin
-	3. read lines in loop until end of heredoc
-	3a. send every line to pid stdin (`write(fd, line, len)` probably)
-	4. close pipe after heredoc done
-	5 (CMD should know stdin is closed, so should process and exit)
-[ ] can be only 1 signal handler set. Need to set in struct is_ctrl_c in heredoc. And then reset main ctrl_c.
+15.02
+[ ] exit code 130 after cat
+[ ] exit code 130 after heredoc
+[x] separate exit to exit.c
+[x] exit code 130 works after ctrl+c
+[x] < Makefile
+[x] space before echo
+[x] ls | cat << A | wc -l
+[x] ls | cat << A | cat <<B | wc -l
+[x] cat << A | wc -l 
+[x] <<A <<B multiple heredocs (almost works) (<< : command not found)
 
+14.02
+[x] wc -l <<A
+[x] << A, cat << A (basic hereodc working)
+[x] cat << A | wc -l (working, but exits)
+[x] minishell $ cd abc | cd def 
+
+13.02
+[x] A LOT of memory cleaned !!
+[x] count and save heredocs
+[x] $EMPTY echo a
+[x] $? echo a
+[x] heredoc: start rewriting, finds all eof, can write in tmp_heredoc.txt(need to add launch cmd)
 
 12.02
-[x]  memory cleaning, optimization and norminette
-[x] test minishell for different types of heredocs with commands, 
-	problem with CTR+C and echo_heredoc (calls not original ctrl_heredoc)
-	All bugs added as tasks for 13.02
+[x] memory cleaning
+[x] find a lot of bugs for heredoc
 
 11.02
 [x] cat << A

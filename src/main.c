@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:58:49 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/11 18:46:12 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/15 11:39:13 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,37 @@ void	ctrl_c(int signum)
 	rl_redisplay();
 }
 
+void	organizer(char *line, t_shell *shell)
+{
+	int	pipe_count;
+	int	old_fd;
+
+	pipe_count = check_symbol(line, '|');
+	if (pipe_count > 0)
+		manage_pipes(line, pipe_count, shell);
+	else if (pipe_count == 0)
+	{
+		shell->is_pipe = FALSE;
+		run_heredoc(&line, &old_fd, shell);
+	}
+	else if (pipe_count == -1)
+	{
+		write(2, "syntax error near '|'\n", 22);
+		shell->exit_code = 1;
+		return (free(line));
+	}
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
 	char	*line;
+	char	*tmp;
 
 	(void)argv;
 	(void)argc;
 	shell.exit_code = 0;
+	shell.is_pipe = FALSE;
 	g_ctrl_c_status = 0;
 	save_envp(&shell, envp);
 	signal(SIGINT, ctrl_c);
@@ -41,12 +64,14 @@ int	main(int argc, char **argv, char **envp)
 		line = readline("\033[1;38;5;199mminishell $ \033[0m");
 		if (line == NULL)
 			break ;
-		line = ft_strtrim(line, " ");
-		manage_pipes(line, &shell);
 		add_history(line);
+		tmp = change_env_var(line, &shell);
+		organizer(ft_strtrim(tmp, " "), &shell);
+		free(tmp);
 		g_ctrl_c_status = 0;
 	}
-	free(line);
-	//free_linked_list(&shell);
+	if (line)
+		free(line);
+	free_linked_list(&shell);
 	printf("exit\n");
 }

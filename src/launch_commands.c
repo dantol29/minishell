@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:12:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/12 17:16:13 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/15 10:56:14 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static char	*extract_command(char *line, int count_letters)
 	int		i;
 	int		j;
 	char	*cmd;
+	char	*tmp;
 
 	cmd = malloc(sizeof(char) * (count_letters + 2));
 	if (!cmd)
@@ -31,7 +32,11 @@ static char	*extract_command(char *line, int count_letters)
 		i++;
 	}
 	cmd[count_letters] = '\0';
-	return (ft_strtrim(cmd, " "));
+	tmp = ft_strdup(cmd);
+	while (*tmp && *tmp == ' ')
+		i++;
+	free(cmd);
+	return (tmp);
 }
 
 /*find command in the line ("echo" .....)*/
@@ -91,7 +96,7 @@ static int	builtins(char *line, char *command, t_shell *shell)
 
 static void	close_redirections(int *old_fd, char *command)
 {
-	if (old_fd[0] != -1)
+	if (old_fd[0] != -1 && old_fd[0] != -2)
 	{
 		dup2(old_fd[0], 0);
 		dup2(old_fd[1], 1);
@@ -109,9 +114,8 @@ void	launch_commands(char *line, t_shell *shell)
 
 	command = find_command(line);
 	old_fd = redirections(&line, shell);
-	if (old_fd && (old_fd > 0 || old_fd[0] == -1))
+	if (old_fd && (old_fd[0] >= -2))
 		return (close_redirections(old_fd, command));
-	line = run_heredoc(line, command, shell);
 	if (command == NULL || line == NULL || is_empty_line(line))
 		shell->exit_code = 0;
 	else if (!check_quotes(line))

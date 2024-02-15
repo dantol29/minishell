@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/12 18:09:08 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/15 11:57:43 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,11 @@ char	*change_env_var(char *line, t_shell *shell);
 void	check_echo_line(char *line, t_shell *shell);
 
 // heredoc
-char   *run_heredoc(char *line, char *command, t_shell *shell);
+int		run_heredoc(char **line, int *old_fd, t_shell *shell);
 int		check_double_symbol(char *line, char c);
+char 	*remove_heredoc(char *line, char **eof_heredoc);
+char 	**save_eof_heredoc(char *line, int count);
+void	heredoc_read(char *exit_heredoc, t_shell *shell);
 
 // redirections
 int	*redirections(char **line, t_shell *shell);
@@ -86,7 +89,7 @@ int		is_empty_line(char *line);
 char	*skip_command_name(char *line);
 int		is_quote(char c);
 int		check_quotes(char *line);
-int	count_flags(char *line);
+int		count_flags(char *line);
 
 // env
 int		print_env_var(char *line, t_shell *shell, int i, int *invalid_var);
@@ -102,17 +105,17 @@ void	replace_env_var_value(char *variable_name, char *new_value, t_env *lst);
 void	unset_env_var(char *env_name, t_env **lst);
 int		skip_until_char(char *line, int i, char c, char mode);
 
-// cd_pwd_shell
+// cd_pwd
 void	cd(char *line, t_shell *shell);
-void	ft_exit(char *line, t_shell *shell);
 void	pwd(t_shell *shell);
 
 // error
 int	ft_error(char *line, t_shell *shell);
+int	set_error(char *line, t_shell *shell);
 
 // pipe
 int		check_symbol(char *line, char c);
-void	manage_pipes(char *line, t_shell *shell);
+void	manage_pipes(char *line, int pipe_count, t_shell *shell);
 
 // path
 char *get_executable_path(t_shell *shell, char *cmd);
@@ -121,13 +124,16 @@ char *get_executable_path(t_shell *shell, char *cmd);
 int		launch_exec(char *line, char *cmd, t_shell *shell);
 char	*get_path(char **splited_path, char *command);
 
+//exit.c
+void	ft_exit(char *line, t_shell *shell);
+
 // free
-void    free_double_array(char **array, int size);
+void    free_double_array(char **array);
 void	free_linked_list(t_shell *shell);
 
 // save all env variables in a linked list
 void	save_envp(t_shell *shell, char **envp);
 void	lstadd_back(t_env **lst, t_env *new);
-char	**update_envp(t_shell *shell);
+void	update_envp(t_shell *shell);
 
 #endif

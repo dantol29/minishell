@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 14:16:12 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/12 17:48:28 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/15 10:53:57 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,12 @@ int	*redirections(char **line, t_shell *shell)
 		ft_error("minishell: syntax error\n", shell);
 		error = malloc(sizeof(int) * 1);
 		error[0] = -1;
+		return (error);
+	}
+	if (output_redir == -2 || input_redir == -2 || append_redir == -2)
+	{
+		error = malloc(sizeof(int) * 1);
+		error[0] = -2;
 		return (error);
 	}
 	if (output_redir == 0 && input_redir == 0 && append_redir == 0)

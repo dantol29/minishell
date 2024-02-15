@@ -6,133 +6,61 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:15:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/12 18:08:30 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/15 10:21:39 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	ctrl_c_heredoc(int signum)
+int launch_heredoc(char **line, int count, int *old_fd, t_shell *shell)
 {
-	(void)signum;
-	ioctl(STDIN_FILENO, TIOCSTI, "\n");
-	g_ctrl_c_status = 130;
-}
-
-//  finds heredoc or append redirection in a line
-int	check_double_symbol(char *line, char c)
-{
-	int	i;
-	int	status;
-	int	count;
-
-	i = -1;
-	status = 0;
-	count = 0;
-	while (line[++i])
-	{
-		if (is_quote(line[i]))
-			i = skip_until_char(line, i, line[i], 2);
-		if (line[i] != c && line[i] != ' ' && !is_quote(line[i]))
-			status = 1;
-		if (status == 1 && line[i] == c && \
-		line[i + 1] == c && !is_quote(line[i - 1]) \
-		&& !is_quote(line[i + 2]) && line[i + 2] != c && line[i - 1] != c)
-		{
-			if (is_empty_line(line + i + 2))
-				return (-1);
-			count++;
-			status = 0;
-		}
-	}
-	return (count);
-}
-
-static int	heredoc_read(char *line, int i)
-{
-	int		start;
-	char	*exit_heredoc;
-	char	*get_line;
-
-	start = i;
-	while (line[i] && line[i] != ' ')
-		i++;
-	exit_heredoc = ft_substr(line, start, i - start);
-	while (1)
-	{
-		get_line = readline("> ");
-		if (get_line == NULL || ft_strcmp(get_line, exit_heredoc) \
-		|| g_ctrl_c_status == 130)
-		{
-			free(get_line);
-			break ;
-		}
-		free(get_line);
-	}
-	free(exit_heredoc);
-	return (i);
-}
-
-static int	heredoc_cat(char *line, int i, t_shell *shell)
-{
-	int		start;
-	int		j;
-	char	*exit_heredoc;
-	char	*get_line;
-	char	*save_cat[1024];
-
-	signal(SIGINT, ctrl_c_heredoc);
-	j = 0;
-	start = i;
-	i = skip_until_char(line, i, ' ', 0);
-	exit_heredoc = ft_substr(line, start, i - start);
-	while (1)
-	{
-		get_line = readline("> ");
-		if (g_ctrl_c_status == 130 || !get_line \
-		|| ft_strcmp(get_line, exit_heredoc))
-		{
-			free(get_line);
-			break ;
-		}
-		save_cat[j++] = ft_substr(get_line, 0, ft_strlen(get_line));
-		free(get_line);
-	}
-	free(exit_heredoc);
-	if (!is_empty_line(line + i))
-		return (i);
-	start = 0;
-	while (start < j && g_ctrl_c_status != 130)
-		printf("%s\n", change_env_var(save_cat[start++], shell));
-	return (-1);
-}
-
-char	*run_heredoc(char *line, char *command, t_shell *shell)
-{
-	int		i;
-	int		before_heredoc;
-
-	if (check_double_symbol(line, '<') == 0)
-		return (line);
+	char **eof_heredoc;
+	int i;
+	int	fd;
+	
 	i = 0;
-	while (line[i] && line[i] != '<')
-		i++;
-	before_heredoc = i;
-	i = skip_until_char(line, i + 2, ' ', 1);
-	if (!line[i] || check_double_symbol(line, '<') == -1)
+	*old_fd = dup(STDIN_FILENO);
+	eof_heredoc = save_eof_heredoc(*line, count);
+	*line = remove_heredoc(*line, eof_heredoc);
+	fd = 0;
+	while (i < count)
 	{
+		heredoc_read(eof_heredoc[i], shell);
+		fd = open("tmp_heredoc.txt", O_RDONLY);
+		if (fd == -1)
+			return (set_error("open", shell));
+		if (dup2(fd, STDIN_FILENO) == -1)
+			return (set_error("Failed to redirect stdin", shell));
+		if (unlink("tmp_heredoc.txt") == -1)
+			return (set_error("Failed to delete file", shell));
+		if (count > 1)
+			dup2(*old_fd, 0);
+		i++;	
+	}
+	if (shell->is_pipe == FALSE)
+	{
+		launch_commands(*line, shell);
+		dup2(*old_fd, 0);
+		close(fd);
+	}
+	dup2(*old_fd, 0);
+	return (fd);
+}
+
+int run_heredoc(char **line, int *old_fd, t_shell *shell)
+{
+	int		count;
+	
+	count = check_double_symbol(*line, '<');
+	if ((count == 0 || count == -1) && shell->is_pipe == FALSE)
+	{
+		if (count == 0)
+		{
+			launch_commands(*line, shell);
+			return (TRUE);
+		}
 		write(2, "heredoc: syntax error\n", 22);
-		return (NULL);
+		return (FALSE);
 	}
-	if (ft_strncmp("cat", command, 3) == 0)
-	{
-		i = heredoc_cat(line, i, shell);
-		if (i == -1)
-			return (NULL);
-	}
-	else
-		i = heredoc_read(line, i);
-	if (g_ctrl_c_status == 130)
-		return (NULL);
-	return (ft_strjoin(ft_substr(line, 0, before_heredoc), line + i));
+	return (launch_heredoc(line, count, old_fd, shell));
 }

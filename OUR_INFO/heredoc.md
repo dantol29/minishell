@@ -31,6 +31,11 @@
 		> A
 		bash: syntax error near unexpected token `newline'
 
+[ ] Current: ($ exit 42 42) completely exit from minishell
+	$ exit 42 42
+	exit
+[ ] exit 42 42 (too many arguments)
+
 
 
 ## CAT AND HEREDOC -  prints  strings, after exit heredoc
@@ -43,6 +48,10 @@
     dsaf
     fsdaf
     111111111111
+
+[ ] CMD heredoc not working
+[ ] heredoc  with pipes not working
+[ ] <<A heredoc is not working (our: command not found)
 
 
 

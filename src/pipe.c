@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:14:45 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/11 16:19:20 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/15 10:27:42 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,10 @@ int	is_valid_substring(char **substrings, int j, t_shell *shell)
 
 int	split_pipes(char *line, t_shell *shell, char **substrings)
 {
-	int	i;
-	int	j;
-	int	start;
+	int		i;
+	int		j;
+	int		start;
+	char	*tmp;
 
 	i = 0;
 	j = 0;
@@ -47,11 +48,17 @@ int	split_pipes(char *line, t_shell *shell, char **substrings)
 		(line[i] == '|' && !is_quote(line[i - 1]) && !is_quote(line[i + 1])))
 		{
 			if (line[i + 1] == '\0')
-				substrings[j++] = \
-				ft_strtrim(ft_substr(line, start, i - start + 1), " ");
+			{
+				tmp = ft_substr(line, start, i - start + 1);
+				substrings[j++] = ft_strtrim(tmp, " ");
+				free(tmp);
+			}
 			else
-				substrings[j++] = \
-				ft_strtrim(ft_substr(line, start, i - start), " ");
+			{
+				tmp = ft_substr(line, start, i - start);
+				substrings[j++] = ft_strtrim(tmp, " ");
+				free(tmp);
+			}
 			if (!is_valid_substring(substrings, j, shell))
 				return (-1);
 			start = i + 1;
@@ -67,9 +74,17 @@ void	pipe_loop(char **substrings, int *tube, int num_cmd, t_shell *shell)
 	int		i;
 	int		j;
 	int		current_pipe;
+	int		fd[num_cmd];
+	int		old_fd;
 
 	i = 0;
 	current_pipe = 0;
+	while (i < num_cmd)
+	{
+		fd[i] = run_heredoc(&substrings[i], &old_fd, shell);
+		i++;
+	}
+	i = 0;
 	while (i < num_cmd)
 	{
 		pid = fork();
@@ -77,12 +92,16 @@ void	pipe_loop(char **substrings, int *tube, int num_cmd, t_shell *shell)
 		{
 			if (i != num_cmd - 1)
 				dup2(tube[current_pipe + 1], 1);
-			if (i != 0)
+			if (fd[i] != 0)
+				dup2(fd[i], 0);
+			else if (i != 0)
 				dup2(tube[current_pipe - 2], 0);
 			j = 0;
 			while (j < 2 * (num_cmd))
 				close(tube[j++]);
 			launch_commands(substrings[i], shell);
+			if (fd[i] != 0)
+				close(fd[i]);
 			exit(EXIT_SUCCESS);
 		}
 		current_pipe += 2;
@@ -111,29 +130,16 @@ void	launch_pipes(char **substrings, t_shell *shell, int num_commands)
 	free(tube);
 }
 
-void	manage_pipes(char *line, t_shell *shell)
+void	manage_pipes(char *line, int pipe_count, t_shell *shell)
 {
-	int		pipe_count;
 	int		num_commands;
 	char	**substrings;
 
-	pipe_count = check_symbol(line, '|');
-	if (pipe_count <= 0)
-	{
-		if (pipe_count == -1)
-		{
-			write(2, "syntax error near '|'\n", 22);
-			shell->exit_code = 1;
-			return ;
-		}
-		shell->is_pipe = FALSE;
-		launch_commands(line, shell);
-		return ;
-	}
-	substrings = (char **)malloc(sizeof(char *) * (pipe_count + 1));
+	substrings = (char **)malloc(sizeof(char *) * (pipe_count + 1 + 1));
+	substrings[pipe_count + 1] = NULL;
 	num_commands = split_pipes(line, shell, substrings);
 	if (num_commands != -1)
 		launch_pipes(substrings, shell, num_commands);
-	free_double_array(substrings, pipe_count + 1);
-	return ;
+	free_double_array(substrings);
+	return (free(line));
 }

@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:51:29 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/12 18:09:02 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/15 10:53:29 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int	check_symbol(char *line, char c)
 	i = -1;
 	status = 0;
 	count = 0;
+	if (line[0] && line[1] && line[0] == c && line[1] != c)
+		return (-2);
 	while (line[++i])
 	{
 		if (is_quote(line[i]))
@@ -106,7 +108,8 @@ char	*skip_command_name(char *line)
 {
 	while (*line && *line != ' ')
 		line++;
-	line = ft_strtrim(line, " ");
+	while (*line && *line == ' ')
+		line++;
 	return (line);
 }
 
@@ -135,7 +138,7 @@ int	check_quotes(char *line)
 				if (line[i] && line[i] == symbol && line[i - 1] != '\\')
 					break ;
 			}
-			if (line[i] != symbol)
+			if (line[i] && line[i] != symbol)
 			{
 				write(2, \
 				"minishell: error while looking for matching quote\n", 50);
@@ -145,4 +148,27 @@ int	check_quotes(char *line)
 		i++;
 	}
 	return (TRUE);
+}
+
+//  finds heredoc or append redirection in a line
+int	check_double_symbol(char *line, char c)
+{
+	int	i;
+	int	count;
+
+	i = -1;
+	count = 0;
+	while (line[++i])
+	{
+		if (is_quote(line[i]))
+			i = skip_until_char(line, i, line[i], 2);
+		if (line[i] == c && line[i + 1] == c && !is_quote(line[i - 1]) \
+		&& !is_quote(line[i + 2]) && line[i + 2] != c && line[i - 1] != c)
+		{
+			if (is_empty_line(line + i + 2))
+				return (-1);
+			count++;
+		}
+	}
+	return (count);
 }
