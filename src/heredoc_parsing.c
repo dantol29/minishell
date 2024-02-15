@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:15:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/15 10:39:12 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/15 11:32:40 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	ctrl_c_heredoc(int signum)
 {
 	(void)signum;
-	ioctl(STDIN_FILENO, TIOCSTI, "\n");
 	g_ctrl_c_status = 130;
+	ioctl(STDIN_FILENO, TIOCSTI, "\n");
 }
 
 void	heredoc_read(char *exit_heredoc, t_shell *shell)
