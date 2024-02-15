@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 11:38:13 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/15 11:07:34 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/15 11:52:20 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,12 +99,7 @@ static char	**execve_flags(char *line, char *cmd, t_shell *shell)
 		flags[i] = find_command(line);
 		line += ft_strlen(flags[i]) + 1;
 		if (ft_strcmp(flags[i], "$?") && !ft_strcmp(cmd, "awk"))
-		{
-			// if (g_ctrl_c_status == 130)
 			flags[i] = ft_itoa(130);
-			// else
-			// 	flags[i] = ft_itoa(shell->exit_code);
-		}
 		else if (!ft_strcmp(cmd, "awk"))
 			flags[i] = change_env_var(flags[i], shell);
 		i++;
@@ -112,6 +107,16 @@ static char	**execve_flags(char *line, char *cmd, t_shell *shell)
 	flags[flag_count + 1] = NULL;
 	return (flags);
 }
+
+// void	child_ctrl_c(int signum)
+// {
+// 	(void)signum;
+// 	g_ctrl_c_status = 130;
+// 	//write(1, "\n", 1);
+// 	//rl_on_new_line();
+// 	//rl_replace_line("", 0);
+// 	//rl_redisplay();
+// }
 
 int	launch_exec(char *line, char *cmd, t_shell *shell)
 {
@@ -126,7 +131,10 @@ int	launch_exec(char *line, char *cmd, t_shell *shell)
 		return (FALSE);
 	pid = fork();
 	if (pid == 0)
+	{
+		signal(SIGINT, SIG_IGN);
 		execve(cmd_path, flags, shell->current_envp);
+	}
 	waitpid(pid, &shell->exit_code, 0);
 	shell->exit_code /= 256;
 	free(cmd_path);
