@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:15:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/14 17:35:36 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/15 10:21:39 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int launch_heredoc(char **line, int count, int *old_fd, t_shell *shell)
 		dup2(*old_fd, 0);
 		close(fd);
 	}
+	dup2(*old_fd, 0);
 	return (fd);
 }
 

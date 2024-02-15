@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:14:45 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/14 17:47:14 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/15 10:27:42 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,22 +92,16 @@ void	pipe_loop(char **substrings, int *tube, int num_cmd, t_shell *shell)
 		{
 			if (i != num_cmd - 1)
 				dup2(tube[current_pipe + 1], 1);
-			if (i != 0)
-			{
-				if (fd[i] != 0)
-					dup2(fd[i], 0);
-				else
-					dup2(tube[current_pipe - 2], 0);
-			}
+			if (fd[i] != 0)
+				dup2(fd[i], 0);
+			else if (i != 0)
+				dup2(tube[current_pipe - 2], 0);
 			j = 0;
 			while (j < 2 * (num_cmd))
 				close(tube[j++]);
 			launch_commands(substrings[i], shell);
 			if (fd[i] != 0)
-			{
-				dup2(old_fd, 0);
 				close(fd[i]);
-			}
 			exit(EXIT_SUCCESS);
 		}
 		current_pipe += 2;

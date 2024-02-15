@@ -33,7 +33,9 @@ Optional
 15.02
 [ ] < Makefile > out
 [ ] space before echo
-[ ] cat << A | wc -l (working, but exits(we have to close fd correctly))
+[x] ls | cat << A | wc -l
+[x] ls | cat << A | cat <<B | wc -l
+[x] cat << A | wc -l 
 [ ] <<A <<B multiple heredocs (almost works) (<< : command not found)
 
 14.02
