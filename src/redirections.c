@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 14:16:12 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/15 10:53:57 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/15 18:43:32 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,22 @@ int	extract_input_output(char **line, char **file, int i, int *count)
 {
 	int		start;
 	char	*tmp;
+	char	*tmp_2;
+	char	*cmd;
+	char	*after_redir;
 
 	tmp = *line;
 	start = ++i;
 	i = skip_until_char(tmp, i, ' ', 1);
 	i = skip_until_char(tmp, i, ' ', 0);
-	*file = ft_strtrim(ft_substr(tmp, start, i - start), " ");
-	tmp = ft_strjoin(ft_substr(tmp, 0, start - 2), \
-	ft_substr(tmp, i, ft_strlen(tmp) - i));
+	cmd = ft_substr(tmp, 0, start - 2);
+	after_redir = ft_substr(tmp, i, ft_strlen(tmp) - i);
+	tmp_2 = ft_substr(tmp, start, i - start);
+	*file = ft_strtrim(tmp_2, " ");
+	tmp = ft_strjoin(cmd, after_redir);
+	free(cmd);
+	free(after_redir);
+	free(tmp_2);
 	*count += 1;
 	*line = tmp;
 	return (-1);

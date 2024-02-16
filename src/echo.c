@@ -82,6 +82,8 @@ static char	*check_flag_n(char *line, int *flag)
 {
 	int		i;
 	int		j;
+	char	*new;
+	char	*tmp;
 
 	i = 0;
 	j = 0;
@@ -90,7 +92,13 @@ static char	*check_flag_n(char *line, int *flag)
 		if (is_quote(line[i]))
 		{
 			if (!flag_in_quotes(line, flag, &i, &j))
-				return (line + j);
+			{
+				new = ft_strdup(line + j);
+				free(line);
+				tmp = ft_strtrim(new, " ");
+				free(new);
+				return (tmp);
+			}
 		}
 		else if (line[i] == '-')
 		{
@@ -98,13 +106,23 @@ static char	*check_flag_n(char *line, int *flag)
 			while (line[i] == 'n')
 				i++;
 			if (line[i] != ' ' && line[i] != '\0')
-				return (line + j);
+			{
+				new = ft_strdup(line + j);
+				free(line);
+				tmp = ft_strtrim(new, " ");
+				free(new);
+				return (tmp);
+			}
 			*flag = 0;
 			j = i;
 		}
 		i++;
 	}
-	return (line + j);
+	new = ft_strdup(line + j);
+	free(line);
+	tmp = ft_strtrim(new, " ");
+	free(new);
+	return (tmp);
 }
 
 /*manage echo function*/
@@ -123,8 +141,6 @@ void	check_echo_line(char *line, t_shell *shell)
 		return ;
 	}
 	tmp = check_flag_n(tmp, &flag);
-	while (*tmp && *tmp == ' ')
-		tmp++;
 	if (!check_quotes(tmp))
 	{
 		free(tmp);
@@ -134,5 +150,5 @@ void	check_echo_line(char *line, t_shell *shell)
 	if (flag)
 		printf("\n");
 	shell->exit_code = 0;
-	//free(tmp);
+	free(tmp);
 }

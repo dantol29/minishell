@@ -13,12 +13,15 @@ Optional
 [ ] x=y    echo $x     y  (local variables)
 [ ] export in alphabetical order
 
-15.02
+16.02
 [ ] exit code 130 after cat
 [ ] exit code 130 after heredoc
 [ ] when ctrl+c is pressed after blocking command (cat) minishell$ is displayed 2 times
-[ ] exit 42 42 (too many arguments)
-[ ] cd $PWD hi (too many arguments)
+[ ] exit 42 42 (too many arguments) (Alena)
+[ ] cd $PWD hi (too many arguments) (Alena)
+[ ] clean memory  in redirections
+
+15.02
 [x] /bin/ls "-l" "-a"
 [x] echo $?HELLO
 [x] cat <<EOF | grep "ABC" ()
