@@ -9,5 +9,6 @@ Exit codes:       https://www.redhat.com/sysadmin/exit-codes-demystified
 # 0 success
 
 [x] exit 135
+[x] exit 42 42 (mini: exit: too many arguments)
 [x] exit fghggfgfgh
 [x] exit "1"2"7"
