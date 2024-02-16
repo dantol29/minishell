@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:58:49 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/15 15:15:36 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/16 11:18:46 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	organizer(char *line, t_shell *shell)
 	{
 		write(2, "syntax error near '|'\n", 22);
 		shell->exit_code = 1;
-		return (free(line));
 	}
 	free(line);
 }

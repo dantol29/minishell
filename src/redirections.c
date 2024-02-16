@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 14:16:12 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/15 18:43:32 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/16 11:39:22 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,38 +53,51 @@ int	*launch_redir(char *line, char **filenames, int redir_count, t_shell *shell)
 			if (open_file(filenames, filenames[i], i, shell) == -1)
 			{
 				old[0] = -1;
+				free_double_array(filenames);
+				free(line);
 				return (old);
 			}
 		}
 		i++;
 	}
+	free_double_array(filenames);
 	launch_commands(line, shell);
+	free(line);
 	return (old);
 }
 
-int	extract_input_output(char **line, char **file, int i, int *count)
+char	*extract_input_output(char *line, int i)
 {
 	int		start;
+	char	*filename;
 	char	*tmp;
-	char	*tmp_2;
+
+	start = ++i;
+	i = skip_until_char(line, i, ' ', 1);
+	i = skip_until_char(line, i, ' ', 0);
+	tmp = ft_substr(line, start, i - start);
+	filename = ft_strtrim(tmp, " ");
+	free(tmp);
+	return (filename);
+}
+
+char	*remove_redir(char *line, int i)
+{
 	char	*cmd;
 	char	*after_redir;
+	char	*tmp;
+	int		start;
 
-	tmp = *line;
 	start = ++i;
-	i = skip_until_char(tmp, i, ' ', 1);
-	i = skip_until_char(tmp, i, ' ', 0);
-	cmd = ft_substr(tmp, 0, start - 2);
-	after_redir = ft_substr(tmp, i, ft_strlen(tmp) - i);
-	tmp_2 = ft_substr(tmp, start, i - start);
-	*file = ft_strtrim(tmp_2, " ");
+	i = skip_until_char(line, i, ' ', 1);
+	i = skip_until_char(line, i, ' ', 0);
+	cmd = ft_substr(line, 0, start - 2);
+	after_redir = ft_substr(line, i, ft_strlen(line) - i);
 	tmp = ft_strjoin(cmd, after_redir);
+	free(line);
 	free(cmd);
 	free(after_redir);
-	free(tmp_2);
-	*count += 1;
-	*line = tmp;
-	return (-1);
+	return (tmp);
 }
 
 int	*extract_redirection(char *line, int redirection_count, t_shell *shell)
@@ -92,29 +105,36 @@ int	*extract_redirection(char *line, int redirection_count, t_shell *shell)
 	int		i;
 	int		count;
 	char	**filenames;
+	char	*tmp;
 
+	tmp = ft_strdup(line);
 	i = -1;
 	count = 0;
 	filenames = malloc(sizeof(char *) * (redirection_count * 2 + 1));
 	filenames[redirection_count * 2] = NULL;
-	while (line[++i])
+	while (tmp[++i])
 	{
-		if (line[i] && line[i] == '>' && line[i + 1] == '>' && \
-		!is_quote(line[i - 1]) && !is_quote(line[i + 2]))
+		if (tmp[i] && tmp[i] == '>' && tmp[i + 1] == '>' && \
+		!is_quote(tmp[i - 1]) && !is_quote(tmp[i + 2]))
 		{
-			filenames[count] = ">>";
-			i = extract_input_output(&line, &filenames[++count], ++i, &count);
+			filenames[count++] = ft_strdup(">>");
+			filenames[count++] = extract_input_output(tmp, i + 1);
+			tmp = remove_redir(tmp, i + 1);
+			i = -1;
 		}
-		else if (line[i] && (line[i] == '>' || line[i] == '<') && \
-		!is_quote(line[i - 1]) && !is_quote(line[i + 1]))
+		else if (tmp[i] && (tmp[i] == '>' || tmp[i] == '<') && \
+		!is_quote(tmp[i - 1]) && !is_quote(tmp[i + 1]))
 		{
-			filenames[count] = "<";
-			if (line[i] == '>')
-				filenames[count] = ">";
-			i = extract_input_output(&line, &filenames[++count], i, &count);
+			if (tmp[i] == '<')
+				filenames[count++] = ft_strdup("<");
+			else if (tmp[i] == '>')
+				filenames[count++] = ft_strdup(">");
+			filenames[count++] = extract_input_output(tmp, i);
+			tmp = remove_redir(tmp, i);
+			i = -1;
 		}
 	}
-	return (launch_redir(line, filenames, redirection_count, shell));
+	return (launch_redir(tmp, filenames, redirection_count, shell));
 }
 
 int	*redirections(char **line, t_shell *shell)
