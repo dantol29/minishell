@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/16 12:45:06 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/16 13:09:47 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,10 @@ char 	*remove_heredoc(char *line, char **eof_heredoc);
 char 	**save_eof_heredoc(char *line, int count);
 void	heredoc_read(char *exit_heredoc, t_shell *shell);
 
+//check_symbol
+int	check_symbol(char *line, char c);
+int	check_double_symbol(char *line, char c);
+
 // redirections
 int	*redirections(char **line, t_shell *shell);
 
@@ -135,5 +139,8 @@ void	free_linked_list(t_shell *shell);
 void	save_envp(t_shell *shell, char **envp);
 void	lstadd_back(t_env **lst, t_env *new);
 void	update_envp(t_shell *shell);
+
+//file.c
+int	open_file(char **filenames, char *redir, int i, t_shell *shell);
 
 #endif
