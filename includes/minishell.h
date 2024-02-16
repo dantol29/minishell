@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/15 11:57:43 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/02/16 12:45:06 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int		check_quotes(char *line);
 int		count_flags(char *line);
 
 // env
-int		print_env_var(char *line, t_shell *shell, int i, int *invalid_var);
+char	*skip_env_var(char *before_var, char *after_var, int *i);
 void	print_env_var_value(char *variable_name, t_env *lst);
 int		find_env_var(char *variable_name, t_env *lst);
 void	print_env(t_env *env);

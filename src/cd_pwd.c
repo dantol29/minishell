@@ -22,16 +22,13 @@ void	pwd(t_shell *shell)
 	shell->exit_code = 0;
 }
 
-static void	cd_error(char *path, char *current_dir, t_shell *shell)
+static void	cd_error(char *line, char *path, char *current_dir, t_shell *shell)
 {
 	char	*error;
 
 	error = strerror(errno);
 	write(2, "cd: ", 4);
-	write(2, error, ft_strlen(error));
-	write(2, ": ", 2);
-	write(2, path, ft_strlen(path));
-	write(2, "\n", 1);
+	write(2, line, ft_strlen(line));
 	shell->exit_code = 1;
 	free(current_dir);
 	free(path);
@@ -41,22 +38,15 @@ void	cd(char *line, t_shell *shell)
 {
 	char	*current_dir;
 	char	*path;
-	int		i;
 
 	current_dir = getcwd(NULL, 0);
-	i = 0;
-
 	line = skip_command_name(line);
 	path = find_command(line);
 	line = skip_command_name(line);
-	if (line[i] == ' ')
+	if (line[0] == ' ')
 		line += 1;
 	if (!is_empty_line(line + 1))
-	{
-		write(2, "minishell: cd: too many arguments\n", 35);
-		free(path);
-		return ;
-	}
+		return (cd_error("too many arguments\n", path, current_dir, shell));
 	if (ft_strcmp("-", path))
 	{
 		printf("%s\n", get_env_value("OLDPWD", shell->env));
@@ -65,7 +55,7 @@ void	cd(char *line, t_shell *shell)
 	else if (ft_strcmp("~", path) || is_empty_line(path))
 		chdir(get_env_value("HOME", shell->env));
 	else if (chdir(path) == -1)
-		return (cd_error(path, current_dir, shell));
+		return (cd_error("No such file or directory\n", path, current_dir, shell));
 	replace_env_var_value("OLDPWD", current_dir, shell->env);
 	replace_env_var_value("PWD", getcwd(NULL, 0), shell->env);
 	shell->exit_code = 0;

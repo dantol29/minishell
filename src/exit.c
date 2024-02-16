@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 11:54:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/16 12:45:02 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/02/16 12:49:33 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	ft_exit(char *line, t_shell *shell)
 	{
 		write(2, "minishell: exit: too many arguments\n", 37);
 		free(exit_arg);
+		shell->exit_code = 1;
 		return ;
 	}
 	if (exit_arg[i] == '-' || exit_arg[i] == '+')
