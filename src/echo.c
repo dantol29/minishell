@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:50:22 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/16 14:08:05 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/16 15:06:32 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,22 +75,11 @@ static int	flag_in_quotes(char *line, int *flag, int *i, int *j)
 	return (TRUE);
 }
 
-char	*skip_flag_n(char *new, char *line, char *tmp, int j)
-{
-	new = ft_strdup(line + j);
-	free(line);
-	tmp = ft_strtrim(new, " ");
-	free(new);
-	return (tmp);
-}
-
 /*checks echo -n flag*/
 static char	*check_flag_n(char *line, int *flag)
 {
 	int		i;
 	int		j;
-	char	*new;
-	char	*tmp;
 
 	i = 0;
 	j = 0;
@@ -99,13 +88,7 @@ static char	*check_flag_n(char *line, int *flag)
 		if (is_quote(line[i]))
 		{
 			if (!flag_in_quotes(line, flag, &i, &j))
-			{
-				new = ft_strdup(line + j);
-				free(line);
-				tmp = ft_strtrim(new, " ");
-				free(new);
-				return (tmp);
-			}
+				return (skip_flag_n(line, j));
 		}
 		else if (line[i] == '-')
 		{
@@ -113,23 +96,13 @@ static char	*check_flag_n(char *line, int *flag)
 			while (line[i] == 'n')
 				i++;
 			if (line[i] != ' ' && line[i] != '\0')
-			{
-				new = ft_strdup(line + j);
-				free(line);
-				tmp = ft_strtrim(new, " ");
-				free(new);
-				return (tmp);
-			}
+				return (skip_flag_n(line, j));
 			*flag = 0;
 			j = i;
 		}
 		i++;
 	}
-	new = ft_strdup(line + j);
-	free(line);
-	tmp = ft_strtrim(new, " ");
-	free(new);
-	return (tmp);
+	return (skip_flag_n(line, j));
 }
 
 /*manage echo function*/

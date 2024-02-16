@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:58:49 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/16 13:19:46 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/16 15:52:40 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	ctrl_c(int signum)
 void	organizer(char *line, t_shell *shell)
 {
 	int	pipe_count;
-	int	old_fd;
 
 	pipe_count = check_symbol(line, '|');
 	if (pipe_count > 0)
@@ -35,7 +34,7 @@ void	organizer(char *line, t_shell *shell)
 	else if (pipe_count == 0)
 	{
 		shell->is_pipe = FALSE;
-		run_heredoc(&line, &old_fd, shell);
+		run_heredoc(&line, shell);
 	}
 	else if (pipe_count == -1)
 	{

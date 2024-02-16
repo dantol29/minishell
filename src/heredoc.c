@@ -6,13 +6,25 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:15:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/16 13:14:44 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/16 16:25:21 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	heredoc_loop(char **eof_hered, int count, int *old_fd, t_shell *sh)
+int	*heredoc_in_pipe(char **substrings, int num_cmd, t_shell *shell)
+{
+	int	*new;
+	int	i;
+
+	new = malloc(sizeof(int) * num_cmd);
+	i = -1;
+	while (++i < num_cmd)
+		new[i] = run_heredoc(&substrings[i], shell);
+	return (new);
+}
+
+static int	heredoc_loop(char **eof_hered, int count, int old_fd, t_shell *sh)
 {
 	int	i;
 	int	fd;
@@ -30,20 +42,21 @@ static int	heredoc_loop(char **eof_hered, int count, int *old_fd, t_shell *sh)
 		if (unlink("tmp_heredoc.txt") == -1)
 			return (set_error("Failed to delete file", sh));
 		if (count > 1)
-			dup2(*old_fd, 0);
+			dup2(old_fd, 0);
 		i++;
 	}
 	return (fd);
 }
 
-static int	launch_heredoc(char **line, int count, int *old_fd, t_shell *shell)
+static int	launch_heredoc(char **line, int count, t_shell *shell)
 {
 	char	**eof_heredoc;
 	int		i;
 	int		fd;
+	int		old_fd;
 
 	i = 0;
-	*old_fd = dup(STDIN_FILENO);
+	old_fd = dup(STDIN_FILENO);
 	eof_heredoc = save_eof_heredoc(*line, count);
 	*line = remove_heredoc(*line, eof_heredoc);
 	fd = 0;
@@ -51,15 +64,15 @@ static int	launch_heredoc(char **line, int count, int *old_fd, t_shell *shell)
 	if (shell->is_pipe == FALSE)
 	{
 		launch_commands(*line, shell);
-		dup2(*old_fd, 0);
+		dup2(old_fd, 0);
 		close(fd);
 	}
 	free_double_array(eof_heredoc);
-	dup2(*old_fd, 0);
+	dup2(old_fd, 0);
 	return (fd);
 }
 
-int	run_heredoc(char **line, int *old_fd, t_shell *shell)
+int	run_heredoc(char **line, t_shell *shell)
 {
 	int		count;
 
@@ -74,5 +87,5 @@ int	run_heredoc(char **line, int *old_fd, t_shell *shell)
 		write(2, "heredoc: syntax error\n", 22);
 		return (FALSE);
 	}
-	return (launch_heredoc(line, count, old_fd, shell));
+	return (launch_heredoc(line, count, shell));
 }

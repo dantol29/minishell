@@ -6,25 +6,17 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:15:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/16 13:04:50 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/16 16:00:25 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void	ctrl_c_heredoc(int signum)
-{
-	(void)signum;
-	g_ctrl_c_status = 130;
-	ioctl(STDIN_FILENO, TIOCSTI, "\n");
-}
 
 void	heredoc_read(char *exit_heredoc, t_shell *shell)
 {
 	char	*get_line;
 	int		fd;
 
-	signal(SIGINT, ctrl_c_heredoc);
 	signal(SIGQUIT, SIG_IGN);
 	fd = open("tmp_heredoc.txt", O_RDWR | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)

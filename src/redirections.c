@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 14:16:12 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/16 13:54:36 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/16 15:21:31 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,15 +99,7 @@ int	*extract_redirection(char *line, int redirection_count, t_shell *shell)
 		}
 		else if (tmp[i] && (tmp[i] == '>' || tmp[i] == '<') && \
 		!is_quote(tmp[i - 1]) && !is_quote(tmp[i + 1]))
-		{
-			if (tmp[i] == '<')
-				filenames[count++] = ft_strdup("<");
-			else if (tmp[i] == '>')
-				filenames[count++] = ft_strdup(">");
-			filenames[count++] = extract_input_output(tmp, i);
-			tmp = remove_redir(tmp, i);
-			i = -1;
-		}
+			tmp = get_filename(filenames, tmp, &count, &i);
 	}
 	return (launch_redir(tmp, filenames, redirection_count, shell));
 }

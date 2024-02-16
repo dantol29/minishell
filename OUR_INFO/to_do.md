@@ -17,6 +17,7 @@ Optional
 [ ] exit code 130 after cat
 [ ] exit code 130 after heredoc
 [ ] when ctrl+c is pressed after blocking command (cat) minishell$ is displayed 2 times
+[x] norminette
 [X] exit 42 42 (mini: exit: too many arguments) (Alena)
 [x] cd ".""."
 [x] cd ".""/"".""."

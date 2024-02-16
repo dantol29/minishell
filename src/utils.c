@@ -6,11 +6,17 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:51:29 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/16 14:01:23 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/16 16:33:42 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	dup_output(int *tube, int current_pipe, int num_cmd, int i)
+{
+	if (i != num_cmd - 1)
+		dup2(tube[current_pipe + 1], 1);
+}
 
 int	count_flags(char *line)
 {

@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:14:45 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/16 13:38:54 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/16 16:33:33 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,41 +40,41 @@ int	split_pipes(char *line, char **substrings)
 	return (j);
 }
 
+void	exit_pipe(char *substring, int fd, t_shell *shell)
+{
+	launch_commands(substring, shell);
+	if (fd != 0)
+		close(fd);
+	exit(EXIT_SUCCESS);
+}
+
 void	pipe_loop(char **substrings, int *tube, int num_cmd, t_shell *shell)
 {
 	int		pid;
 	int		i;
-	int		j;
 	int		current_pipe;
-	int		fd[num_cmd];
-	int		old_fd;
+	int		*fd;
 
-	i = -1;
 	current_pipe = 0;
-	while (++i < num_cmd)
-		fd[i] = run_heredoc(&substrings[i], &old_fd, shell);
+	fd = heredoc_in_pipe(substrings, num_cmd, shell);
 	i = -1;
 	while (++i < num_cmd)
 	{
 		pid = fork();
 		if (pid == 0)
 		{
-			if (i != num_cmd - 1)
-				dup2(tube[current_pipe + 1], 1);
+			dup_output(tube, current_pipe, num_cmd, i);
 			if (fd[i] != 0)
 				dup2(fd[i], 0);
 			else if (i != 0)
 				dup2(tube[current_pipe - 2], 0);
-			j = 0;
-			while (j < 2 * (num_cmd))
-				close(tube[j++]);
-			launch_commands(substrings[i], shell);
-			if (fd[i] != 0)
-				close(fd[i]);
-			exit(EXIT_SUCCESS);
+			while (pid < 2 * (num_cmd))
+				close(tube[pid++]);
+			exit_pipe(substrings[i], fd[i], shell);
 		}
 		current_pipe += 2;
 	}
+	free(fd);
 }
 
 void	launch_pipes(char **substrings, t_shell *shell, int num_commands)
