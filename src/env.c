@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:00:47 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/16 12:22:39 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/16 12:58:38 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ char	*skip_env_var(char *before_var, char *after_var, int *i)
 	*i = -1;
 	return (ft_strjoin(before_var, after_var));
 }
-
 
 /*print all env variables*/
 void	print_env(t_env *env)

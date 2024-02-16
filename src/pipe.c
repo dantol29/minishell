@@ -6,31 +6,11 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:14:45 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/15 15:13:19 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/16 13:38:54 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-// int	is_valid_substring(char **substrings, int j, t_shell *shell)
-// {
-// 	char	*command;
-// 	char	*path;
-
-// 	command = find_command(substrings[j - 1]);
-// 	path = get_executable_path(shell, command);
-// 	free(command);
-// 	if (path)
-// 	{
-// 		free(path);
-// 		return (TRUE);
-// 	}
-// 	write(2, substrings[j - 1], ft_strlen(substrings[j - 1]));
-// 	write(2, ": command not found\n", 20);
-// 	shell->exit_code = 127;
-// 	free(path);
-// 	return (FALSE);
-// }
 
 int	split_pipes(char *line, char **substrings)
 {
@@ -69,15 +49,12 @@ void	pipe_loop(char **substrings, int *tube, int num_cmd, t_shell *shell)
 	int		fd[num_cmd];
 	int		old_fd;
 
-	i = 0;
+	i = -1;
 	current_pipe = 0;
-	while (i < num_cmd)
-	{
+	while (++i < num_cmd)
 		fd[i] = run_heredoc(&substrings[i], &old_fd, shell);
-		i++;
-	}
-	i = 0;
-	while (i < num_cmd)
+	i = -1;
+	while (++i < num_cmd)
 	{
 		pid = fork();
 		if (pid == 0)
@@ -97,7 +74,6 @@ void	pipe_loop(char **substrings, int *tube, int num_cmd, t_shell *shell)
 			exit(EXIT_SUCCESS);
 		}
 		current_pipe += 2;
-		i++;
 	}
 }
 

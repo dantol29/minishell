@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 14:16:12 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/16 13:06:56 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/02/16 13:54:36 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int	*launch_redir(char *line, char **filenames, int redir_count, t_shell *shell)
 	old = malloc(sizeof(int) * 2);
 	old[1] = dup(1);
 	old[0] = dup(0);
-	i = 0;
-	while (i < redir_count * 2)
+	i = -1;
+	while (++i < redir_count * 2)
 	{
 		if (ft_strcmp(filenames[i], "<") || ft_strcmp(filenames[i], ">") \
 		|| ft_strcmp(filenames[i], ">>"))
@@ -34,7 +34,6 @@ int	*launch_redir(char *line, char **filenames, int redir_count, t_shell *shell)
 				return (old);
 			}
 		}
-		i++;
 	}
 	free_double_array(filenames);
 	launch_commands(line, shell);

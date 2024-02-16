@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:50:22 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/16 12:18:38 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/16 14:08:05 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,15 @@ static int	flag_in_quotes(char *line, int *flag, int *i, int *j)
 	*j = tmp_i;
 	*i = tmp_i;
 	return (TRUE);
+}
+
+char	*skip_flag_n(char *new, char *line, char *tmp, int j)
+{
+	new = ft_strdup(line + j);
+	free(line);
+	tmp = ft_strtrim(new, " ");
+	free(new);
+	return (tmp);
 }
 
 /*checks echo -n flag*/

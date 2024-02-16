@@ -21,7 +21,7 @@ Optional
 [x] cd ".""."
 [x] cd ".""/"".""."
 [x] cd $PWD hi (msini: cd: too many arguments) (Alena)
-[ ] clean memory  in redirections
+[x] clean memory  in redirections
 
 15.02
 [x] /bin/ls "-l" "-a"

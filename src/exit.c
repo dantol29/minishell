@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 11:54:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/16 12:49:33 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/16 12:59:51 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,8 @@ void	ft_exit(char *line, t_shell *shell)
 	if (!is_empty_line(line + 1))
 	{
 		write(2, "minishell: exit: too many arguments\n", 37);
-		free(exit_arg);
 		shell->exit_code = 1;
-		return ;
+		return (free(exit_arg));
 	}
 	if (exit_arg[i] == '-' || exit_arg[i] == '+')
 		i++;

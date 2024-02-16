@@ -1,43 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   skip.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/26 10:41:15 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/16 13:02:14 by dtolmaco         ###   ########.fr       */
+/*   Created: 2024/02/16 14:01:31 by dtolmaco          #+#    #+#             */
+/*   Updated: 2024/02/16 14:07:39 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	free_double_array(char **array)
+int	skip_until_char(char *line, int i, char c, char mode)
 {
-	int	i;
-
-	i = 0;
-	while (array[i])
-		free(array[i++]);
-	free(array);
-}
-
-void	free_env_list(t_env *env_list)
-{
-	t_env	*temp;
-
-	while (env_list)
+	if (mode == 0)
 	{
-		temp = env_list;
-		env_list = env_list->next;
-		free(temp->name);
-		free(temp->value);
-		free(temp);
+		while (line[i] && line[i] != c)
+			i++;
 	}
+	else if (mode == 1)
+	{
+		while (line[i] && line[i] == c)
+			i++;
+	}
+	else if (mode == 2)
+	{
+		i++;
+		while (line[i] && line[i] != c)
+			i++;
+	}
+	return (i);
 }
 
-void	free_linked_list(t_shell *shell)
+char	*skip_command_name(char *line)
 {
-	free_env_list(shell->env);
-	free_double_array(shell->current_envp);
+	while (*line && *line != ' ')
+		line++;
+	while (*line && *line == ' ')
+		line++;
+	return (line);
 }

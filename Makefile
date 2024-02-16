@@ -7,7 +7,7 @@ SOURCES = src/main.c src/save_env.c src/echo.c src/utils.c \
 		src/env.c src/launch_commands.c src/pipe.c src/heredoc.c \
 		src/cd_pwd.c src/export_unset.c src/free.c src/redirections.c \
 		src/execve.c src/path.c src/error.c src/heredoc_parsing.c src/exit.c \
-		src/env_variables.c src/check_symbol.c src/file.c 
+		src/env_variables.c src/check_symbol.c src/file.c src/skip.c
 
 OBJECTS = $(SOURCES:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:15:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/15 13:44:11 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/16 13:04:50 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void	ctrl_c_heredoc(int signum)
 void	heredoc_read(char *exit_heredoc, t_shell *shell)
 {
 	char	*get_line;
-	int	fd;
+	int		fd;
 
-	//signal(SIGINT, ctrl_c_heredoc);
+	signal(SIGINT, ctrl_c_heredoc);
 	signal(SIGQUIT, SIG_IGN);
 	fd = open("tmp_heredoc.txt", O_RDWR | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
@@ -48,7 +48,7 @@ void	heredoc_read(char *exit_heredoc, t_shell *shell)
 	}
 }
 
-char **save_eof_heredoc(char *line, int count)
+char	**save_eof_heredoc(char *line, int count)
 {
 	int		i;
 	int		j;
@@ -93,7 +93,7 @@ char	*get_line_without_heredoc(char *line, int start_heredoc, int i)
 	return (new);
 }
 
-char *remove_heredoc(char *line, char **eof_heredoc)
+char	*remove_heredoc(char *line, char **eof_heredoc)
 {
 	int		i;
 	int		j;
@@ -118,4 +118,3 @@ char *remove_heredoc(char *line, char **eof_heredoc)
 	free(line);
 	return (tmp);
 }
-

@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 13:35:22 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/15 13:52:49 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/16 13:20:03 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ void	save_envp(t_shell *shell, char **envp)
 	int		i;
 	t_env	*new;
 
+	shell->exit_code = 0;
+	shell->is_pipe = FALSE;
 	i = 0;
 	while (envp[i])
 		i++;

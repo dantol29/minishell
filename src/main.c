@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:58:49 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/16 11:18:46 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/16 13:19:46 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argv;
 	(void)argc;
-	shell.exit_code = 0;
-	shell.is_pipe = FALSE;
 	g_ctrl_c_status = 0;
 	save_envp(&shell, envp);
 	signal(SIGINT, ctrl_c);

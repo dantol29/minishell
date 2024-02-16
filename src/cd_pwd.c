@@ -55,7 +55,8 @@ void	cd(char *line, t_shell *shell)
 	else if (ft_strcmp("~", path) || is_empty_line(path))
 		chdir(get_env_value("HOME", shell->env));
 	else if (chdir(path) == -1)
-		return (cd_error("No such file or directory\n", path, current_dir, shell));
+		return (cd_error("No such file or directory\n", \
+		path, current_dir, shell));
 	replace_env_var_value("OLDPWD", current_dir, shell->env);
 	replace_env_var_value("PWD", getcwd(NULL, 0), shell->env);
 	shell->exit_code = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/16 13:09:47 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/02/16 14:07:53 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ int	*redirections(char **line, t_shell *shell);
 // utils
 int		ft_strcmp(const char *str1, const char *str2);
 int		is_empty_line(char *line);
-char	*skip_command_name(char *line);
 int		is_quote(char c);
 int		check_quotes(char *line);
 int		count_flags(char *line);
@@ -107,7 +106,6 @@ int		export(char *line, t_shell *shell);
 t_env	*create_new_env_node(char *name, char *value);
 void	replace_env_var_value(char *variable_name, char *new_value, t_env *lst);
 void	unset_env_var(char *env_name, t_env **lst);
-int		skip_until_char(char *line, int i, char c, char mode);
 
 // cd_pwd
 void	cd(char *line, t_shell *shell);
@@ -120,6 +118,8 @@ int	set_error(char *line, t_shell *shell);
 // pipe
 int		check_symbol(char *line, char c);
 void	manage_pipes(char *line, int pipe_count, t_shell *shell);
+char	*extract_input_output(char *line, int i);
+char	*remove_redir(char *line, int i);
 
 // path
 char *get_executable_path(t_shell *shell, char *cmd);
@@ -142,5 +142,9 @@ void	update_envp(t_shell *shell);
 
 //file.c
 int	open_file(char **filenames, char *redir, int i, t_shell *shell);
+
+// skip.c
+char	*skip_command_name(char *line);;
+int		skip_until_char(char *line, int i, char c, char mode);
 
 #endif
