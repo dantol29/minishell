@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 11:54:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/15 14:30:00 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/16 10:24:21 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	exit_error(char	*exit_arg)
 	exit(2);
 }
 
+
 void	ft_exit(char *line, t_shell *shell)
 {
 	char	*exit_arg;
@@ -32,8 +33,14 @@ void	ft_exit(char *line, t_shell *shell)
 		i++;
 	while (exit_arg[i] && ft_isdigit(exit_arg[i]))
 		i++;
-	if (exit_arg[i])
+	if (exit_arg[i] && is_empty_line(line + i))
 		exit_error(exit_arg);
+	else
+	{
+		write(2, "minishell: exit: too many arguments\n", 37);
+		free(exit_arg);
+		return ;
+	}
 	printf("exit\n");
 	i = ft_atoi(exit_arg);
 	free(exit_arg);

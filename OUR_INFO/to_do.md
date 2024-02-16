@@ -17,8 +17,10 @@ Optional
 [ ] exit code 130 after cat
 [ ] exit code 130 after heredoc
 [ ] when ctrl+c is pressed after blocking command (cat) minishell$ is displayed 2 times
-[ ] exit 42 42 (too many arguments) (Alena)
-[ ] cd $PWD hi (too many arguments) (Alena)
+[X] exit 42 42 (mini: exit: too many arguments) (Alena)
+[x] cd ".""."
+[x] cd ".""/"".""."
+[x] cd $PWD hi (msini: cd: too many arguments) (Alena)
 [ ] clean memory  in redirections
 
 15.02
@@ -41,7 +43,7 @@ Optional
 
 14.02
 [x] wc -l <<A
-[x] << A, cat << A (basic hereodc working)
+[x] << A, cat << A (basic heredoc working)
 [x] cat << A | wc -l (working, but exits)
 [x] minishell $ cd abc | cd def 
 
