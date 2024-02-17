@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-int	split_pipes(char *line, char **substrings)
+static int	split_pipes(char *line, char **substrings)
 {
 	int		i;
 	int		j;
@@ -40,7 +40,7 @@ int	split_pipes(char *line, char **substrings)
 	return (j);
 }
 
-void	exit_pipe(char *substring, int fd, t_shell *shell)
+static void	exit_pipe(char *substring, int fd, t_shell *shell)
 {
 	launch_commands(substring, shell);
 	if (fd != 0)
@@ -48,7 +48,7 @@ void	exit_pipe(char *substring, int fd, t_shell *shell)
 	exit(EXIT_SUCCESS);
 }
 
-void	pipe_loop(char **substrings, int *tube, int num_cmd, t_shell *shell)
+static void	pipe_loop(char **substrings, int *tube, int num_cmd, t_shell *shell)
 {
 	int		pid;
 	int		i;
@@ -77,7 +77,7 @@ void	pipe_loop(char **substrings, int *tube, int num_cmd, t_shell *shell)
 	free(fd);
 }
 
-void	launch_pipes(char **substrings, t_shell *shell, int num_commands)
+static void	launch_pipes(char **substrings, t_shell *shell, int num_commands)
 {
 	int		*tube;
 	int		i;

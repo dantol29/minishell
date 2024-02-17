@@ -1,8 +1,8 @@
 # MINISHELL
-## Tasks
-1. Run simple commands with absolute, relative path (e.g. /bin/ls, ../bin/ls)
-
-2. Run simple commands without a path (e.g. ls, cat, grep, etc…)
+## How to compile
+...
+## Tests
+...
 ____________________________________________
 ## FUNCTION USED TO CREATE MINISHELL
 

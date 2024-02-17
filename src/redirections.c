@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-int	*launch_redir(char *line, char **filenames, int redir_count, t_shell *shell)
+static int	*launch_redir(char *line, char **filenames, int redir_count, t_shell *shell)
 {
 	int		*old;
 	int		i;
@@ -75,7 +75,7 @@ char	*remove_redir(char *line, int i)
 	return (tmp);
 }
 
-int	*extract_redirection(char *line, int redirection_count, t_shell *shell)
+static int	*extract_redirection(char *line, int redirection_count, t_shell *shell)
 {
 	int		i;
 	int		count;

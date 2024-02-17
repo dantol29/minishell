@@ -29,23 +29,6 @@ void	print_env(t_env *env)
 	}
 }
 
-/*print the value of the enviroment variable*/
-void	print_env_var_value(char *variable_name, t_env *lst)
-{
-	t_env	*tmp;
-
-	tmp = lst;
-	while (tmp)
-	{
-		if (ft_strcmp(tmp->name, variable_name))
-		{
-			printf("%s", tmp->value);
-			break ;
-		}
-		tmp = tmp->next;
-	}
-}
-
 /*checks if the environment variable exists*/
 int	find_env_var(char *variable_name, t_env *lst)
 {

@@ -13,10 +13,20 @@ Optional
 [ ] x=y    echo $x     y  (local variables)
 [ ] export in alphabetical order
 
-16.02
+20.02
+[ ] defend the project!!!
+
+19.02
+[ ] double check memory leaks
+[ ] write good README
 [ ] exit code 130 after cat
 [ ] exit code 130 after heredoc
 [ ] when ctrl+c is pressed after blocking command (cat) minishell$ is displayed 2 times
+
+17.02 - BERLINALE!!!
+[x] organize header
+
+16.02
 [x] norminette
 [X] exit 42 42 (mini: exit: too many arguments) (Alena)
 [x] cd ".""."

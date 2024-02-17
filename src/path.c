@@ -12,24 +12,7 @@
 
 #include "../includes/minishell.h"
 
-char	*get_executable_path(t_shell *shell, char *cmd)
-{
-	char	*path;
-	char	*cmd_path;
-	char	**splitted_path;
-
-	path = get_env_value("PATH", shell->env);
-	if (!path)
-		return (NULL);
-	splitted_path = ft_split(path, ':');
-	cmd_path = get_path(splitted_path, cmd);
-	free_double_array(splitted_path);
-	if (!cmd_path)
-		return (NULL);
-	return (cmd_path);
-}
-
-char	*get_path(char **splited_path, char *command)
+static char	*get_path(char **splited_path, char *command)
 {
 	char	*cmd;
 	char	*temp;
@@ -54,4 +37,21 @@ char	*get_path(char **splited_path, char *command)
 		i++;
 	}
 	return (NULL);
+}
+
+char	*get_executable_path(t_shell *shell, char *cmd)
+{
+	char	*path;
+	char	*cmd_path;
+	char	**splitted_path;
+
+	path = get_env_value("PATH", shell->env);
+	if (!path)
+		return (NULL);
+	splitted_path = ft_split(path, ':');
+	cmd_path = get_path(splitted_path, cmd);
+	free_double_array(splitted_path);
+	if (!cmd_path)
+		return (NULL);
+	return (cmd_path);
 }

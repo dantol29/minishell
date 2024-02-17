@@ -22,7 +22,7 @@ void	free_double_array(char **array)
 	free(array);
 }
 
-void	free_env_list(t_env *env_list)
+static void	free_env_list(t_env *env_list)
 {
 	t_env	*temp;
 

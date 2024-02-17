@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-void	exit_error(char	*exit_arg)
+static void	exit_error(char	*exit_arg)
 {
 	write(2, "minishell: exit: numeric argument required\n", 43);
 	printf("exit\n");
