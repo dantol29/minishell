@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:58:49 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/16 15:52:40 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/18 15:14:11 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	organizer(char *line, t_shell *shell)
 {
 	int	pipe_count;
 
+	if (g_ctrl_c_status == 130)
+		g_ctrl_c_status = 0;
 	pipe_count = check_symbol(line, '|');
 	if (pipe_count > 0)
 		manage_pipes(line, pipe_count, shell);
@@ -65,7 +67,6 @@ int	main(int argc, char **argv, char **envp)
 		tmp = change_env_var(line, &shell);
 		organizer(ft_strtrim(tmp, " "), &shell);
 		free(tmp);
-		g_ctrl_c_status = 0;
 	}
 	if (line)
 		free(line);

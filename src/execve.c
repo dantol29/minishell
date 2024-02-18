@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 11:38:13 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/18 12:53:19 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/18 15:04:52 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static char	**execve_flags(char *line, char *cmd, t_shell *shell)
 static void	sigquit_handler(int signum)
 {
 	(void)signum;
+	g_ctrl_c_status = 130;
 	exit(EXIT_SUCCESS);
 }
 

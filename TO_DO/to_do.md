@@ -12,8 +12,6 @@ Bonus
 Optional
 [ ] x=y    echo $x     y  (local variables)
 [ ] export in alphabetical order
-[ ] exit code 130 after cat
-[ ] exit code 130 after heredoc
 [ ] when ctrl+c is pressed after blocking command (cat) minishell$ is displayed 2 times
 
 20.02
@@ -21,6 +19,8 @@ Optional
 [ ] write good README
 
 19.02
+[x] exit code 130 after heredoc
+[x] exit code 130 after cat
 [x] double check memory leaks
 [x] ctrl+d in heredoc
 [x] exit code 131 after ctrl+\ in blocking command (cat, wc)
