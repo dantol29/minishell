@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 11:38:13 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/16 12:46:36 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/18 12:53:19 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,18 @@ static char	**execve_flags(char *line, char *cmd, t_shell *shell)
 	return (flags);
 }
 
+static void	sigquit_handler(int signum)
+{
+	(void)signum;
+	exit(EXIT_SUCCESS);
+}
+
+static void	child(char *cmd_path, char **flags, t_shell *shell)
+{
+	signal(SIGQUIT, sigquit_handler);
+	execve(cmd_path, flags, shell->current_envp);
+}
+
 int	launch_exec(char *line, char *cmd, t_shell *shell)
 {
 	char	**flags;
@@ -53,22 +65,13 @@ int	launch_exec(char *line, char *cmd, t_shell *shell)
 	}
 	pid = fork();
 	if (pid == 0)
-		execve(cmd_path, flags, shell->current_envp);
+		child(cmd_path, flags, shell);
 	waitpid(pid, &shell->exit_code, 0);
-	shell->exit_code /= 256;
+	if (shell->exit_code != 131)
+		shell->exit_code /= 256;
 	free(cmd_path);
 	free_double_array(flags);
 	if (shell->is_pipe == TRUE)
 		exit(shell->exit_code);
 	return (TRUE);
 }
-
-// void	child_ctrl_c(int signum)
-// {
-// 	(void)signum;
-// 	g_ctrl_c_status = 130;
-// 	//write(1, "\n", 1);
-// 	//rl_on_new_line();
-// 	//rl_replace_line("", 0);
-// 	//rl_redisplay();
-// }

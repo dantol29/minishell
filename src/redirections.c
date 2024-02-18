@@ -6,13 +6,13 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 14:16:12 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/16 15:21:31 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/18 12:10:13 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	*launch_redir(char *line, char **filenames, int redir_count, t_shell *shell)
+static int	*launch_redir(char *line, char **file, int redir_count, t_shell *sh)
 {
 	int		*old;
 	int		i;
@@ -23,20 +23,20 @@ static int	*launch_redir(char *line, char **filenames, int redir_count, t_shell 
 	i = -1;
 	while (++i < redir_count * 2)
 	{
-		if (ft_strcmp(filenames[i], "<") || ft_strcmp(filenames[i], ">") \
-		|| ft_strcmp(filenames[i], ">>"))
+		if (ft_strcmp(file[i], "<") || ft_strcmp(file[i], ">") \
+		|| ft_strcmp(file[i], ">>"))
 		{
-			if (open_file(filenames, filenames[i], i, shell) == -1)
+			if (open_file(file, file[i], i, sh) == -1)
 			{
 				old[0] = -1;
-				free_double_array(filenames);
+				free_double_array(file);
 				free(line);
 				return (old);
 			}
 		}
 	}
-	free_double_array(filenames);
-	launch_commands(line, shell);
+	free_double_array(file);
+	launch_commands(line, sh);
 	free(line);
 	return (old);
 }
@@ -75,7 +75,7 @@ char	*remove_redir(char *line, int i)
 	return (tmp);
 }
 
-static int	*extract_redirection(char *line, int redirection_count, t_shell *shell)
+static int	*extract_redirection(char *line, int redir_count, t_shell *shell)
 {
 	int		i;
 	int		count;
@@ -85,8 +85,8 @@ static int	*extract_redirection(char *line, int redirection_count, t_shell *shel
 	tmp = ft_strdup(line);
 	i = -1;
 	count = 0;
-	filenames = malloc(sizeof(char *) * (redirection_count * 2 + 1));
-	filenames[redirection_count * 2] = NULL;
+	filenames = malloc(sizeof(char *) * (redir_count * 2 + 1));
+	filenames[redir_count * 2] = NULL;
 	while (tmp[++i])
 	{
 		if (tmp[i] && tmp[i] == '>' && tmp[i + 1] == '>' && \
@@ -101,7 +101,7 @@ static int	*extract_redirection(char *line, int redirection_count, t_shell *shel
 		!is_quote(tmp[i - 1]) && !is_quote(tmp[i + 1]))
 			tmp = get_filename(filenames, tmp, &count, &i);
 	}
-	return (launch_redir(tmp, filenames, redirection_count, shell));
+	return (launch_redir(tmp, filenames, redir_count, shell));
 }
 
 int	*redirections(char **line, t_shell *shell)

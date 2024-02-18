@@ -6,11 +6,23 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:51:29 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/16 16:33:42 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/18 11:13:28 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	ft_strcmp(const char *str1, const char *str2)
+{
+	size_t	i;
+
+	i = 0;
+	while (str1[i] && str1[i] == str2[i])
+		i++;
+	if (str1[i] == str2[i])
+		return (TRUE);
+	return (FALSE);
+}
 
 void	dup_output(int *tube, int current_pipe, int num_cmd, int i)
 {

@@ -12,16 +12,18 @@ Bonus
 Optional
 [ ] x=y    echo $x     y  (local variables)
 [ ] export in alphabetical order
-
-20.02
-[ ] defend the project!!!
-
-19.02
-[ ] double check memory leaks
-[ ] write good README
 [ ] exit code 130 after cat
 [ ] exit code 130 after heredoc
 [ ] when ctrl+c is pressed after blocking command (cat) minishell$ is displayed 2 times
+
+20.02
+[ ] defend the project!!!
+[ ] write good README
+
+19.02
+[x] double check memory leaks
+[x] ctrl+d in heredoc
+[x] exit code 131 after ctrl+\ in blocking command (cat, wc)
 
 17.02 - BERLINALE!!!
 [x] organize header

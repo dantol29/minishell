@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:15:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/16 16:00:25 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/18 12:13:49 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ void	heredoc_read(char *exit_heredoc, t_shell *shell)
 	while (1)
 	{
 		get_line = readline("> ");
-		get_line = change_env_var(get_line, shell);
 		if (get_line == NULL || ft_strcmp(get_line, exit_heredoc) \
 		|| g_ctrl_c_status == 130)
 		{
 			free(get_line);
 			break ;
 		}
+		get_line = change_env_var(get_line, shell);
 		write(fd, get_line, ft_strlen(get_line));
 		write(fd, "\n", 1);
 		free(get_line);

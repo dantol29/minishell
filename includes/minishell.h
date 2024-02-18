@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/16 16:37:28 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/18 11:14:08 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	pwd(t_shell *shell);
 // check symbol (counts how many valid symbols the line has)
 int		check_symbol(char *line, char c);
 int		check_double_symbol(char *line, char c);
+int		is_quote(char c);
 
 // env variables (changes env variables in the line)
 char	*change_env_var(char *line, t_shell *shell);
@@ -104,7 +105,8 @@ char	*remove_redir(char *line, int i);
 int		is_empty_line(char *line);
 int		check_quotes(char *line);
 int		count_flags(char *line);
-void	dup_output(int *tube, int current_pipe, int num_cmd, int i);	
+void	dup_output(int *tube, int current_pipe, int num_cmd, int i);
+int		ft_strcmp(const char *str1, const char *str2);	
 
 // env (manipulations with env variables)
 char	*skip_env_var(char *before_var, char *after_var, int *i);
