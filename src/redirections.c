@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 14:16:12 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/18 12:10:13 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/18 15:47:18 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*remove_redir(char *line, int i)
 	start = ++i;
 	i = skip_until_char(line, i, ' ', 1);
 	i = skip_until_char(line, i, ' ', 0);
-	cmd = ft_substr(line, 0, start - 2);
+	cmd = ft_substr(line, 0, start - 1);
 	after_redir = ft_substr(line, i, ft_strlen(line) - i);
 	tmp = ft_strjoin(cmd, after_redir);
 	free(line);
