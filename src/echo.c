@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:50:22 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/16 15:06:32 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/19 11:27:28 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ static char	*check_flag_n(char *line, int *flag)
 		else if (line[i] == '-')
 		{
 			i++;
-			while (line[i] == 'n')
+			while (line[i] == 'n' || is_quote(line[i]))
 				i++;
 			if (line[i] != ' ' && line[i] != '\0')
 				return (skip_flag_n(line, j));

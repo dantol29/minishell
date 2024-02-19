@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 12:43:39 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/16 12:58:06 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/19 11:24:30 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static char	*replace_env_value(char	*line, int *i, t_shell *shell)
 
 	start = *i;
 	while (line[*i] && line[*i] != ' ' && \
-	line[*i] != '$' && !is_quote(line[*i]))
+	!is_quote(line[*i]) && (ft_isalnum(line[*i]) || line[*i] == '_'))
 		*i += 1;
 	var = ft_substr(line, start, *i - start);
 	after_var = ft_substr(line, *i, ft_strlen(line) - *i);

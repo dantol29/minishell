@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:12:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/15 14:06:37 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/19 11:01:48 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ static char	*extract_command(char *line, int count_letters)
 	}
 	cmd[count_letters] = '\0';
 	tmp = ft_strdup(cmd);
-	while (*tmp && *tmp == ' ')
-		i++;
 	free(cmd);
 	return (tmp);
 }

@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:51:29 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/18 11:13:28 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/19 10:53:03 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	count_flags(char *line)
 	count = 0;
 	while (line[i])
 	{
-		if (line[i] != ' ' && !is_quote(line[i]))
+		if (line[i] != ' ')
 		{
 			count++;
 			while (line[i] && line[i] != ' ')

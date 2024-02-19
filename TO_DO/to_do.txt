@@ -22,62 +22,16 @@ Optional
 [ ] x=y    echo $x     y  (local variables)
 [ ] export in alphabetical order
 [ ] when ctrl+c is pressed after blocking command (cat) minishell$ is displayed 2 times
+[ ] write good README
 
 20.02
 [ ] defend the project!!!
-[ ] write good README
-[ ]"/bin/ls" "-l""a" 	(must print as  ls -la, our: /bin/ls: cannot access '': No such file or directory)
-[ ] '/bin/ls' '-l''a' (must print as  ls -la, our: /bin/ls: cannot access '': No such file or directory)
-[ ] echo "Hello$World!" (Must : Hello!, Our: Hello)
-[ ] echo -n '"abc'"	 (Must: error for quote, Our: "abc    )
-[ ] echo -"n" a
-[ ] export a=  a  (Must: saves only a= stops on first empty space, Our: doesn't save env var a)
-[ ] Big problem with Ctrl+c and heredoc: doesn't start heredoc, doesn't stop with EOF
-	minishell $ echo <<             A                      
-	> A
-	> echo <<             A                 
-	> ^C
-	> 
-	minishell $ echo <<             A                 
-	_____________________________________
-	minishell $ echo <<             A                      
-	> A
-	> A
-	> A
-	> 
-	minishell $ ^C
-	minishell $ echo <<                  A
-	> j
-	> ^C
-	> ^C
-	> ^C
-	> ^C
-	> ^C (stops only with Enter)
-
-[ ] CTRL + C  (bash: just new line, Our: on newline ^C, newline, minishell)
-	minishell $ echo
-	minishell $ ^C
-
-	minishell $ 
-[ ] CTRL + C  (bash: just new line, Our: newline, on newline: minishell $ minishell $ ^C)
-	dsaf
-
-	minishell $ minishell $ ^C
-[ ] CTRL +C 
-	 cat
-	^C
-	minishell $ minishell $ 
-[ ] Empty command
-	(Must:$  ' ': command not foundempty command doesnt work, stops with ctrl+C)
-	Our:		 (like cat, stops only with Ctr+C)			
-	minishell $ ' '		
-
-	^C
-[ ] Commands with empty arg doesnt work (only like cat)
-	Must:
-	$ ls " "
-	ls: cannot access ' ': No such file or directory
-
+[x] echo -"n" a
+[x] echo "Hello$World!" (Must : Hello!, Our: Hello)
+[x] export a=  a  (Must: saves only a= stops on first empty space)
+[x] ls "-l""a"
+[x] ls " "
+[x] " " 
 
 19.02
 [x] exit code 130 after heredoc

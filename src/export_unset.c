@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:20:15 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/15 16:29:08 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/19 11:16:05 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static void	add_env_var(char *line, int i, t_shell *shell)
 	char	*tmp;
 
 	value = find_command(line + i);
-	if (!value || is_empty_line(value))
+	if (!value)
 	{
 		free(value);
 		return ;
