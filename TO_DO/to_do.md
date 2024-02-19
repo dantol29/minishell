@@ -1,4 +1,13 @@
 add NEW TODO's to the TOP. []=todo [x] = done
+# minisell check:
+```
+Testline:
+    "e"c"h"o""  '-n'   "$USER hello" '$USER' $USER "world\"" $?hello
+
+output:
+
+akurmyza hello $USER akurmyza world" 0hello
+```
 
 Start minishell: make && ./minishell
 
@@ -17,6 +26,58 @@ Optional
 20.02
 [ ] defend the project!!!
 [ ] write good README
+[ ]"/bin/ls" "-l""a" 	(must print as  ls -la, our: /bin/ls: cannot access '': No such file or directory)
+[ ] '/bin/ls' '-l''a' (must print as  ls -la, our: /bin/ls: cannot access '': No such file or directory)
+[ ] echo "Hello$World!" (Must : Hello!, Our: Hello)
+[ ] echo -n '"abc'"	 (Must: error for quote, Our: "abc    )
+[ ] echo -"n" a
+[ ] export a=  a  (Must: saves only a= stops on first empty space, Our: doesn't save env var a)
+[ ] Big problem with Ctrl+c and heredoc: doesn't start heredoc, doesn't stop with EOF
+	minishell $ echo <<             A                      
+	> A
+	> echo <<             A                 
+	> ^C
+	> 
+	minishell $ echo <<             A                 
+	_____________________________________
+	minishell $ echo <<             A                      
+	> A
+	> A
+	> A
+	> 
+	minishell $ ^C
+	minishell $ echo <<                  A
+	> j
+	> ^C
+	> ^C
+	> ^C
+	> ^C
+	> ^C (stops only with Enter)
+
+[ ] CTRL + C  (bash: just new line, Our: on newline ^C, newline, minishell)
+	minishell $ echo
+	minishell $ ^C
+
+	minishell $ 
+[ ] CTRL + C  (bash: just new line, Our: newline, on newline: minishell $ minishell $ ^C)
+	dsaf
+
+	minishell $ minishell $ ^C
+[ ] CTRL +C 
+	 cat
+	^C
+	minishell $ minishell $ 
+[ ] Empty command
+	(Must:$  ' ': command not foundempty command doesnt work, stops with ctrl+C)
+	Our:		 (like cat, stops only with Ctr+C)			
+	minishell $ ' '		
+
+	^C
+[ ] Commands with empty arg doesnt work (only like cat)
+	Must:
+	$ ls " "
+	ls: cannot access ' ': No such file or directory
+
 
 19.02
 [x] exit code 130 after heredoc
@@ -25,7 +86,7 @@ Optional
 [x] ctrl+d in heredoc
 [x] exit code 131 after ctrl+\ in blocking command (cat, wc)
 
-17.02 - BERLINALE!!!
+17.02 - BERLINALE!!! :)
 [x] organize header
 
 16.02

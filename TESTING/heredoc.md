@@ -2,7 +2,7 @@
 
 # VALID heredoc
 
-[x] minishell$ <<A
+[x] <<A
 [x] echo <<             A			//  END: A (without spaces) 
 
 
@@ -30,12 +30,6 @@
 [ ] echo <<A | echo <<<
 		> A
 		bash: syntax error near unexpected token `newline'
-
-[ ] Current: ($ exit 42 42) completely exit from minishell
-	$ exit 42 42
-	exit
-[ ] exit 42 42 (too many arguments)
-
 
 
 ## CAT AND HEREDOC -  prints  strings, after exit heredoc

@@ -1,8 +1,14 @@
 ### VARIABLES
-#     check:
+# minisell check:
 ```
+Testline:
     "e"c"h"o""  '-n'   "$USER hello" '$USER' $USER "world\"" $?hello
+
+output:
+
+akurmyza hello $USER akurmyza world" 0hello
 ```
+
 ## CHECK COMMAND IF it is BUILTIN
 # type -a echo
 # echo is a shell builtin
@@ -29,7 +35,7 @@
 [x] echo '$BLABLA'								$BLABLA
 
 #  NOT VALID VARIABLES: 
-[x] _ $USER (_ in begin)						$_akurmyza: command not found
+[x] _$USER (_ in begin)						$_akurmyza: command not found
 [x]$USEr (Small letter, not the same as valid $USER from env)  //  Retturn without empty line 
 [x] HELLO$USER									$HELLOakurmyza: command not found
 [x] echo "Hello$World!"							$Hello!

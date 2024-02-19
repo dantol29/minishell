@@ -6,8 +6,8 @@
 [x]minishell $ export x=file
 	minishell $ cat Make$x
 
-[x] minishell $ export MY_LS_VAR="ls -la"
-	minishell $ $MY_LS_VAR
+[x] export MY_LS_VAR="ls -la"
+	$MY_LS_VAR
 	total 84
 	drwxr-xr-x 11 akurmyza 2022_berlin  4096 Feb 15 10:09 .
 	drwxr-xr-x  3 akurmyza 2022_berlin   130 Jan 28 10:40 ..
