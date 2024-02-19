@@ -25,7 +25,13 @@ Optional
 [ ] write good README
 
 20.02
-[ ] defend the project!!!
+[x] ls || wc -l (syntax error)
+[Failed because of this]
+[x] < infile grep something
+[x] cat /etc/os-release >> outfile
+[x] /bin/ls after unset PATH
+[Failed because of this]
+[Too optimistic] defend the project!!!
 [x] echo -"n" a
 [x] echo "Hello$World!" (Must : Hello!, Our: Hello)
 [x] export a=  a  (Must: saves only a= stops on first empty space)

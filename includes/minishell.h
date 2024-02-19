@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/18 11:14:08 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/19 18:21:44 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	pwd(t_shell *shell);
 // check symbol (counts how many valid symbols the line has)
 int		check_symbol(char *line, char c);
 int		check_double_symbol(char *line, char c);
+int		check_pipe(char *line, char c);
 int		is_quote(char c);
 
 // env variables (changes env variables in the line)
@@ -99,7 +100,7 @@ char	*get_line_without_heredoc(char *line, int start_heredoc, int i);
 // redirections (< input, > output, >> output append redirections)
 int		*redirections(char **line, t_shell *shell);
 char	*extract_input_output(char *line, int i);
-char	*remove_redir(char *line, int i);
+char	*remove_redir(char *line, int i, int mode);
 
 // utils (useful functions)
 int		is_empty_line(char *line);
@@ -153,5 +154,6 @@ char	*get_filename(char **filenames, char *tmp, int *count, int *i);
 char	*skip_command_name(char *line);;
 int		skip_until_char(char *line, int i, char c, char mode);
 char	*skip_flag_n(char *line, int j);
+void	add_i_and_count(int *i, int *count);
 
 #endif

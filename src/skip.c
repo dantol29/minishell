@@ -6,11 +6,17 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 14:01:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/16 15:06:41 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/19 18:21:32 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	add_i_and_count(int *i, int *count)
+{
+	*i += 1;
+	*count += 1;
+}
 
 char	*skip_flag_n(char *line, int j)
 {

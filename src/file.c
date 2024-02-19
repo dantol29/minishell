@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 13:06:38 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/16 15:21:37 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/19 17:46:48 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*get_filename(char **filenames, char *tmp, int *count, int *i)
 	filenames[len++] = extract_input_output(tmp, c);
 	*i = -1;
 	*count = len;
-	return (remove_redir(tmp, c));
+	return (remove_redir(tmp, c, 0));
 }
 
 int	open_file(char **filenames, char *redir, int i, t_shell *shell)

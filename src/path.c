@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 14:40:45 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/16 11:43:19 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/19 16:47:03 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,6 @@ static char	*get_path(char **splited_path, char *command)
 
 	if (opendir(command))
 		return (NULL);
-	if (access(command, X_OK) == 0)
-	{
-		cmd = ft_substr(command, 0, ft_strlen(command));
-		return (cmd);
-	}
 	i = 0;
 	while (splited_path[i])
 	{
@@ -45,6 +40,11 @@ char	*get_executable_path(t_shell *shell, char *cmd)
 	char	*cmd_path;
 	char	**splitted_path;
 
+	if (access(cmd, X_OK) == 0)
+	{
+		cmd = ft_substr(cmd, 0, ft_strlen(cmd));
+		return (cmd);
+	}
 	path = get_env_value("PATH", shell->env);
 	if (!path)
 		return (NULL);

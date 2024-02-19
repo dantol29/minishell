@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:58:49 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/19 10:58:54 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/19 18:16:50 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,18 @@ void	organizer(char *line, t_shell *shell)
 
 	if (g_ctrl_c_status == 130)
 		g_ctrl_c_status = 0;
-	pipe_count = check_symbol(line, '|');
-	if (pipe_count > 0)
+	pipe_count = check_pipe(line, '|');
+	if (pipe_count == -1 || check_double_symbol(line, '|') > 0)
+	{
+		write(2, "minishell: syntax error near '|'\n", 33);
+		shell->exit_code = 1;
+	}
+	else if (pipe_count > 0)
 		manage_pipes(line, pipe_count, shell);
 	else if (pipe_count == 0)
 	{
 		shell->is_pipe = FALSE;
 		run_heredoc(&line, shell);
-	}
-	else if (pipe_count == -1)
-	{
-		write(2, "syntax error near '|'\n", 22);
-		shell->exit_code = 1;
 	}
 	free(line);
 }
