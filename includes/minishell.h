@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/19 18:21:44 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/21 19:39:26 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,14 @@ typedef struct s_shell
 	t_env	*env;
 }	t_shell;
 
+
 // global variable to store ctrl+c exit code (130)
 extern int	g_ctrl_c_status;
+
+//main
+void ctrl_c_child_process(int signum);
+void	ctrl_c(int signum);
+void ctrl_c_heredoc(int signum);
 
 // launch commands (decides what to execute)
 void	launch_commands(char *line, t_shell *shell);

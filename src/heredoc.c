@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:15:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/19 10:59:18 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/21 21:33:17 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static int	heredoc_loop(char **eof_hered, int count, int old_fd, t_shell *sh)
 	fd = 0;
 	while (i < count)
 	{
+		signal(SIGINT, ctrl_c_heredoc);
 		heredoc_read(eof_hered[i], sh);
 		fd = open("tmp_heredoc.txt", O_RDONLY);
 		if (fd == -1)
@@ -51,11 +52,10 @@ static int	heredoc_loop(char **eof_hered, int count, int old_fd, t_shell *sh)
 static int	launch_heredoc(char **line, int count, t_shell *shell)
 {
 	char	**eof_heredoc;
-	int		i;
 	int		fd;
 	int		old_fd;
 
-	i = 0;
+	printf("launch heredoc\n");
 	old_fd = dup(STDIN_FILENO);
 	eof_heredoc = save_eof_heredoc(*line, count);
 	*line = remove_heredoc(*line, eof_heredoc);
@@ -81,6 +81,7 @@ int	run_heredoc(char **line, t_shell *shell)
 	{
 		if (count == 0)
 		{
+			signal(SIGINT, ctrl_c_child_process);
 			launch_commands(*line, shell);
 			return (TRUE);
 		}

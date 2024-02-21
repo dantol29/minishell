@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_parsing.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:15:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/18 12:13:49 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/21 19:24:08 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ void	heredoc_read(char *exit_heredoc, t_shell *shell)
 	char	*get_line;
 	int		fd;
 
-	signal(SIGQUIT, SIG_IGN);
+	// signal(SIGQUIT, SIG_IGN);
+	
 	fd = open("tmp_heredoc.txt", O_RDWR | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 	{
@@ -30,6 +31,7 @@ void	heredoc_read(char *exit_heredoc, t_shell *shell)
 		if (get_line == NULL || ft_strcmp(get_line, exit_heredoc) \
 		|| g_ctrl_c_status == 130)
 		{
+			close(fd);
 			free(get_line);
 			break ;
 		}

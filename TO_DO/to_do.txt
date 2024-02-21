@@ -24,6 +24,17 @@ Optional
 [ ] when ctrl+c is pressed after blocking command (cat) minishell$ is displayed 2 times
 [ ] write good README
 
+21.02
+[x] found unused variable 
+	static void	cd_error(char *line, char *path, char *current_dir, t_shell *shell)
+	// char	*error;
+	// error = strerror(errno);
+[x] added 	close(fd); to heredoc_read, if CTRL_C
+[x] deleted 	// signal(SIGQUIT, SIG_IGN); , because it is used in main
+[] launch_pipes: 	signal(SIGINT, ctrl_c_child_process);
+[] launch_heredoc probably needs check variable count
+	
+
 20.02
 [x] ls || wc -l (syntax error)
 [Failed because of this]

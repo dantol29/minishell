@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:14:45 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/16 16:33:33 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/21 21:11:50 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static void	launch_pipes(char **substrings, t_shell *shell, int num_commands)
 {
 	int		*tube;
 	int		i;
-
+	signal(SIGINT, ctrl_c_child_process);
 	tube = malloc(sizeof(int) * (2 * num_commands));
 	shell->is_pipe = TRUE;
 	i = 0;
@@ -102,7 +102,7 @@ void	manage_pipes(char *line, int pipe_count, t_shell *shell)
 {
 	int		num_commands;
 	char	**substrings;
-
+	printf("MANAGE PIPES\n");
 	substrings = (char **)malloc(sizeof(char *) * (pipe_count + 1 + 1));
 	substrings[pipe_count + 1] = NULL;
 	num_commands = split_pipes(line, substrings);

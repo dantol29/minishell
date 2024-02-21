@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:58:49 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/19 18:16:50 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/21 20:05:34 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,29 @@
 
 int	g_ctrl_c_status;
 
+void ctrl_c_child_process(int signum)
+{
+	printf("CTRL+C_CHILD\n");
+	(void)signum;
+	write(1, "\n", 1);
+	g_ctrl_c_status = 130;
+}
+
+void ctrl_c_heredoc(int signum)
+{
+	printf("CTRL+C_HEREDOC\n");
+	(void)signum;
+	ioctl(STDIN_FILENO, TIOCSTI, "\n");
+	g_ctrl_c_status = 130;
+}
+
+/*
+0. No process running - need redisplay
+1. process running - no redisplay needed
+*/
 void	ctrl_c(int signum)
 {
+	printf("CTRL+C\n");
 	(void)signum;
 	g_ctrl_c_status = 130;
 	write(1, "\n", 1);
@@ -27,7 +48,7 @@ void	ctrl_c(int signum)
 void	organizer(char *line, t_shell *shell)
 {
 	int	pipe_count;
-
+	
 	if (g_ctrl_c_status == 130)
 		g_ctrl_c_status = 0;
 	pipe_count = check_pipe(line, '|');
@@ -56,10 +77,10 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	g_ctrl_c_status = 0;
 	save_envp(&shell, envp);
-	signal(SIGINT, ctrl_c);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
+		signal(SIGINT, ctrl_c);
 		line = readline("\033[1;38;5;199mminishell $ \033[0m");
 		if (line == NULL)
 			break ;
