@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   save_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 13:35:22 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/16 13:20:03 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/22 11:38:52 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	update_envp(t_shell *shell)
 		free(tmp_join2);
 		new[i++] = ft_strdup(tmp_join);
 		free(tmp_join);
-		tmp = tmp->next; 
+		tmp = tmp->next;
 	}
 	free_double_array(shell->current_envp);
 	shell->current_envp = new;

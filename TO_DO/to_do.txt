@@ -24,16 +24,31 @@ Optional
 [ ] when ctrl+c is pressed after blocking command (cat) minishell$ is displayed 2 times
 [ ] write good README
 
-21.02
+22.02 [ ] From eval: cat /etc/os-release >in  and then: <in | grep ubuntu Is not working and does not return the correct lines (compare with bash) I checked it in my computer - it do nothing. Needs to check in bash at school(Alena)|
+
+
+21.02 Alena
+[x] CTRL_C WORKS as in bash!!! 
+[x] minishell 🐱‍💻 
+[x] Norminette
+[x] CTRL+C allmost work as  in bash
 [x] found unused variable 
 	static void	cd_error(char *line, char *path, char *current_dir, t_shell *shell)
 	// char	*error;
 	// error = strerror(errno);
 [x] added 	close(fd); to heredoc_read, if CTRL_C
 [x] deleted 	// signal(SIGQUIT, SIG_IGN); , because it is used in main
-[] launch_pipes: 	signal(SIGINT, ctrl_c_child_process);
-[] launch_heredoc probably needs check variable count
-	
+[x] launch_pipes: 	signal(SIGINT, ctrl_c_child_process);
+
+[ ] launch_heredoc probably needs check variable count
+[ ] Probably it need to change names of programs.
+	need to change run_heredoc with count = 0, to not enter in "launch_heredoc"
+	//here it goes inside launch_heredoc, but count = 0 in cat|cat|ls
+	//MANAGE PIPES
+	//run_herredoc, count<< =0
+	//launch heredoc
+	return (launch_heredoc(line, count, shell));
+
 
 20.02
 [x] ls || wc -l (syntax error)

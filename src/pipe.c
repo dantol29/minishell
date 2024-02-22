@@ -6,7 +6,7 @@
 /*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:14:45 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/21 21:11:50 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/02/22 11:39:57 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ static void	launch_pipes(char **substrings, t_shell *shell, int num_commands)
 {
 	int		*tube;
 	int		i;
+
 	signal(SIGINT, ctrl_c_child_process);
 	tube = malloc(sizeof(int) * (2 * num_commands));
 	shell->is_pipe = TRUE;
@@ -92,7 +93,7 @@ static void	launch_pipes(char **substrings, t_shell *shell, int num_commands)
 	while (i < 2 * (num_commands))
 		close(tube[i++]);
 	i = -1;
-	while (++i < num_commands) 
+	while (++i < num_commands)
 		waitpid(-1, &shell->exit_code, 0);
 	shell->exit_code /= 256;
 	free(tube);
@@ -102,7 +103,7 @@ void	manage_pipes(char *line, int pipe_count, t_shell *shell)
 {
 	int		num_commands;
 	char	**substrings;
-	printf("MANAGE PIPES\n");
+
 	substrings = (char **)malloc(sizeof(char *) * (pipe_count + 1 + 1));
 	substrings[pipe_count + 1] = NULL;
 	num_commands = split_pipes(line, substrings);

@@ -6,7 +6,7 @@
 /*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:15:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/21 19:24:08 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/02/22 11:35:44 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ void	heredoc_read(char *exit_heredoc, t_shell *shell)
 	char	*get_line;
 	int		fd;
 
-	// signal(SIGQUIT, SIG_IGN);
-	
 	fd = open("tmp_heredoc.txt", O_RDWR | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 	{

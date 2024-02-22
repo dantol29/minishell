@@ -6,7 +6,7 @@
 /*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:15:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/21 21:33:17 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/02/22 10:44:16 by akurmyza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ static int	launch_heredoc(char **line, int count, t_shell *shell)
 	int		fd;
 	int		old_fd;
 
-	printf("launch heredoc\n");
 	old_fd = dup(STDIN_FILENO);
 	eof_heredoc = save_eof_heredoc(*line, count);
 	*line = remove_heredoc(*line, eof_heredoc);

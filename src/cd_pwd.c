@@ -24,9 +24,6 @@ void	pwd(t_shell *shell)
 
 static void	cd_error(char *line, char *path, char *current_dir, t_shell *shell)
 {
-	// char	*error;
-
-	// error = strerror(errno);
 	write(2, "cd: ", 4);
 	write(2, line, ft_strlen(line));
 	shell->exit_code = 1;
