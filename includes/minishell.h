@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:02:31 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/22 11:41:16 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:50:32 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ void	unset_env_var(char *env_name, t_env **lst);
 // error (error handling)
 int		ft_error(char *line, t_shell *shell);
 int		set_error(char *line, t_shell *shell);
+int		syntax_error(char *line, t_shell *shell);
 
 // pipe ('|')
 void	manage_pipes(char *line, int pipe_count, t_shell *shell);

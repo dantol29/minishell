@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 14:16:12 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/19 17:48:21 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:50:19 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ char	*extract_input_output(char *line, int i)
 
 	start = ++i;
 	i = skip_until_char(line, i, ' ', 1);
-	i = skip_until_char(line, i, ' ', 0);
+	while (line[i] && line[i] != ' ' && line[i] != '<'\
+	&& line[i] != '>')
+		i++;
 	tmp = ft_substr(line, start, i - start);
 	filename = ft_strtrim(tmp, " ");
 	free(tmp);
@@ -68,7 +70,9 @@ char	*remove_redir(char *line, int i, int mode)
 	if (mode == 1)
 		start -= 1;
 	i = skip_until_char(line, i, ' ', 1);
-	i = skip_until_char(line, i, ' ', 0);
+	while (line[i] && line[i] != ' ' && line[i] != '<'\
+	&& line[i] != '>')
+		i++;
 	cmd = ft_substr(line, 0, start - 1);
 	after_redir = ft_substr(line, i, ft_strlen(line) - i);
 	tmp_2 = ft_strtrim(after_redir, " ");
@@ -121,7 +125,7 @@ int	*redirections(char **line, t_shell *shell)
 	append_redir = check_double_symbol(*line, '>');
 	if (output_redir == -1 || input_redir == -1 || append_redir == -1)
 	{
-		ft_error("minishell: syntax error\n", shell);
+		syntax_error("minishell: syntax error\n", shell);
 		error = malloc(sizeof(int) * 1);
 		error[0] = -1;
 		return (error);

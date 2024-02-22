@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:15:21 by akurmyza          #+#    #+#             */
-/*   Updated: 2024/02/22 10:44:16 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:51:45 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int	run_heredoc(char **line, t_shell *shell)
 			return (TRUE);
 		}
 		write(2, "heredoc: syntax error\n", 22);
+		shell->exit_code = 2;
 		return (FALSE);
 	}
 	return (launch_heredoc(line, count, shell));

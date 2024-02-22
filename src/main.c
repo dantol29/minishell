@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:58:49 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/22 11:37:41 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:48:01 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	organizer(char *line, t_shell *shell)
 	if (pipe_count == -1 || check_double_symbol(line, '|') > 0)
 	{
 		write(2, "minishell: syntax error near '|'\n", 33);
-		shell->exit_code = 1;
+		shell->exit_code = 2;
 	}
 	else if (pipe_count > 0)
 		manage_pipes(line, pipe_count, shell);

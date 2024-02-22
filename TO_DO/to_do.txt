@@ -14,41 +14,29 @@ Start minishell: make && ./minishell
 Bonus
 [ ] Use &&, || and parenthesis with commands and ensure minishell behaves the same way bash does.
 [ ] Use wildcards in arguments in the current working directory.
-[X] Surprise! (or not...) Set the USER environment variable.
-[X] echo "'$USER'" should print the value of the USER variable.
-[X] echo '"$USER"' should print "$USER".
+[ ] Surprise! (or not...) Set the USER environment variable.
+[ ] echo "'$USER'" should print the value of the USER variable.
+[ ] echo '"$USER"' should print "$USER".
 
 Optional
 [ ] x=y    echo $x     y  (local variables)
 [ ] export in alphabetical order
-[ ] when ctrl+c is pressed after blocking command (cat) minishell$ is displayed 2 times
 [ ] write good README
 
-22.02 [ ] From eval: cat /etc/os-release >in  and then: <in | grep ubuntu Is not working and does not return the correct lines (compare with bash) I checked it in my computer - it do nothing. Needs to check in bash at school(Alena)|
-
+22.02
+[] defend the project !!!!
+[x] cat <minishell.h>./outfiles/outfile (segfault)
+[x] exit code 2 after syntax error
 
 21.02 Alena
 [x] CTRL_C WORKS as in bash!!! 
 [x] minishell 🐱‍💻 
 [x] Norminette
-[x] CTRL+C allmost work as  in bash
+[x] when ctrl+c is pressed after blocking command (cat) minishell$ is displayed 2 times
 [x] found unused variable 
-	static void	cd_error(char *line, char *path, char *current_dir, t_shell *shell)
-	// char	*error;
-	// error = strerror(errno);
 [x] added 	close(fd); to heredoc_read, if CTRL_C
 [x] deleted 	// signal(SIGQUIT, SIG_IGN); , because it is used in main
 [x] launch_pipes: 	signal(SIGINT, ctrl_c_child_process);
-
-[ ] launch_heredoc probably needs check variable count
-[ ] Probably it need to change names of programs.
-	need to change run_heredoc with count = 0, to not enter in "launch_heredoc"
-	//here it goes inside launch_heredoc, but count = 0 in cat|cat|ls
-	//MANAGE PIPES
-	//run_herredoc, count<< =0
-	//launch heredoc
-	return (launch_heredoc(line, count, shell));
-
 
 20.02
 [x] ls || wc -l (syntax error)
