@@ -36,6 +36,11 @@ void	cd(char *line, t_shell *shell)
 	char	*current_dir;
 	char	*path;
 
+	if (!find_env_var("PWD", shell->env) || !find_env_var("OLDPWD", shell->env))
+	{
+		write(2, "cd: variable is not set\n", 24);
+		return ;
+	}
 	current_dir = getcwd(NULL, 0);
 	line = skip_command_name(line);
 	path = find_command(line);

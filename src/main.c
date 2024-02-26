@@ -6,7 +6,7 @@
 /*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:58:49 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/22 14:48:01 by dtolmaco         ###   ########.fr       */
+/*   Updated: 2024/02/26 16:57:43 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,35 @@ void	organizer(char *line, t_shell *shell)
 	free(line);
 }
 
+char	*remove_tab(char *line)
+{
+	int		i;
+	int		j;
+	int		count;
+	char	*new;
+
+	i = 0;
+	count = 0;
+	while (line[i])
+	{
+		if (line[i] != '\t')
+			count++;
+		i++;
+	}
+	new = malloc(sizeof(char) * (count + 1));
+	i = 0;
+	j = 0;
+	while (line[i])
+	{
+		if (line[i] != '\t')
+			new[j++] = line[i]; 
+		i++;
+	}
+	new[j] = '\0';
+	free(line);
+	return (new);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
@@ -54,6 +83,7 @@ int	main(int argc, char **argv, char **envp)
 		if (line == NULL)
 			break ;
 		add_history(line);
+		line = remove_tab(line);
 		tmp = change_env_var(line, &shell);
 		organizer(ft_strtrim(tmp, " "), &shell);
 		free(tmp);

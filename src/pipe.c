@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurmyza <akurmyza@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: dtolmaco <dtolmaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 19:14:45 by dtolmaco          #+#    #+#             */
-/*   Updated: 2024/02/22 11:39:57 by akurmyza         ###   ########.fr       */
+/*   Updated: 2024/02/26 17:17:58 by dtolmaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ static void	pipe_loop(char **substrings, int *tube, int num_cmd, t_shell *shell)
 static void	launch_pipes(char **substrings, t_shell *shell, int num_commands)
 {
 	int		*tube;
+	int		exit_code;
 	int		i;
 
 	signal(SIGINT, ctrl_c_child_process);
@@ -93,9 +94,15 @@ static void	launch_pipes(char **substrings, t_shell *shell, int num_commands)
 	while (i < 2 * (num_commands))
 		close(tube[i++]);
 	i = -1;
+	exit_code = 0;
 	while (++i < num_commands)
+	{
 		waitpid(-1, &shell->exit_code, 0);
-	shell->exit_code /= 256;
+		if (WIFEXITED(shell->exit_code))
+			if (WEXITSTATUS(shell->exit_code) != 0)
+				exit_code = WEXITSTATUS(shell->exit_code);
+	}
+	shell->exit_code = exit_code;
 	free(tube);
 }
 

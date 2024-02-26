@@ -23,8 +23,13 @@ Optional
 [ ] export in alphabetical order
 [ ] write good README
 
+Fix after eval (daniil)
+[x] unset PWD and OLDPWD (memory leak and no error message)
+[x] not working with tab (\t)
+[x] exit status of child process in pipe
+
 22.02
-[] defend the project !!!!
+[x] defend the project !!!!
 [x] cat <minishell.h>./outfiles/outfile (segfault)
 [x] exit code 2 after syntax error
 
