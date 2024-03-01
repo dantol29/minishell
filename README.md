@@ -1,10 +1,12 @@
-# MINISHELL
+# miniSHELL
+Fully functional shell for your command-line needs!
+
 ## How to compile
-...
-## Tests
-...
+```
+make && ./minishell
+```
 ____________________________________________
-## FUNCTION USED TO CREATE MINISHELL
+## Functions used
 
 ### 1. USER INTERACTION (Readline and Display)
 1. readline;            // Read a line of input using the Readline library.
@@ -31,59 +33,23 @@ ____________________________________________
 
 ### 5. PROCESS CONTROL
 16. fork;           // Create a new process.
-17. wait;           // Wait for a child process to terminate.
-18. waitpid;        // Wait for a specific child process to terminate.
-19. wait3;          // Wait for a child process and retrieve status information.
-20. wait4;          // Wait for a specific child process and retrieve status information.
-21. execve;         // Execute a program.
-22. exit;            // Exit a program.
+17. waitpid;        // Wait for a specific child process to terminate.
+18. execve;         // Execute a program.
+19. exit;            // Exit a program.
 
 ### 6. SIGNAL HANDLING
-23. signal;         // Set a signal handler.
-24. sigaction;       // Handle signals with extended functionality.
-25. sigemptyset;     // Initialize an empty signal set.
-26. sigaddset;       // Add a signal to a signal set.
-27. kill;           // Send a signal to a process.
+22. signal;         // Set a signal handler.
 
-### 7. DIRECTORY OPERATIONS
-28. opendir;         // Open a directory.
-29. readdir;         // Read a directory entry.
-30. closedir;        // Close a directory.
+### 7. FILE SYSTEM
+23. getcwd;         // Get the current working directory.
+24. chdir;          // Change the current working directory.
 
-### 8. FILE INFORMATION
-31. stat;           // Retrieve file information.
-32. lstat;          // Retrieve file information (follows symbolic links).
-33. fstat;          // Retrieve file information (from an open file descriptor).
+### 8. PIPE AND DUPLICATION
+25. dup;             // Duplicate a file descriptor.
+26. dup2;           // Duplicate a file descriptor to a specific descriptor number.
+27. pipe;           // Create a pipe for interprocess communication.
 
-### 9. FILE SYSTEM
-34. getcwd;         // Get the current working directory.
-35. chdir;          // Change the current working directory.
-
-### 10. TERMINAL HANDLING
-36. tcsetattr;      // Set terminal attributes.
-37. tcgetattr;      // Get terminal attributes.
-38. tgetent;        // Get terminal capabilities.
-39. tgetflag;       // Get terminal flag.
-40. tgetnum;        // Get terminal number.
-41. tgetstr;        // Get terminal string.
-42. tgoto;          // String capabilities for cursor positioning.
-43. tputs;          // Output terminal capabilities.
-44. ttyslot;        // Get slot in the utmp file.
-
-### 11. I/O CONTROL
-45. isatty;         // Check if a file descriptor refers to a terminal.
-46. ttyname;         // Get the name of the terminal.
-47. ioctl;           // Perform I/O control operations.
-
-### 12. ENVIRONMENT
-48. getenv;         // Retrieve the value of an environment variable.
-
-### 13. PIPE AND DUPLICATION
-49. dup;             // Duplicate a file descriptor.
-50. dup2;           // Duplicate a file descriptor to a specific descriptor number.
-51. pipe;           // Create a pipe for interprocess communication.
-
-### 14. ERROR HANDLING
-52. strerror;       // Get a descriptive string for an error code.
-53. perror;         // Print a descriptive error message.
+### 9. ERROR HANDLING
+28. strerror;       // Get a descriptive string for an error code.
+29. perror;         // Print a descriptive error message.
 _________________________________________________________
