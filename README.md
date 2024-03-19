@@ -7,6 +7,8 @@ Fully functional shell for your command-line needs!
 make && ./minishell
 ```
 ____________________________________________
+## Introduction
+🔥miniSHELL is a compact yet powerful shell application designed to provide a seamless command-line experience. Whether you're a seasoned developer or a casual user, miniSHELL offers a range of features to enhance your workflow, from basic command execution to advanced functionalities like redirections and environment variable management.
 
 ## Features
 ☑️ Command Execution:
@@ -48,3 +50,6 @@ ____________________________________________
 
     Respond appropriately to signals like Ctrl+C.
 _________________________________________________________
+
+## Usage
+To use miniSHELL, simply compile the application using the provided instructions and run the executable. Once launched, you can start entering commands and leveraging the various features offered by miniSHELL.
