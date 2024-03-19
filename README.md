@@ -10,6 +10,7 @@ ____________________________________________
 ## Introduction
 🔥miniSHELL is a compact yet powerful shell application designed to provide a seamless command-line experience. Whether you're a seasoned developer or a casual user, miniSHELL offers a range of features to enhance your workflow, from basic command execution to advanced functionalities like redirections and environment variable management.
 
+_Note: The codebase follows the norms specified by Norminette._
 ## Features
 ☑️ Command Execution:
 
